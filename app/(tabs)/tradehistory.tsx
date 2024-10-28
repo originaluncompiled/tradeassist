@@ -4,6 +4,7 @@ import FilterSection from '@/components/Filter/FilterSection'
 import TradeCard from '@/components/TradingHistory/TradeCard'
 import { Trade } from '@/constants/types'
 import AddButton from '@/components/TradingHistory/AddButton'
+import { FlashList } from '@shopify/flash-list'
 
 const TradeHistory = () => {
   const [filters, setFilters] = useState<string[]>([]);
@@ -45,119 +46,119 @@ const TradeHistory = () => {
     }
   }
 
-  // PLACEHOLDER DATA, REMOVE LATER
+  // PLACEHOLDER DATA, REMOVE AND REPLACE WITH DATABASE/STORAGE STUFFS
   const tradeHistory: Trade[] = [
     {
-      "date": [28, 3, 2022],
-      "asset": "EURUSD",
-      "rating": 4,
-      "return": 1500.75,
-      "roi": 0.02,
-      "direction": "Long"
+      date: [28, 3, 2022],
+      asset: "EURUSD",
+      rating: 4,
+      return: 1500.75,
+      roi: 0.02,
+      direction: "Long"
     },
     {
-      "date": [29, 3, 2022],
-      "asset": "AAPL",
-      "rating": 5,
-      "return": 3200.00,
-      "roi": 0.05,
-      "direction": "Short"
+      date: [29, 3, 2022],
+      asset: "AAPL",
+      rating: 5,
+      return: 3200.00,
+      roi: 0.05,
+      direction: "Short"
     },
     {
-      "date": [30, 3, 2022],
-      "asset": "BTCUSD",
-      "rating": 3,
-      "return": 1200.50,
-      "roi": 0.01,
-      "direction": "Long"
+      date: [30, 3, 2022],
+      asset: "BTCUSD",
+      rating: 3,
+      return: 1200.50,
+      roi: 0.01,
+      direction: "Long"
     },
     {
-      "date": [31, 3, 2022],
-      "asset": "TSLA",
-      "rating": 4,
-      "return": -2500.00,
-      "roi": -0.04,
-      "direction": "Short"
+      date: [31, 3, 2022],
+      asset: "TSLA",
+      rating: 4,
+      return: -2500.00,
+      roi: -0.04,
+      direction: "Short"
     },
     {
-      "date": [1, 4, 2022],
-      "asset": "GOLD",
-      "rating": 5,
-      "return": 4000.25,
-      "roi": 0.06,
-      "direction": "Long"
+      date: [1, 4, 2022],
+      asset: "GOLD",
+      rating: 5,
+      return: 4000.25,
+      roi: 0.06,
+      direction: "Long"
     },
     {
-      "date": [2, 4, 2022],
-      "asset": "USDJPY",
-      "rating": 2,
-      "return": -500.00,
-      "roi": -0.01,
-      "direction": "Short"
+      date: [2, 4, 2022],
+      asset: "USDJPY",
+      rating: 2,
+      return: -500.00,
+      roi: -0.01,
+      direction: "Short"
     },
     {
-      "date": [3, 4, 2022],
-      "asset": "NGAS",
-      "rating": 3,
-      "return": 750.00,
-      "roi": 0.02,
-      "direction": "Long"
+      date: [3, 4, 2022],
+      asset: "NGAS",
+      rating: 3,
+      return: 750.00,
+      roi: 0.02,
+      direction: "Long"
     },
     {
-      "date": [4, 4, 2022],
-      "asset": "MSFT",
-      "rating": 4,
-      "return": 1800.30,
-      "roi": 0.03,
-      "direction": "Short"
+      date: [4, 4, 2022],
+      asset: "MSFT",
+      rating: 4,
+      return: 1800.30,
+      roi: 0.03,
+      direction: "Short"
     },
     {
-      "date": [5, 4, 2022],
-      "asset": "LTCUSD",
-      "rating": 5,
-      "return": 1500.00,
-      "roi": 0.04,
-      "direction": "Long"
+      date: [5, 4, 2022],
+      asset: "LTCUSD",
+      rating: 5,
+      return: 1500.00,
+      roi: 0.04,
+      direction: "Long"
     },
     {
-      "date": [6, 4, 2022],
-      "asset": "FTSE100",
-      "rating": 4,
-      "return": 2000.80,
-      "roi": 0.03,
-      "direction": "Short"
+      date: [6, 4, 2022],
+      asset: "FTSE100",
+      rating: 4,
+      return: 2000.80,
+      roi: 0.03,
+      direction: "Short"
     },
     {
-      "date": [7, 4, 2022],
-      "asset": "AUDCAD",
-      "rating": 2,
-      "return": -300.00,
-      "roi": -0.01,
-      "direction": "Long"
+      date: [7, 4, 2022],
+      asset: "AUDCAD",
+      rating: 2,
+      return: -300.00,
+      roi: -0.01,
+      direction: "Long"
     },
     {
-      "date": [8, 4, 2022],
-      "asset": "S&P 500",
-      "rating": 5,
-      "return": 5000.00,
-      "roi": 0.07,
-      "direction": "Short"
+      date: [8, 4, 2022],
+      asset: "S&P 500",
+      rating: 5,
+      return: 5000.00,
+      roi: 0.07,
+      direction: "Short"
     }
   ]
 
   return (
     <>
-      <ScrollView className='flex-1 bg-dark-8' showsVerticalScrollIndicator={false}>
+      <View className='flex-1 bg-dark-8'>
         <FilterSection filters={filters} updateFilters={updateFilters} />
-        {/* USE FLASHLIST/FLATLIST */}
-        {/* Make last TradeCard have enough bottom padding to not be obstructed by navbar */}
-        <View className='mb-[74px]'>
-          {tradeHistory.map((trade) => {
-            return <TradeCard tradeInfo={trade} key={`${Math.random()}`}/>
-          })}
-        </View>
-      </ScrollView>
-
+        <FlashList
+          // Extra Data??? https://shopify.github.io/flash-list/docs/usage#extradata
+          data={tradeHistory}
+          renderItem={({ item }) => <TradeCard tradeInfo={item} />}
+          estimatedItemSize={98}
+          contentContainerStyle={{ paddingBottom: 74 }}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
       <AddButton />
     </>
   );

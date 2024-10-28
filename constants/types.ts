@@ -16,9 +16,20 @@ export type Trade = {
   direction: string,
 }
 
+export type JournalEntry = {
+  date: ShortDate,
+  asset: string,
+  status?: 'Win' | 'Loss' | 'Break Even',
+  snippet?: string,
+}
+
 // Props:
 export type TradeCardProps = {
   tradeInfo: Trade,
+}
+
+export type JournalCardProps = {
+  journalInfo: JournalEntry,
 }
 
 export type TradePopUpProps = {

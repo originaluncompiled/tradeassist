@@ -15,6 +15,7 @@ const Index = () => {
       <AccountOverview timeline={timeline} />
       <TimelineSelector timeline={timeline} changeTimeline={changeTimeline} />
 
+      {/* FLATLIST */}
       {/* <ChartCard {title as prop, etc.} /> */}
     </ScrollView>
   );

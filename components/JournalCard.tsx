@@ -1,9 +1,46 @@
-<View className='mt-2'>
-  {/* A snippet from the "Notes/Takeaways" section */}
-  <Text className='text-dark-3 font-medium' numberOfLines={4}>{tradeInfo.peek}</Text>
-</View>
+import { View, Text, Pressable } from 'react-native'
+import React from 'react'
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+import { colors } from '@/constants/colors'
+import { JournalCardProps } from '@/constants/types'
 
-// Just has: Date - Asset; Win/Loss (DISPLAYED AS a bookmark coming out from the back of the card in red(loss) & green(win)); ^ Snippet
+const JournalCard = ({ journalInfo }: JournalCardProps) => {
+  return (
+    <Pressable
+      className='flex-1 rounded-2xl mx-4 my-2 px-6 pb-4 active:bg-dark-6 bg-dark-7'
+      onPress={() => {
+        // FUNCTION
+      }}
+    >
+      <View className='flex-1 flex-row justify-between pt-2'>
+        <View className='flex-row items-center'>
+          <Text className='text-dark-1 font-bold text-2xl'>
+            {`${journalInfo.date[0]}/${journalInfo.date[1]}/${journalInfo.date[2]}`}
+          </Text>
+          <Text className='text-dark-2 font-bold italic text-xl'>
+            &nbsp;- {journalInfo.asset}
+          </Text>
+        </View>
+        {/* A bookmark icon indicating win/loss/break even */}
+        <View className='absolute -top-2.5 right-0'>
+          <MaterialCommunityIcons
+            name={journalInfo.snippet? 'bookmark' : 'pen-plus'}
+            size={journalInfo.snippet? 38 : 20}
+            color={journalInfo.status === 'Win' ?
+              colors.accent_green
+              : (journalInfo.status === 'Loss' ?
+              colors.accent_red : colors.dark.neutral_3)}
+            />
+        </View>
+      </View>
+      {/* A snippet from the "Notes/Takeaways" section in the actual journal */}
+      <Text className='text-dark-3 font-medium pt-2' numberOfLines={4}>{journalInfo.snippet? journalInfo.snippet : 'No Notes Found!'}</Text>
+    </Pressable>
+  )
+}
+
+export default JournalCard
+
 // On top show "Unjournaled Trades" + Have red dot on icon in navbar when there's unjournaled trades
 // ^ If there aren't any just say underneath that heading, "You've journaled all your trades :)"
 // Then have "Past Entries"
