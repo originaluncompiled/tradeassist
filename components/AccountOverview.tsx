@@ -1,11 +1,10 @@
 import { View, Text } from 'react-native';
 import React from 'react';
+import { AccountOverviewProps } from '@/constants/types';
 
-type AccountOverviewProps = {
-  timeline: string,
-};
 
-const AccountOverview = ({ timeline }: AccountOverviewProps ) => {
+
+const AccountOverview = ({ timeline }: AccountOverviewProps) => {
   const account = {
     balance: '$128,043.67',
     return: '+$28,043.67',

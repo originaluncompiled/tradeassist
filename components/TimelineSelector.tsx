@@ -1,23 +1,11 @@
-import { Text, ScrollView, Pressable } from 'react-native';
-import React, { useEffect, useRef } from 'react';
-
-type TimelineSelectorProps = {
-  timeline: string,
-  changeTimeline: (option: string) => void,
-}
+import { TimelineSelectorProps } from '@/constants/types';
+import { Text, ScrollView, Pressable } from 'react-native'
 
 const TimelineSelector = ({ changeTimeline, timeline }: TimelineSelectorProps) => {
   const timelineOptions: string[] = ['All Time', 'This Month', 'This Week', 'Today'];
-  const timelineRef = useRef<ScrollView>(null);
-
-  useEffect(() => {
-    setTimeout(() => {
-      timelineRef?.current?.scrollTo({ x: 50 })
-    }, 1000);
-  })
 
   return (
-    <ScrollView horizontal={true} className='mx-2' showsHorizontalScrollIndicator={false} overScrollMode='always' ref={timelineRef}>
+    <ScrollView horizontal={true} className='mx-2' showsHorizontalScrollIndicator={false} overScrollMode='always'>
       { timelineOptions.map((option) => {
         return (
           <Pressable

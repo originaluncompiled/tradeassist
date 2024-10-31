@@ -46,3 +46,18 @@ export type FilterItemProps = {
   changeFilter: (filter: string | string[], action: 'remove' | 'add' | 'clear', scrollViewRef?: React.RefObject<ScrollView>) => void,
   scrollViewRef: React.RefObject<ScrollView>,
 }
+
+export type AccountOverviewProps = {
+  timeline: string,
+}
+
+export type TimelineSelectorProps = {
+  timeline: string,
+  changeTimeline: (option: string) => void,
+}
+
+export type BadgeProps = {
+  color: string,
+  emoji: string,
+  badgeText: string,
+}
