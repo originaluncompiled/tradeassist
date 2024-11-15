@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, Pressable } from 'react-native'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import FilterItem from './FilterItem'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { colors } from '@/constants/colors'
@@ -9,7 +9,7 @@ const FilterSection = ({ filters, updateFilters }: FilterSectionProps) => {
   const scrollViewRef = useRef<ScrollView>(null);
 
   return (
-    <View className='flex-row items-center justify-between m-4'>
+    <View className='flex-row items-center justify-between mx-4 mt-4'>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} ref={scrollViewRef}>
         {filters.length === 0 ?
           <Text className='font-bold text-lg ml-2 text-dark-2'>All Past Trades</Text>

@@ -4,7 +4,7 @@ import { colors } from '@/constants/colors';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { TradePopUpProps } from '@/constants/types';
 
-const TradePopUp = ({updateClicked}: TradePopUpProps) => {
+const TradePopUp = ({ updateClicked }: TradePopUpProps) => {
   return (
       <View className='absolute right-0 bottom-36'>
         <BlurView
@@ -18,15 +18,13 @@ const TradePopUp = ({updateClicked}: TradePopUpProps) => {
             overflow: 'hidden',
             borderColor: colors.green_2,
             backgroundColor: `${colors.green_2}B4`,
-          }}
-        >
+          }} >
           {/* Takes you to the 'Take a Trade' page */}
           <Pressable
             className='flex-row p-2 mb-2 pb-2 justify-center items-center bg-dark-1/10 rounded-lg'
             onPress={() => {
               updateClicked();
-            }}
-          >
+            }} >
             <MaterialCommunityIcons name='play' size={22}/>
             <Text className='font-bold px-1 text-lg'>Take a Trade</Text>
           </Pressable>
@@ -36,8 +34,7 @@ const TradePopUp = ({updateClicked}: TradePopUpProps) => {
             className='flex-row p-2 pt-2 justify-center items-center bg-dark-1/10 rounded-lg'
             onPress={() => {
               updateClicked();
-            }}
-          >
+            }} >
             <MaterialCommunityIcons name='upload' size={18}/>
             <Text className='font-bold px-2 text-lg'>Log a Trade</Text>
           </Pressable>

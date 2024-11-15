@@ -22,10 +22,10 @@ const TradeHistory = () => {
       }
       setFilters(updatedFilters);
       // Scroll to the beginning after adding filters
-      scrollViewRef?.current?.scrollTo({ x: 0, animated: false });
-      // Scroll right a bit to indicate to user that it can be scrolled
+      scrollViewRef?.current?.scrollTo({ x: 0, animated: true });
+      // Scroll a bit to indicate to user that it can be scrolled
       setTimeout(() => {
-        scrollViewRef?.current?.scrollTo({ x: 50 });
+        scrollViewRef?.current?.scrollTo({ x: 50, animated: true });
       }, 500);
 
     } else if (action === 'remove') {
@@ -149,7 +149,7 @@ const TradeHistory = () => {
   return (
     <>
       <View className='flex-1 bg-dark-8'>
-        <FilterSection filters={filters} updateFilters={updateFilters} />
+        <FilterSection filters={filters} updateFilters={updateFilters}/>
         <FlashList
           // Extra Data??? https://shopify.github.io/flash-list/docs/usage#extradata
           data={tradeHistory}

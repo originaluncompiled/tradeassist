@@ -4,7 +4,7 @@ import { View, Image, Text, Pressable } from 'react-native'
 
 const ProfileSection = () => {
   return (
-      <View className='flex-row'>
+      <View className='flex-row mb-4'>
         <Image
           source={require('../../assets/images/profilePicturePlaceholder.jpg')}
           style={{width: 125, height: 150, borderRadius: 16}}
@@ -22,7 +22,7 @@ const ProfileSection = () => {
             }}
           >
             <MaterialCommunityIcons name='square-edit-outline' size={24} color={colors.dark.neutral_3}/>
-            <Text className='font-semibold text-md text-dark-3'> Edit Account</Text>
+            <Text className='font-semibold text-md text-dark-3 active:underline ml-1'>Edit Account</Text>
           </Pressable>
         </View>
       </View>

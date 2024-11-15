@@ -51,13 +51,14 @@ export type AccountOverviewProps = {
   timeline: string,
 }
 
+export type ProfileButtonProps = {
+  icon?: string,
+  type?: 'large' | 'compact',
+  text: string,
+  buttonAction: Function,
+}
+
 export type TimelineSelectorProps = {
   timeline: string,
   changeTimeline: (option: string) => void,
-}
-
-export type BadgeProps = {
-  color: string,
-  emoji: string,
-  badgeText: string,
 }

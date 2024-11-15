@@ -3,7 +3,7 @@ import React from 'react'
 
 const Separator = () => {
   return (
-    <View className='my-4 border rounded-sm border-dark-4/10' />
+    <View className='border rounded-sm border-dark-4/10' />
   )
 }
 

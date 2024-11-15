@@ -5,12 +5,12 @@ import { FilterItemProps } from '@/constants/types'
 
 const FilterItem = ({ filterText, changeFilter, scrollViewRef }: FilterItemProps) => {
   return (
-    <View className='flex flex-row items-center bg-dark-6 border border-dark-5 px-2 py-1 mx-2 rounded-full'>
+    <View className='flex flex-row items-center bg-dark-6 border border-dark-5 px-2 py-1 mx-2 mb-2 rounded-full'>
       <Text className='text-md text-dark-2'>
         {filterText}
       </Text>
 
-      <Pressable onPress={() => {
+      <Pressable hitSlop={20} onPress={() => {
         changeFilter(filterText, 'remove', scrollViewRef);
       }}>
         <MaterialCommunityIcons className='pl-1' name='close' size={16} color={colors.dark.neutral_2} />
