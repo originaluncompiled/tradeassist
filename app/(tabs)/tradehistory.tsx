@@ -151,7 +151,6 @@ const TradeHistory = () => {
       <View className='flex-1 bg-dark-8'>
         <FilterSection filters={filters} updateFilters={updateFilters}/>
         <FlashList
-          // Extra Data??? https://shopify.github.io/flash-list/docs/usage#extradata
           data={tradeHistory}
           renderItem={({ item }) => <TradeCard tradeInfo={item} />}
           estimatedItemSize={98}

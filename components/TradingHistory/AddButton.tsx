@@ -14,10 +14,9 @@ const AddButton = () => {
 
   return (
     <>
-      {/* Dismisses the TradePopUp when clicking anywhere else on the screen */}
       { clicked && <Pressable className='absolute w-full h-full' onPressIn={() => setClicked(false)}/> }
-      
       { clicked && <TradePopUp updateClicked={updateClicked} /> }
+      
       <View className='absolute right-0 bottom-20'>  
         <Pressable
           onPress={updateClicked}

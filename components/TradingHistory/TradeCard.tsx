@@ -8,7 +8,7 @@ const TradeCard = ({ tradeInfo }: TradeCardProps) => {
   return (
     <View className='mx-4 mb-4'>
       <Pressable
-        className='flex-1 rounded-2xl mx-[2px] border border-dark-6 px-4 pt-2 pb-4 active:bg-dark-6 bg-dark-7'
+        className='flex-1 mx-[2px] px-4 pt-2 pb-4 rounded-2xl border border-dark-6 bg-dark-7 active:bg-dark-6 '
         onPress={() => {
           // FUNCTION
         }}

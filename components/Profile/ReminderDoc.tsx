@@ -9,7 +9,7 @@ const ReminderDoc = () => {
 
   return (
     <View className={`mx-2 ${reminderDoc && 'pb-3'}`}>
-      <View className='flex-row items-center justify-between'>
+      <View className={`flex-row items-center justify-between mx-2 ${reminderDoc && '-mb-2'}`}>
         {/* (i) <- when pressed show tooltip: "Shows a document with things to keep in mind when *taking* a trade" */}
         <Text className='text-dark-2 font-medium text-lg'>Reminder Document</Text>
         <Switch 

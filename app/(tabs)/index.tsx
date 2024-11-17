@@ -1,7 +1,7 @@
-import { ScrollView } from 'react-native';
-import { useState } from 'react';
-import AccountOverview from '@/components/AccountOverview';
-import TimelineSelector from '@/components/TimelineSelector';
+import { ScrollView } from 'react-native'
+import { useState } from 'react'
+import AccountOverview from '@/components/AccountOverview'
+import TimelineSelector from '@/components/TimelineSelector'
 
 const Index = () => {
   const [timeline, setTimeline] = useState('All Time');
@@ -15,7 +15,6 @@ const Index = () => {
       <AccountOverview timeline={timeline} />
       <TimelineSelector timeline={timeline} changeTimeline={changeTimeline} />
 
-      {/* FLATLIST */}
       {/* <ChartCard {title as prop, etc.} /> */}
     </ScrollView>
   );

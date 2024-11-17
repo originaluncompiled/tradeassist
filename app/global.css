@@ -5,3 +5,7 @@
 * {
   box-sizing: border-box;
 }
+
+html, body, #root {
+  @apply bg-dark-8;
+}

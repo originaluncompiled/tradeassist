@@ -1,9 +1,10 @@
-import BottomNav from '@/components/BottomNav';
+import React from 'react'
+import BottomNav from '@/components/BottomNav'
 
 const Layout = () => {
   return (
     <BottomNav />
-  );
+  )
 }
 
 export default Layout

@@ -1,18 +1,16 @@
-import { Stack } from 'expo-router';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { colors } from '@/constants/colors';
+import { Stack } from 'expo-router'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import './global.css'
 
 const RootLayout = () => {
   return (
-    // https://icons.expo.fyi/Index
-    // darkmode: colors.dark.neutral_8; lightmode: colors.white (OR, colors.dark.neutral_1)
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.dark.neutral_8 }}>
-      <Stack>
-        <Stack.Screen name='(tabs)' options={{ headerShown: false }}/>
+    <SafeAreaView style={{ flex: 1 }}>
+      <Stack screenOptions={{ animation: 'none' }}>
+        <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+        <Stack.Screen name='trade-history' options={{ headerShown: false }} />
       </Stack>
     </SafeAreaView>
   );
-}
+};
 
-export default RootLayout
+export default RootLayout;
