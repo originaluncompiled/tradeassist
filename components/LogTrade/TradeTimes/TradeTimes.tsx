@@ -1,23 +1,32 @@
 import { View, Text } from 'react-native'
 import SetTradeTimes from './SetTradeTimes'
 import { useEffect, useState } from 'react'
+import { useTradeContext } from '@/hooks/useTradeContext';
 
 const TradeTimes = () => {
+  const { tradeState, dispatch } = useTradeContext();
+  const { entryTime, exitTime } = tradeState;
+
   const [timeInTrade, setTimeInTrade] = useState('0h : 0m');
-  // Round new dates down, so that decimals don't mess with calculations (like this: 17:00 - 15:00 = 1hr and 59min)
-  const [entryTime, setEntryTime] = useState(Math.round(new Date().getTime() / 60000) * 60000);
-  const [exitTime, setExitTime] = useState(Math.round(new Date().getTime() / 60000) * 60000);
 
   const updateEntryTime = (time: number) => {
-    setEntryTime(time);
+    dispatch({
+      type: 'ENTRY_TIME',
+      payload: time
+    });
   }
   const updateExitTime = (time: number) => {
-    setExitTime(time);
+    dispatch({
+      type: 'EXIT_TIME',
+      payload: time
+    })
   }
 
   useEffect(() => calculateTimeInTrade(), [entryTime, exitTime]);
 
   const calculateTimeInTrade = () => {
+    if (!entryTime || !exitTime) return;
+
     const newTimeInTrade = exitTime - entryTime;
     const hours = Math.floor((newTimeInTrade / 1000) / 3600);
     let minutes = Math.round(((newTimeInTrade / 1000) % 3600) / 60);

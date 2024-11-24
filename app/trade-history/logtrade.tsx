@@ -7,6 +7,7 @@ import TradeInfo from '@/components/LogTrade/TradeInfo/TradeInfo'
 import { initialTrade, tradeReducer } from '@/reducers/tradeReducer'
 import { useReducer } from 'react'
 import { TradeContext } from '@/hooks/useTradeContext'
+import LogTradeButton from '@/components/LogTrade/LogTradeButton'
 
 
 const LogTrade = () => {
@@ -25,20 +26,7 @@ const LogTrade = () => {
           <TradeTimes />
 
           {/* TO-DO: Make button be fixed to the bottom of the screen, but disappear when you scroll down and then reappear when you scroll up OR are at the bottom of the screen */}
-          <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={80}
-            style={{ flex: 1 }}
-          >
-            <Pressable
-              className='rounded-lg mb-4 bg-green-2/75 active:bg-green-2 border border-green-2'
-              onPress={() => {
-                router.navigate('/(tabs)/tradehistory')
-              }}
-            >
-              <Text className='text-lg text-dark-7 font-bold text-center p-3'>Log Trade</Text>
-            </Pressable>
-          </KeyboardAvoidingView>
+          <LogTradeButton />
         </ScrollView>
       </View>
     </TradeContext.Provider>

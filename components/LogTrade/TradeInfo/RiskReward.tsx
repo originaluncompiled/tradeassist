@@ -29,7 +29,11 @@ const RiskReward = ({ tradeState, handleInputChange }: RiskRewardProps) => {
 
   // A separate useEffect, because sometimes there's a delay when the state gets changed ^ and then it uses old vlaues
   useEffect(() => {
-    setRiskReward(Number((target / risk).toFixed(2)));
+    if (target === 0 || risk === 0) {
+      setRiskReward(1);
+    } else {
+      setRiskReward(Number((target / risk).toFixed(2)));
+    }
   }, [risk, target])
 
   useEffect(() => {
@@ -41,12 +45,20 @@ const RiskReward = ({ tradeState, handleInputChange }: RiskRewardProps) => {
     <View>
       <View className='flex-row justify-between items-center'>
         <Text className='text-dark-2 font-semibold text-lg'>$ Target</Text>
-        <Text className='text-accent-green font-semibold text-lg w-32 text-center p-2'>{target.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</Text>
+        <Text
+          className={`${target > 0 ? 'text-accent-green' : 'text-dark-1'} font-semibold text-lg w-32 text-center p-2`}
+        >
+          {target.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}
+        </Text>
       </View>
 
       <View className='flex-row justify-between items-center'>
         <Text className='text-dark-2 font-semibold text-lg'>$ Risk</Text>
-        <Text className='text-accent-red font-semibold text-lg w-32 text-center p-2'>{risk.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</Text>
+        <Text
+          className={`${risk > 0 ? 'text-accent-red' : 'text-dark-1'} font-semibold text-lg w-32 text-center p-2`}
+        >
+          {risk.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}
+        </Text>
       </View>
 
       <View className='flex-row justify-between items-center'>

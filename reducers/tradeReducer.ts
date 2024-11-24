@@ -1,6 +1,8 @@
 import { TradeAction, TradePage } from "@/constants/types"
 
 export const initialTrade: TradePage = {
+  asset: '',
+  date: new Date(),
   tradeReturn: 0,
   tradeOutcome: 'BREAK EVEN',
   direction: 'Long',
@@ -10,12 +12,26 @@ export const initialTrade: TradePage = {
   exit: 0,
   takeProfit: 0,
   stopLoss: 0,
+  entryTime: Math.round(new Date().getTime() / 60000) * 60000, // initial load's time in hours
+  exitTime: Math.round(new Date().getTime() / 60000) * 60000, // initial load's time in hours
   amountTraded: 0,
   commission: 0,
 }
 
 export const tradeReducer = (state: TradePage, action: TradeAction): TradePage => {
   switch (action.type) {
+    case 'ASSET': {
+      return {
+        ...state,
+        asset: action.payload
+      };
+    }
+    case 'DATE': {
+      return {
+        ...state,
+        date: action.payload
+      };
+    }
     case 'TRADE_RETURN': {
       return {
         ...state,
@@ -68,6 +84,18 @@ export const tradeReducer = (state: TradePage, action: TradeAction): TradePage =
       return {
         ...state,
         stopLoss: action.payload
+      };
+    }
+    case 'ENTRY_TIME': {
+      return {
+        ...state,
+        entryTime: action.payload
+      };
+    }
+    case 'EXIT_TIME': {
+      return {
+        ...state,
+        exitTime: action.payload
       };
     }
     case 'AMOUNT_TRADED': {

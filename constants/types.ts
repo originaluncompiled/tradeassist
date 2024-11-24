@@ -25,6 +25,8 @@ export type JournalEntry = {
 }
 
 export type TradePage = {
+  asset: string,
+  date: Date,
   tradeReturn: number,
   tradeOutcome: 'WIN' | 'LOSS' | 'BREAK EVEN',
   direction: 'Long' | 'Short',
@@ -34,11 +36,15 @@ export type TradePage = {
   exit: number,
   takeProfit: number,
   stopLoss: number,
+  entryTime: number, //date.getTime (stores the amount of milliseconds since 1970)
+  exitTime: number, //date.getTime (stores the amount of milliseconds since 1970)
   amountTraded: number,
   commission: number,
 }
 
 export type TradeAction = 
+  { type: 'ASSET', payload: string} |
+  { type: 'DATE', payload: Date} |
   { type: 'TRADE_RETURN', payload: number} |
   { type: 'TRADE_OUTCOME', payload: 'WIN' | 'LOSS' | 'BREAK EVEN'} |
   { type: 'DIRECTION', payload: 'Long' | 'Short'} |
@@ -48,6 +54,8 @@ export type TradeAction =
   { type: 'EXIT', payload: number} |
   { type: 'TAKE_PROFIT', payload: number} |
   { type: 'STOP_LOSS', payload: number} |
+  { type: 'ENTRY_TIME', payload: number} |
+  { type: 'EXIT_TIME', payload: number} |
   { type: 'AMOUNT_TRADED', payload: number} |
   { type: 'COMMISSION', payload: number}
 

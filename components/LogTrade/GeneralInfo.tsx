@@ -3,29 +3,30 @@ import React, { useState } from 'react'
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker'
 import Button from '../Button'
 import { colors } from '@/constants/colors'
+import { useTradeContext } from '@/hooks/useTradeContext'
 
 const GeneralInfo = () => {
-  const [show, setShow] = useState(false);
-  const [date, setDate] = useState(new Date());
+  const { tradeState, dispatch } = useTradeContext();
 
-  const showDatePicker = () => {
-    setShow(true)
-  }
+  const [show, setShow] = useState(false);
 
   const onDateChange = (event: DateTimePickerEvent, date: Date | undefined) => {
     const selectedDate = date || new Date;
 
-    setDate(selectedDate);
+    dispatch({
+      type: 'DATE',
+      payload: selectedDate
+    });
     setShow(false);
   };
 
   return (
     <View className='p-4 rounded-2xl my-2 border border-dark-6 bg-dark-7'>
       <View className='flex-row justify-between'>
-        <Button text={date.toLocaleDateString()} buttonAction={() => showDatePicker()}/>
+        <Button text={(tradeState.date).toLocaleDateString()} buttonAction={() => setShow(true)}/>
         {show && (
           <DateTimePicker
-            value={date}
+            value={tradeState.date}
             onChange={onDateChange}
             mode='date'
             accentColor={`${colors.green_2}B4`}
