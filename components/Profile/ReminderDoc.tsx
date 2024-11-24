@@ -1,7 +1,7 @@
 import { View, Text, Switch } from 'react-native'
 import React, { useState } from 'react'
-import { colors } from '@/constants/colors';
-import ProfileButton from './ProfileButton';
+import { colors } from '@/constants/colors'
+import Button from '../Button';
 
 const ReminderDoc = () => {
   const [reminderDoc, setReminderDoc] = useState(false);
@@ -22,7 +22,12 @@ const ReminderDoc = () => {
 
       {
         reminderDoc &&
-        <ProfileButton text='Import Notes to Remember' icon='file-document' type='large' buttonAction={() => console.log('reminder document')}/>
+        <Button
+          text='Import Notes to Remember'
+          icon='file-document'
+          type='large'
+          buttonAction={() => console.log('reminder document')}
+        />
       }
     </View>
   )

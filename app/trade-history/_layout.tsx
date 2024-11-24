@@ -15,7 +15,7 @@ const Layout = () => {
       }}
     >
       <Stack.Screen
-        name="taketrade"
+        name='taketrade'
         options={{
           title: 'Take a Trade',
           headerBackVisible: false,
@@ -23,7 +23,7 @@ const Layout = () => {
             return (
               <Pressable
                 className='rounded-lg px-2'
-                onPress={() => router.navigate('/(tabs)/tradehistory')}
+                onPressOut={() => setTimeout(() => {router.navigate('/(tabs)/tradehistory')}, 50)}
                 hitSlop={12}
               >
                 <Text className='text-lg font-semibold text-dark-3'>Cancel</Text>
@@ -33,7 +33,7 @@ const Layout = () => {
         }}
       />
       <Stack.Screen
-        name="logtrade"
+        name='logtrade'
         options={{
           title: 'Log a Trade',
           headerBackVisible: false,

@@ -2,7 +2,7 @@ import { View, Text, Pressable } from 'react-native'
 import React from 'react'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { colors } from '@/constants/colors'
-import ProfileButton from './ProfileButton'
+import Button from '../Button'
 
 const Strategies = () => {
   return (
@@ -15,13 +15,13 @@ const Strategies = () => {
         </Pressable>
       </View>
 
-      <ProfileButton
+      <Button
         text="Quick 'n Easy"
         type='large'
         icon='chess-knight' buttonAction={() => {
         console.log('open strategy editor')
       }}/>
-      <ProfileButton
+      <Button
         text='Trading Transformation'
         type='large'
         icon='chess-knight' buttonAction={() => {

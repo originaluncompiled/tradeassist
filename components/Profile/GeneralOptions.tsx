@@ -1,15 +1,13 @@
-import { Pressable, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 import React from 'react'
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
-import { colors } from '@/constants/colors'
-import ProfileButton from './ProfileButton'
+import Button from '../Button'
 
 const GeneralOptions = () => {
   return (
     <View>
       <View className='flex-row justify-between items-center mt-3 mx-2'>
         <Text className='text-dark-2 font-medium text-lg'>Balance History</Text>
-        <ProfileButton
+        <Button
           text='$100,000'
           icon='history'
           buttonAction={() => {
@@ -20,7 +18,7 @@ const GeneralOptions = () => {
 
       <View className='flex-row justify-between items-center mt-3 mx-2'>
         <Text className='text-dark-2 font-medium text-lg'>Break Even Buffer</Text>
-        <ProfileButton
+        <Button
           text='0%'
           icon='arrow-expand-horizontal'
           buttonAction={() => {
@@ -34,13 +32,14 @@ const GeneralOptions = () => {
         <Text className='text-dark-2 font-medium text-lg'>App Theme</Text>
         <View className='flex-row justify-center items-center'>
           {/* TO-DO: BRING UP PAGE/MODAL ABOUT TRANSACTION HISTORY */}
-          <ProfileButton
+          <Button
             text='Dark'
             buttonAction={() => {
               console.log('dark mode')
             }}
+            customClasses='mr-2 bg-dark-6'
           />
-          <ProfileButton
+          <Button
             text='Light'
             buttonAction={() => {
               console.log('light mode')
