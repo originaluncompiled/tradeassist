@@ -148,7 +148,7 @@ const TradeHistory = () => {
 
   return (
     <>
-      <View className='flex-1 bg-dark-8'>
+      <View className='flex-1 bg-dark-8 pt-4'>
         <FilterSection filters={filters} updateFilters={updateFilters}/>
         <FlashList
           data={tradeHistory}

@@ -9,7 +9,7 @@ const FilterSection = ({ filters, updateFilters }: FilterSectionProps) => {
   const scrollViewRef = useRef<ScrollView>(null);
 
   return (
-    <View className='flex-row items-center justify-between mx-4 mt-4 mb-2'>
+    <View className='flex-row items-center justify-between mx-4 mb-2'>
         {filters.length === 0 ?
           <Text className='font-bold text-lg ml-2 text-dark-2'>All Past Trades</Text>
           : 
