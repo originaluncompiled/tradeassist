@@ -27,37 +27,45 @@ export type JournalEntry = {
 export type TradePage = {
   asset: string,
   date: Date,
+  assetType: 'Stocks' | 'Futures' | 'Forex' | 'Crypto' | 'Options',
   tradeReturn: number,
   tradeOutcome: 'WIN' | 'LOSS' | 'BREAK EVEN',
   direction: 'Long' | 'Short',
   rating: number,
   balanceChange: number,
-  entry: number,
-  exit: number,
   takeProfit: number,
   stopLoss: number,
+  target: number,
+  risk: number,
+  entry: number,
+  exit: number,
   entryTime: number, //date.getTime (stores the amount of milliseconds since 1970)
   exitTime: number, //date.getTime (stores the amount of milliseconds since 1970)
   amountTraded: number,
   commission: number,
+  notes: string,
 }
 
 export type TradeAction = 
   { type: 'ASSET', payload: string} |
   { type: 'DATE', payload: Date} |
+  { type: 'ASSET_TYPE', payload: 'Stocks' | 'Futures' | 'Forex' | 'Crypto' | 'Options'} |
   { type: 'TRADE_RETURN', payload: number} |
   { type: 'TRADE_OUTCOME', payload: 'WIN' | 'LOSS' | 'BREAK EVEN'} |
   { type: 'DIRECTION', payload: 'Long' | 'Short'} |
   { type: 'RATING', payload: number} |
   { type: 'BALANCE_CHANGE', payload: number} |
-  { type: 'ENTRY', payload: number} |
-  { type: 'EXIT', payload: number} |
   { type: 'TAKE_PROFIT', payload: number} |
   { type: 'STOP_LOSS', payload: number} |
+  { type: 'TARGET', payload: number} |
+  { type: 'RISK', payload: number} |
+  { type: 'ENTRY', payload: number} |
+  { type: 'EXIT', payload: number} |
   { type: 'ENTRY_TIME', payload: number} |
   { type: 'EXIT_TIME', payload: number} |
   { type: 'AMOUNT_TRADED', payload: number} |
-  { type: 'COMMISSION', payload: number}
+  { type: 'COMMISSION', payload: number} |
+  { type: 'NOTES', payload: string}
 
 export type TradeContextType = {
   tradeState: TradePage,
@@ -104,7 +112,7 @@ export type ButtonProps = {
   icon?: string,
   customClasses?: string,
   type?: 'large' | 'compact',
-  text: string,
+  text?: string,
   buttonAction: Function,
 }
 
@@ -123,10 +131,11 @@ export type TradeOutcomeProps = {
 
 export type MoneyInputProps = {
   text: string,
-  dispatchAction: 'ENTRY'|'EXIT'|'TAKE_PROFIT'|'STOP_LOSS'|'AMOUNT_TRADED'|'COMMISSION'|'BALANCE_CHANGE'
+  initialValue: number,
+  dispatchAction: 'ENTRY'|'EXIT'|'TAKE_PROFIT'|'STOP_LOSS'|'AMOUNT_TRADED'|'COMMISSION'|'BALANCE_CHANGE'|'TARGET'|'RISK',
   handleInputChange: (
     input: number,
-    dispatchAction: 'ENTRY'|'EXIT'|'TAKE_PROFIT'|'STOP_LOSS'|'AMOUNT_TRADED'|'COMMISSION'|'BALANCE_CHANGE'
+    dispatchAction: 'ENTRY'|'EXIT'|'TAKE_PROFIT'|'STOP_LOSS'|'AMOUNT_TRADED'|'COMMISSION'|'BALANCE_CHANGE'|'TARGET'|'RISK',
   ) => void,
 }
 
@@ -140,8 +149,16 @@ export type RiskRewardProps = {
   tradeState: TradePage,
   handleInputChange: (
     input: number,
-    dispatchAction: 'BALANCE_CHANGE'
+    dispatchAction: 'ENTRY'|'EXIT'|'TAKE_PROFIT'|'STOP_LOSS'|'AMOUNT_TRADED'|'COMMISSION'|'BALANCE_CHANGE'|'TARGET'|'RISK',
   ) => void,
+}
+
+export type AmountTradedProps = {
+  handleInputChange: (
+    input: number,
+    dispatchAction: 'ENTRY'|'EXIT'|'TAKE_PROFIT'|'STOP_LOSS'|'AMOUNT_TRADED'|'COMMISSION'|'BALANCE_CHANGE'|'TARGET'|'RISK',
+  ) => void,
+  tradeState: TradePage,
 }
 
 export type InputChangeAsProp = {

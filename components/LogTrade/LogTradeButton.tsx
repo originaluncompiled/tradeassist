@@ -10,7 +10,7 @@ const LogTradeButton = () => {
       style={{ flex: 1 }}
     >
       <Pressable
-        className='rounded-lg mb-4 bg-green-2/75 active:bg-green-2 border border-green-2'
+        className='rounded-lg mb-4 mt-2 bg-green-2/75 active:bg-green-2 border border-green-2'
         onPress={() => {
           router.navigate('/(tabs)/tradehistory')
         }}

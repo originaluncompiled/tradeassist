@@ -3,19 +3,23 @@ import { TradeAction, TradePage } from "@/constants/types"
 export const initialTrade: TradePage = {
   asset: '',
   date: new Date(),
+  assetType: 'Stocks',
   tradeReturn: 0,
   tradeOutcome: 'BREAK EVEN',
   direction: 'Long',
   rating: 0,
   balanceChange: 0,
-  entry: 0,
-  exit: 0,
   takeProfit: 0,
   stopLoss: 0,
+  target: 0,
+  risk: 0,
+  entry: 0,
+  exit: 0,
   entryTime: Math.round(new Date().getTime() / 60000) * 60000, // initial load's time in hours
   exitTime: Math.round(new Date().getTime() / 60000) * 60000, // initial load's time in hours
   amountTraded: 0,
   commission: 0,
+  notes: '',
 }
 
 export const tradeReducer = (state: TradePage, action: TradeAction): TradePage => {
@@ -30,6 +34,12 @@ export const tradeReducer = (state: TradePage, action: TradeAction): TradePage =
       return {
         ...state,
         date: action.payload
+      };
+    }
+    case 'ASSET_TYPE': {
+      return {
+        ...state,
+        assetType: action.payload
       };
     }
     case 'TRADE_RETURN': {
@@ -86,6 +96,18 @@ export const tradeReducer = (state: TradePage, action: TradeAction): TradePage =
         stopLoss: action.payload
       };
     }
+    case 'TARGET': {
+      return {
+        ...state,
+        target: action.payload
+      };
+    }
+    case 'RISK': {
+      return {
+        ...state,
+        risk: action.payload
+      };
+    }
     case 'ENTRY_TIME': {
       return {
         ...state,
@@ -108,6 +130,12 @@ export const tradeReducer = (state: TradePage, action: TradeAction): TradePage =
       return {
         ...state,
         commission: action.payload
+      };
+    }
+    case 'NOTES': {
+      return {
+        ...state,
+        notes: action.payload
       };
     }
   }
