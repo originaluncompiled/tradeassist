@@ -21,6 +21,13 @@ const GeneralInfo = () => {
     setShow(false);
   };
 
+  const onAssetChange = (text: string) => {
+    dispatch({
+      type: 'ASSET',
+      payload: text,
+    })
+  }
+
   return (
     <View className='p-4 rounded-2xl my-2 border border-dark-6 bg-dark-7'>
       <View className='flex-row justify-between'>
@@ -35,6 +42,7 @@ const GeneralInfo = () => {
         )}
           <TextInput
             value={asset}
+            onChangeText={(text) => onAssetChange(text)}
             placeholder='Asset'
             placeholderTextColor={colors.dark.neutral_3}
             selectionColor={`${colors.green_2}B4`}

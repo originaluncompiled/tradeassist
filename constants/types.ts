@@ -1,6 +1,5 @@
 import { Dispatch } from "react";
 import { ScrollView } from "react-native"
-import { SharedValue } from "react-native-reanimated";
 
 // Types:
 export type ShortDate = [

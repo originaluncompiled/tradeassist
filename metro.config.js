@@ -5,4 +5,6 @@ const { wrapWithReanimatedMetroConfig } = require('react-native-reanimated/metro
 const config = getDefaultConfig(__dirname);
 const nativeWindConfig = withNativeWind(config, { input: "./app/global.css" });
 
+nativeWindConfig.resolver.assetExts.push('db');
+
 module.exports = wrapWithReanimatedMetroConfig(nativeWindConfig);

@@ -11,7 +11,7 @@ import Separator from '@/components/Separator'
 import NoteEditor from '@/components/LogTrade/NoteEditor/NoteEditor'
 
 const LogTrade = () => {
-  // prevents the 'Log Trade' button from being on top of the keyboard when the keyboard is open
+  // Prevents the 'Log Trade' button from being on top of the keyboard when it's is open
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   Keyboard.addListener('keyboardDidShow', () => setKeyboardVisible(true));
   Keyboard.addListener('keyboardDidHide', () => setKeyboardVisible(false));

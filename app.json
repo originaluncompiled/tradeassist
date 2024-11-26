@@ -7,7 +7,7 @@
     "scheme": "tradeassist",
     "userInterfaceStyle": "automatic",
     "icon": "./assets/app/icon.png",
-    "backgroundColor": "#1c1c1c", 
+    "backgroundColor": "#1c1c1c",
     "ios": {
       "supportsTablet": true
     },
@@ -28,7 +28,8 @@
           "image": "./assets/app/splash-icon.png",
           "imageWidth": 200
         }
-      ]
+      ],
+      "expo-sqlite"
     ],
     "experiments": {
       "typedRoutes": true

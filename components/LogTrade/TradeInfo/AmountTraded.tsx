@@ -16,7 +16,10 @@ const AmountTraded = ({ handleInputChange, tradeState }: AmountTradedProps) => {
         multiline={Platform.OS === "ios" ? false : true} // for some reason fixes the placeholder dissapearing on Android when swiping
         scrollEnabled={false}
         value={value}
-        onChangeText={text => handleInputChange(Number(text), 'AMOUNT_TRADED')}
+        onChangeText={text => {
+          setValue(text);
+          handleInputChange(Number(text), 'AMOUNT_TRADED')
+        }}
         className='text-dark-1 font-bold text-lg border-b border-dark-3 px-2 w-32 h-14'
         textAlign='center'
       />
