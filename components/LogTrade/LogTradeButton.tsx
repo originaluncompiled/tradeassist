@@ -24,7 +24,7 @@ const LogTradeButton = ({ isEditingTrade, tradeState }: LogTradeButtonProps) => 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
         [
           state.asset,
-          state.date.toString(),
+          state.date.toISOString(),
           state.assetType,
           state.tradeReturn,
           state.tradeOutcome,
@@ -79,7 +79,7 @@ const LogTradeButton = ({ isEditingTrade, tradeState }: LogTradeButtonProps) => 
         WHERE id = ?`, 
         [
           state.asset,
-          state.date.toString(),
+          state.date.toISOString(),
           state.assetType,
           state.tradeReturn,
           state.tradeOutcome,

@@ -27,6 +27,10 @@ const TradeHistory = () => {
     fetchTradeHistory();
   }, [])
 
+  useEffect(() => {
+    console.log(tradeHistory);
+  }, [tradeHistory])
+
   const [filters, setFilters] = useState<string[]>([]);
 
   const updateFilters = (filter: string | string[], action: 'remove' | 'add' | 'clear', scrollViewRef?: React.RefObject<ScrollView>) => {
