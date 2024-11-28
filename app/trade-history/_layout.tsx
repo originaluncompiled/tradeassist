@@ -1,8 +1,14 @@
 import { router, Stack } from 'expo-router'
 import { colors } from '@/constants/colors'
-import { Pressable, Text } from 'react-native';
+import { Pressable, Text } from 'react-native'
+import useDisplayDelete from '@/hooks/useDisplayDelete'
 
 const Layout = () => {
+  const { setShowModal, showDelete } = useDisplayDelete();
+  const handleDeleteClick = async () => {
+    setShowModal(true);
+  };
+
   return (
     <Stack
       screenOptions={{
@@ -44,6 +50,17 @@ const Layout = () => {
               hitSlop={12}
             >
               <Text className='text-lg font-semibold text-dark-3'>Cancel</Text>
+            </Pressable>
+          ),
+          headerRight: () => showDelete && (
+            <Pressable
+              className='rounded-lg px-2'
+              onPressOut={() => setTimeout(() => {
+                handleDeleteClick();
+              }, 50)}
+              hitSlop={12}
+            >
+              <Text className='text-lg font-semibold text-accent-red'>Delete</Text>
             </Pressable>
           )
         }}

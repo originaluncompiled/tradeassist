@@ -11,7 +11,7 @@ const TradePerformance = () => {
 
   const handleInputChange = (
     input: number | string,
-    dispatchAction: 'RATING' | 'TRADE_RETURN' | 'DIRECTION' | 'TRADE_RETURN'
+    dispatchAction: 'RATING' | 'TRADE_RETURN' | 'DIRECTION' | 'TRADE_OUTCOME'
   ) => {
     dispatch({
       type: dispatchAction,

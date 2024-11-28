@@ -1,24 +1,43 @@
 import { Pressable, Text, View } from 'react-native'
-import React from 'react'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { colors } from '@/constants/colors'
-import { TradeCardProps } from '@/constants/types'
+import { TradeCardProps, TradePage } from '@/constants/types'
+import { router } from 'expo-router'
+import { useSQLiteContext } from 'expo-sqlite'
 
 const TradeCard = ({ tradeInfo }: TradeCardProps) => {
+  const formatDate = (date: string) => {
+    const newDate = new Date(date);
+    return newDate.toLocaleDateString();
+  }
+
+  // Send the trade's information that corresponds to the trade card clicked
+  const db = useSQLiteContext();
+  const sendToTradePage = async () => {
+    try {
+      const result: TradePage[] = await db.getAllAsync(`SELECT * FROM trades WHERE id = ?`, [tradeInfo.id]);
+      // Stringify it so it can be passed to the trade page
+      router.push({ pathname: '/trade-history/logtrade', params: { trade: JSON.stringify(result[0]) } });
+    } catch (error) {
+      console.log('Error fetching trade info: ', error);
+    }
+  }
+
   return (
-    <View className='mx-4 mb-4'>
+    <View className='flex-row items-center justify-center mx-4 mb-4'>
       <Pressable
-        className='flex-1 mx-[2px] px-4 pt-2 pb-4 rounded-2xl border border-dark-6 bg-dark-7 active:bg-dark-6 '
+        className='flex-1 mx-[2px] px-4 pt-2 pb-4 rounded-2xl border border-dark-6 active:bg-dark-6 bg-dark-7'
         onPress={() => {
-          // FUNCTION
+          // Sends the user to the logtrade page, with all of the trade's information
+          // This allows it to not show/push to the trade page if it couldn't get the trade
+          sendToTradePage();
         }}
       >
         <View className='flex flex-row justify-between mb-2'>
-          {/* Change this way of storing dates, it's dumb - just use "new Date" and turn it into a ShortDate */}
           {/* Trade Date + Asset */}
           <View className='flex-row items-center'>
             <Text className='text-dark-1 font-bold text-2xl'>
-              {`${tradeInfo.date[0]}/${tradeInfo.date[1]}/${tradeInfo.date[2]}`}
+              {formatDate(tradeInfo.date)}
             </Text>
             <Text className='text-dark-2 font-bold italic text-xl'>
               &nbsp;- {tradeInfo.asset}
@@ -37,12 +56,12 @@ const TradeCard = ({ tradeInfo }: TradeCardProps) => {
           <View className='flex-row'>
             {/* $ Made/Lost */}
             <View
-              className={`flex px-2 py-1 mr-2 rounded-lg ${tradeInfo.return > 0 ?
+              className={`flex px-2 py-1 mr-2 rounded-lg ${tradeInfo.tradeReturn > 0 ?
                   'bg-accent-green/50 border border-accent-green'
                   : 'bg-accent-red/50 border border-accent-red'}`}
               >
               <Text className='text-dark-1'>
-                {tradeInfo.return.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
+                {tradeInfo.tradeReturn.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
               </Text>
             </View>
 
@@ -57,9 +76,9 @@ const TradeCard = ({ tradeInfo }: TradeCardProps) => {
             </View>
           </View>
 
-          {/* ROI */}
-          <Text className={`font-bold text-lg ${tradeInfo.roi > 0 ? 'text-accent-green' : 'text-accent-red'}`}>
-            {(tradeInfo.roi > 0 ? '+' : '') + (tradeInfo.roi / 100).toLocaleString('en-US', { style: 'percent', maximumFractionDigits: 2 })}
+          {/* Balance Change */}
+          <Text className={`font-bold text-lg ${tradeInfo.balanceChange > 0 ? 'text-accent-green' : 'text-accent-red'}`}>
+            {(tradeInfo.balanceChange > 0 ? '+' : '') + (tradeInfo.balanceChange / 100).toLocaleString('en-US', { style: 'percent', maximumFractionDigits: 2 })}
           </Text>
         </View>
       </Pressable>

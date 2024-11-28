@@ -10,15 +10,15 @@ const FilterSection = ({ filters, updateFilters }: FilterSectionProps) => {
 
   return (
     <View className='flex-row items-center justify-between mx-4 mb-2'>
-        {filters.length === 0 ?
-          <Text className='font-bold text-lg ml-2 text-dark-2'>All Past Trades</Text>
-          : 
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} ref={scrollViewRef}>
-            {filters.map((filter, i) => {
-              return <FilterItem filterText={filter} changeFilter={updateFilters} scrollViewRef={scrollViewRef} key={`${filter}${i}`}/>
-            })}
-          </ScrollView>
-        }
+      {filters.length === 0 ?
+        <Text className='font-bold text-lg ml-2 text-dark-2'>All Past Trades</Text>
+        : 
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} ref={scrollViewRef}>
+          {filters.map((filter, i) => {
+            return <FilterItem filterText={filter} changeFilter={updateFilters} scrollViewRef={scrollViewRef} key={`${filter}${i}`}/>
+          })}
+        </ScrollView>
+      }
 
       {/* TEMPORARY - Show random number when clicking filter icon */}
       {/* ^ Add filter selection <BottomSheet /> */}

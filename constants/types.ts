@@ -2,29 +2,25 @@ import { Dispatch } from "react";
 import { ScrollView } from "react-native"
 
 // Types:
-export type ShortDate = [
-  day: number,
-  month: number,
-  year: number,
-];
-
 export type Trade = {
-  date: ShortDate,
+  id: number,
+  date: string,
   asset: string,
   rating: number,
-  return: number,
-  roi: number,
-  direction: string,
+  tradeReturn: number,
+  balanceChange: number,
+  direction: 'Long' | 'Short',
 }
 
 export type JournalEntry = {
-  date: ShortDate,
+  date: string,
   asset: string,
   status?: 'Win' | 'Loss' | 'Break Even',
   snippet?: string,
 }
 
 export type TradePage = {
+  id?: number,
   asset: string,
   date: Date,
   assetType: 'Stocks' | 'Futures' | 'Forex' | 'Crypto' | 'Options',
@@ -75,6 +71,11 @@ export type TradeContextType = {
 // Props:
 export type TradeCardProps = {
   tradeInfo: Trade,
+}
+
+export type DeleteSectionProps = {
+  updateLongPressed: (value: boolean) => void,
+  updateSelectedTrades: (id: number, action: 'add' | 'remove' | 'clear') => void,
 }
 
 export type JournalCardProps = {
@@ -167,4 +168,8 @@ export type InputChangeAsProp = {
     input: number | string,
     dispatchAction: 'RATING' | 'TRADE_RETURN' | 'DIRECTION' | 'TRADE_RETURN'
   ) => void,
+}
+
+export type LogTradeButtonProps = {
+  isEditingTrade: boolean
 }
