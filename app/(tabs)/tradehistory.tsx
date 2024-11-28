@@ -16,7 +16,7 @@ const TradeHistory = () => {
   useEffect(() => {
     const fetchTradeHistory = async () => {
       try {
-        let fetchedTradeHistory: Trade[] = await db.getAllAsync('SELECT id, date, asset, rating, tradeReturn, balanceChange, direction FROM trades ORDER BY id DESC LIMIT 100');
+        let fetchedTradeHistory: Trade[] = await db.getAllAsync('SELECT id, date, asset, rating, tradeReturn, balanceChange, direction FROM trades ORDER BY date DESC LIMIT 100');
 
         setTradeHistory(fetchedTradeHistory);
       } catch (error) {
