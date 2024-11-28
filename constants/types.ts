@@ -172,5 +172,14 @@ export type InputChangeAsProp = {
 
 export type LogTradeButtonProps = {
   isEditingTrade: boolean,
-  tradeState: TradePage,
+}
+
+export type DeleteConfirmationProps = {
+  updateLongPressed: (value: boolean) => void,
+  updateSelectedTrades: (id: number, action: 'add' | 'remove' | 'clear') => void,
+}
+
+export type FilterModalProps = {
+  showModal: boolean,
+  updateShowModal: (value: boolean) => void,
 }

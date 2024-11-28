@@ -78,8 +78,8 @@ const TradeHistory = () => {
             estimatedItemSize={98}
             contentContainerStyle={{ paddingBottom: 74 }}
             showsVerticalScrollIndicator={false}
-          />
-          : <View className='flex-1 justify-center items-center mb-[100px]'>
+          /> :
+          <View className='flex-1 justify-center items-center mb-[100px]'>
             <Text className='text-dark-4 font-semibold text-2xl'>No Trades Found</Text>
             <Text className='text-dark-5 font-semibold text-lg'>Click + To Add Your First Trade!</Text>
             <MaterialCommunityIcons name='magnify' size={100} color={colors.dark.neutral_6} />

@@ -3,8 +3,10 @@ import { router } from 'expo-router'
 import { useSQLiteContext } from 'expo-sqlite'
 import { LogTradeButtonProps, TradePage } from '@/constants/types'
 import { useEffect, useRef } from 'react'
+import { useTradeContext } from '@/hooks/useTradeContext'
 
-const LogTradeButton = ({ isEditingTrade, tradeState }: LogTradeButtonProps) => {
+const LogTradeButton = ({ isEditingTrade }: LogTradeButtonProps) => {
+  const { tradeState } = useTradeContext();
   // A ref to the most up to date version of tradeState
   const tradeStateRef = useRef(tradeState);
 
@@ -24,7 +26,7 @@ const LogTradeButton = ({ isEditingTrade, tradeState }: LogTradeButtonProps) => 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
         [
           state.asset,
-          state.date.toISOString(),
+          new Date(state.date).toISOString(),
           state.assetType,
           state.tradeReturn,
           state.tradeOutcome,
@@ -79,7 +81,7 @@ const LogTradeButton = ({ isEditingTrade, tradeState }: LogTradeButtonProps) => 
         WHERE id = ?`, 
         [
           state.asset,
-          state.date.toISOString(),
+          new Date(state.date).toISOString(),
           state.assetType,
           state.tradeReturn,
           state.tradeOutcome,
