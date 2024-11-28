@@ -2,14 +2,17 @@ import { Text, Pressable, View } from 'react-native'
 import { router } from 'expo-router'
 import { useSQLiteContext } from 'expo-sqlite'
 import { LogTradeButtonProps, TradePage } from '@/constants/types'
-import { useCallback, useEffect, useMemo } from 'react'
-import { useTradeContext } from '@/hooks/useTradeContext'
+import { useEffect, useRef } from 'react'
 
-const LogTradeButton = ({ isEditingTrade }: LogTradeButtonProps) => {
-  const { tradeState, dispatch } = useTradeContext();
-  const actualTradeState = useMemo(() => {
-    return tradeState
-  }, [tradeState])
+const LogTradeButton = ({ isEditingTrade, tradeState }: LogTradeButtonProps) => {
+  // A ref to the most up to date version of tradeState
+  const tradeStateRef = useRef(tradeState);
+
+  // Update the ref whenever tradeState changes to make sure it's always the most up to date
+  useEffect(() => {
+    tradeStateRef.current = tradeState;
+  }, [tradeState]);
+  
   const db = useSQLiteContext();
 
   const writeTrade = async (state: TradePage) => {
@@ -104,21 +107,16 @@ const LogTradeButton = ({ isEditingTrade }: LogTradeButtonProps) => {
     }
   }
 
-  const handlePress = () => {
-    if (isEditingTrade) {
-      editTrade(actualTradeState);
-    } else {
-      writeTrade(actualTradeState);
-    }
-  };
-
   return (
     <View className='absolute bottom-0 left-0 right-0 mx-4'>
       <Pressable
         className='rounded-lg mb-4 bg-green-2/75 active:bg-green-2 border-2 border-green-2'
         onPress={() => {
-          handlePress();
-          console.log('HandlePress: ', actualTradeState);
+          if (isEditingTrade) {
+            editTrade(tradeStateRef.current);
+          } else {
+            writeTrade(tradeStateRef.current);
+          };
         }}
       >
         <Text className='text-lg text-dark-7 font-bold text-center p-3'>{isEditingTrade ? 'Edit Trade' : 'Log Trade'}</Text>

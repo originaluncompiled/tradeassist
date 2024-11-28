@@ -126,7 +126,7 @@ export type TradeOutcomeProps = {
   tradeState: TradePage,
   handleInputChange: (
     input: number | string,
-    dispatchAction: 'RATING' | 'TRADE_RETURN' | 'DIRECTION' | 'TRADE_RETURN'
+    dispatchAction: 'RATING' | 'TRADE_RETURN' | 'DIRECTION' | 'TRADE_OUTCOME'
   ) => void,
 }
 
@@ -171,5 +171,6 @@ export type InputChangeAsProp = {
 }
 
 export type LogTradeButtonProps = {
-  isEditingTrade: boolean
+  isEditingTrade: boolean,
+  tradeState: TradePage,
 }

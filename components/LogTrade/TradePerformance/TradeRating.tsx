@@ -3,6 +3,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { colors } from '@/constants/colors'
 import { useEffect, useState } from 'react'
 import { InputChangeAsProp } from '@/constants/types'
+import useShowLogButton from '@/hooks/useShowLogButton'
 
 const TradeRating = ({ tradeState, handleInputChange }: InputChangeAsProp) => {
   const [ratingArray, setRatingArray] = useState<boolean[]>([]);

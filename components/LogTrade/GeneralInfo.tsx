@@ -36,7 +36,10 @@ const GeneralInfo = () => {
   return (
     <View className='p-4 rounded-2xl my-2 border border-dark-6 bg-dark-7'>
       <View className='flex-row justify-between'>
-        <Button text={dateValue.toLocaleDateString()} buttonAction={() => setShow(true)}/>
+        <Button
+          text={dateValue.toLocaleDateString()}
+          buttonAction={() => setShow(true)}
+        />
         {show && (
           <DateTimePicker
             value={dateValue}

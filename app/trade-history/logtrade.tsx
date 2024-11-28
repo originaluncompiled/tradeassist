@@ -65,7 +65,7 @@ const LogTrade = () => {
     <TradeContext.Provider value={{tradeState, dispatch}}>
       <View className='flex-1 bg-dark-8'>
         <Modal visible={showModal} onRequestClose={() => setShowModal(false)} animationType='none' transparent>\
-          <View className='flex-1 justify-center items-center bg-dark-8/50'>
+          <View className='flex-1 justify-center items-center bg-dark-8/40'>
             <View className='border-2 border-dark-6 rounded-2xl p-4 bg-dark-7 w-3/4'>
               <Text className='text-dark-2 italic font-semibold text-2xl pb-1'>Are You Sure?</Text>
               <Text className='font-medium text-lg'>
@@ -108,7 +108,7 @@ const LogTrade = () => {
 
           <NoteEditor />
         </ScrollView>
-        {!keyboardVisible && <LogTradeButton isEditingTrade={isEditingTrade} />}
+        {!keyboardVisible && <LogTradeButton tradeState={tradeState} isEditingTrade={isEditingTrade} />}
       </View>
     </TradeContext.Provider>
   )
