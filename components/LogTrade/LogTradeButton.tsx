@@ -19,33 +19,53 @@ const LogTradeButton = ({ isEditingTrade }: LogTradeButtonProps) => {
 
   const writeTrade = async (state: TradePage) => {
     try {
-      // TO-DO: Use transactions, so that faulty thingies don't get added and just take up space
-      const result = await db.runAsync(
-        `INSERT INTO trades
-        (asset, date, assetType, tradeReturn, tradeOutcome, direction, rating, balanceChange, takeProfit, stopLoss, target, risk, entry, exit, entryTime, exitTime, amountTraded, commission, notes)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
-        [
-          state.asset,
-          new Date(state.date).toISOString(),
-          state.assetType,
-          state.tradeReturn,
-          state.tradeOutcome,
-          state.direction,
-          state.rating,
-          state.balanceChange,
-          state.takeProfit,
-          state.stopLoss,
-          state.target,
-          state.risk,
-          state.entry,
-          state.exit,
-          state.entryTime,
-          state.exitTime,
-          state.amountTraded,
-          state.commission,
-          state.notes
-        ]
-      );
+      await db.withTransactionAsync(async () => {
+        const result = await db.runAsync(
+          `INSERT INTO trades (
+            asset,
+            date,
+            assetType,
+            tradeReturn,
+            tradeOutcome,
+            direction,
+            rating,
+            balanceChange,
+            takeProfit,
+            stopLoss,
+            target,
+            risk,
+            entry,
+            exit,
+            entryTime,
+            exitTime,
+            amountTraded,
+            commission,
+            notes
+          )
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
+          [
+            state.asset,
+            new Date(state.date).toISOString(),
+            state.assetType,
+            state.tradeReturn,
+            state.tradeOutcome,
+            state.direction,
+            state.rating,
+            state.balanceChange,
+            state.takeProfit,
+            state.stopLoss,
+            state.target,
+            state.risk,
+            state.entry,
+            state.exit,
+            state.entryTime,
+            state.exitTime,
+            state.amountTraded,
+            state.commission,
+            state.notes
+          ]
+        );
+      });
       
       router.navigate('/(tabs)/tradehistory');
     } catch (error) {
@@ -55,53 +75,54 @@ const LogTradeButton = ({ isEditingTrade }: LogTradeButtonProps) => {
 
   const editTrade = async (state: TradePage) => {
     try {
-      // TO-DO: Use transactions, so that faulty thingies don't get added and just take up space
-      const result = await db.runAsync(
-        `UPDATE trades
-        SET
-          asset = ?,
-          date = ?,
-          assetType = ?,
-          tradeReturn = ?,
-          tradeOutcome = ?,
-          direction = ?,
-          rating = ?,
-          balanceChange = ?,
-          takeProfit = ?,
-          stopLoss = ?,
-          target = ?,
-          risk = ?,
-          entry = ?,
-          exit = ?,
-          entryTime = ?,
-          exitTime = ?,
-          amountTraded = ?,
-          commission = ?,
-          notes = ?
-        WHERE id = ?`, 
-        [
-          state.asset,
-          new Date(state.date).toISOString(),
-          state.assetType,
-          state.tradeReturn,
-          state.tradeOutcome,
-          state.direction,
-          state.rating,
-          state.balanceChange,
-          state.takeProfit,
-          state.stopLoss,
-          state.target,
-          state.risk,
-          state.entry,
-          state.exit,
-          state.entryTime,
-          state.exitTime,
-          state.amountTraded,
-          state.commission,
-          state.notes,
-          Number(state.id),
-        ]
-      );
+      await db.withTransactionAsync(async () => {
+        const result = await db.runAsync(
+          `UPDATE trades
+          SET
+            asset = ?,
+            date = ?,
+            assetType = ?,
+            tradeReturn = ?,
+            tradeOutcome = ?,
+            direction = ?,
+            rating = ?,
+            balanceChange = ?,
+            takeProfit = ?,
+            stopLoss = ?,
+            target = ?,
+            risk = ?,
+            entry = ?,
+            exit = ?,
+            entryTime = ?,
+            exitTime = ?,
+            amountTraded = ?,
+            commission = ?,
+            notes = ?
+          WHERE id = ?`, 
+          [
+            state.asset,
+            new Date(state.date).toISOString(),
+            state.assetType,
+            state.tradeReturn,
+            state.tradeOutcome,
+            state.direction,
+            state.rating,
+            state.balanceChange,
+            state.takeProfit,
+            state.stopLoss,
+            state.target,
+            state.risk,
+            state.entry,
+            state.exit,
+            state.entryTime,
+            state.exitTime,
+            state.amountTraded,
+            state.commission,
+            state.notes,
+            Number(state.id),
+          ]
+        );
+      });
 
       router.navigate('/(tabs)/tradehistory');
     } catch (error) {
