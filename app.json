@@ -5,9 +5,8 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "scheme": "tradeassist",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "dark",
     "icon": "./assets/app/icon.png",
-    "backgroundColor": "#1c1c1c",
     "ios": {
       "supportsTablet": true
     },
@@ -16,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/app/adaptive-icon.png",
         "backgroundColor": "#1c1c1c"
-      }
+      },
+      "package": "com.justoriginal.tradeassist"
     },
     "plugins": [
       "expo-router",
@@ -33,6 +33,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "dcafe8f6-89b8-4b02-894c-7e95a1278b56"
+      }
     }
   }
 }
