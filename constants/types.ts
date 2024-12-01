@@ -1,3 +1,5 @@
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import { Dispatch } from "react";
 import { ScrollView } from "react-native"
 
@@ -180,6 +182,18 @@ export type DeleteConfirmationProps = {
 }
 
 export type FilterModalProps = {
+  bottomSheetRef: React.RefObject<BottomSheetModal>,
+}
+
+export type DateTimeSelectorProps = {
   showModal: boolean,
-  updateShowModal: (value: boolean) => void,
+  initialTime: number,
+  title?: string
+  setShowModal: (value: boolean) => void,
+  onTimeChange: (selectedTime: number) => void,
+}
+
+export type ScrollerProps = {
+  updateTime: (time: number) => void,
+  initialTime: number,
 }
