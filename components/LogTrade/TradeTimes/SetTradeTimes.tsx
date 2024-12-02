@@ -27,14 +27,6 @@ const SetTradeTimes = ({ text, updateTime, time }: SetTradeTimesProps) => {
       <Text className='text-dark-2 font-semibold text-lg'>{text}</Text>
       <Button buttonAction={() => setShow(true)} text={getTime(new Date(time))} />
       <DateTimeSelector showModal={show} setShowModal={updateShow} onTimeChange={onTimeChange} initialTime={time} title={text} />
-      {/* {show && (
-        <DateTimePicker
-          value={new Date(time)}
-          onChange={(e, date) => onTimeChange(e, date)}
-          mode='time'
-          accentColor={`${colors.green_2}B4`}
-        />
-      )} */}
     </View>
   )
 }

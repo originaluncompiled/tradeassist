@@ -5,7 +5,6 @@ import Scroller from './Scroller'
 import { useState } from 'react'
 
 const DateTimeSelector = ({ showModal, setShowModal, onTimeChange, initialTime, title }: DateTimeSelectorProps) => {
-  const [timeFormat, setTimeFormat] = useState<'12hr' | '24hr'>('24hr');
   const [time, setTime] = useState<number>(new Date().getTime());
   const updateTime = (selectedTime: number) => setTime(selectedTime);
 
@@ -18,21 +17,13 @@ const DateTimeSelector = ({ showModal, setShowModal, onTimeChange, initialTime, 
           <Text className='text-dark-1 font-medium text-xl mb-2 -mt-2 text-center'>{title}</Text>
           <Scroller updateTime={updateTime} initialTime={initialTime} />
 
-          <View className='flex-row justify-between items-center mt-4'>
-            <Pressable onPress={() => {
-              setTimeFormat('12hr');
-              // TO-DO: SOMEHOW GET DEVICE DEFAULT TIME FORMAT
-            }}>
-              <Text className='text-dark-1 font-medium text-lg ml-2'>{timeFormat}</Text>
-            </Pressable>
-            <View className='flex-row justify-end items-center'>
-              <Button text='Cancel' buttonAction={() => setShowModal(false)} customClasses='mr-2 bg-dark-6'/>
-              <Button text='Done' buttonAction={() => {
-                onTimeChange(time);
-                setShowModal(false);
-              }}/>
-            </View>
-          </View>
+          <View className='flex-row justify-end items-center mt-4'>
+            <Button text='Cancel' buttonAction={() => setShowModal(false)} customClasses='mr-4 bg-dark-6'/>
+            <Button text='Done' buttonAction={() => {
+              onTimeChange(time);
+              setShowModal(false);
+            }}/>
+        </View>
         </View>
       </View>
     </Modal>
