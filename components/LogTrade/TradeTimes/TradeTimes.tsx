@@ -28,13 +28,14 @@ const TradeTimes = () => {
     if (!entryTime || !exitTime) return;
 
     const newTimeInTrade = exitTime - entryTime;
-    const hours = Math.floor((newTimeInTrade / 1000) / 3600);
-    let minutes = Math.round(((newTimeInTrade / 1000) % 3600) / 60);
+    const days = Math.floor((newTimeInTrade / 1000) / 86400);
+    const hours = Math.floor(((newTimeInTrade / 1000) % 86400) / 3600);
+    let minutes = Math.round((((newTimeInTrade / 1000) % 86400) % 3600) / 60);
 
     if (newTimeInTrade < 0) {
-      setTimeInTrade('0h : 0m');
+      setTimeInTrade('0d : 0h : 0m');
     } else {
-      setTimeInTrade(`${hours}h : ${minutes}m`);
+      setTimeInTrade(`${days}d : ${hours}h : ${minutes}m`);
     }
   }
 

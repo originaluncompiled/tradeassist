@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { colors } from '@/constants/colors';
 import { BlurView } from 'expo-blur';
 import TradePopUp from './TradePopUp';
+import { router } from 'expo-router';
 
 const AddButton = () => {
   const [clicked, setClicked] = useState<boolean>(false);
@@ -14,12 +15,14 @@ const AddButton = () => {
 
   return (
     <>
-      { clicked && <Pressable className='absolute w-full h-full' onPressIn={() => setClicked(false)}/> }
-      { clicked && <TradePopUp updateClicked={updateClicked} /> }
+    {/*   TO-DO: Decide whether to actually make this page or not */}
+      {/* { clicked && <Pressable className='absolute w-full h-full' onPressIn={() => setClicked(false)}/> }
+      { clicked && <TradePopUp updateClicked={updateClicked} /> } */}
       
       <View className='absolute right-0 bottom-20'>  
         <Pressable
-          onPress={updateClicked}
+          // onPress={updateClicked}
+          onPress={() => router.push('/trade-history/logtrade')}
         >
           <BlurView
             intensity={40}

@@ -10,11 +10,13 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { useEffect } from 'react'
 import { getCalendars } from 'expo-localization'
 import { useUserSettings } from '@/hooks/useUserSettings'
+import { AppState } from 'react-native'
 
 const RootLayout = () => {
   SystemUI.setBackgroundColorAsync(colors.dark.neutral_8);
   
   const { setIs24Hour } = useUserSettings();
+
   useEffect(() => {
     const is24Hour = getCalendars()[0].uses24hourClock || false;
     setIs24Hour(is24Hour);

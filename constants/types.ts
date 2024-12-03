@@ -191,9 +191,17 @@ export type DateTimeSelectorProps = {
   title?: string
   setShowModal: (value: boolean) => void,
   onTimeChange: (selectedTime: number) => void,
+  mode: 'Date' | 'DateTime',
 }
 
 export type ScrollerProps = {
-  updateTime: (time: number) => void,
   initialTime: number,
+  selectedDate: Date,
+  createTime: ({ hours, minutes }: {
+    hours?: number;
+    minutes?: number;
+  }) => void,
+  updatePartOfDay: (value: "AM" | "PM") => void,
+  partOfDay: 'AM' | 'PM',
+  timeObj: { hours: number; minutes: number }
 }

@@ -1,9 +1,10 @@
-import { Platform, TextInput, View } from 'react-native'
-import { useEffect, useState } from 'react'
-import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker'
+import { Modal, Platform, Pressable, TextInput, View } from 'react-native'
+import { useState } from 'react'
+import DateTimePicker from 'react-native-ui-datepicker'
 import Button from '../Button'
 import { colors } from '@/constants/colors'
 import { useTradeContext } from '@/hooks/useTradeContext'
+import DateTimeSelector from '../DateTimeSelector/DateTimeSelector'
 
 const GeneralInfo = () => {
   const { tradeState, dispatch } = useTradeContext();
@@ -15,8 +16,8 @@ const GeneralInfo = () => {
 
   const [show, setShow] = useState(false);
 
-  const onDateChange = (event: DateTimePickerEvent | null, date: Date | undefined) => {
-    const selectedDate = date || new Date;
+  const onDateChange = (date: number) => {
+    const selectedDate = new Date(date) || new Date;
 
     dispatch({
       type: 'DATE',
@@ -41,12 +42,7 @@ const GeneralInfo = () => {
           buttonAction={() => setShow(true)}
         />
         {show && (
-          <DateTimePicker
-            value={dateValue}
-            onChange={onDateChange}
-            mode='date'
-            accentColor={`${colors.green_2}B4`}
-          />
+          <DateTimeSelector mode='Date' initialTime={dateValue.getTime()} showModal={show} setShowModal={setShow} onTimeChange={onDateChange} title='Select Date' />
         )}
         <TextInput
           value={asset}

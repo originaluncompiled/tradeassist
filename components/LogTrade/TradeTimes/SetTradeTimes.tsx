@@ -9,12 +9,19 @@ const SetTradeTimes = ({ text, updateTime, time }: SetTradeTimesProps) => {
   const updateShow = (value: boolean) => setShow(value);
 
   const getTime = (date: Date): string => {
+    const day = date.getDate();
+    const monthsArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const month = date.getMonth();
     const hours = date.getHours();
     const minutes = date.getMinutes();
 
-    if (hours < 10) return `0${hours}:${minutes}`;
-    else if (minutes < 10) return `${hours}:0${minutes}`
-    else return `${hours}:${minutes}`;
+    let time: string;
+
+    if (hours < 10) time = `0${hours}:${minutes} `;
+    else if (minutes < 10) time = `${hours}:0${minutes}`;
+    else time = `${hours}:${minutes}`;
+
+    return `${day} ${monthsArray[month]} - ${time}`;
   }
 
   const onTimeChange = (selectedTime: number) => {
@@ -25,8 +32,9 @@ const SetTradeTimes = ({ text, updateTime, time }: SetTradeTimesProps) => {
   return (
     <View className='flex-row justify-between items-center mb-2'>
       <Text className='text-dark-2 font-semibold text-lg'>{text}</Text>
+      {/* TO-DO: Make the text display based on if the 24 hour clock is being used */}
       <Button buttonAction={() => setShow(true)} text={getTime(new Date(time))} />
-      <DateTimeSelector showModal={show} setShowModal={updateShow} onTimeChange={onTimeChange} initialTime={time} title={text} />
+      <DateTimeSelector showModal={show} setShowModal={updateShow} onTimeChange={onTimeChange} initialTime={time} title={text} mode='DateTime' />
     </View>
   )
 }
