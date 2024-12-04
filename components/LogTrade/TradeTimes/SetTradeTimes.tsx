@@ -20,11 +20,7 @@ const SetTradeTimes = ({ text, updateTime, time }: SetTradeTimesProps) => {
 
     if (!is24Hour && hours > 12) hours = hours - 12;
 
-    let time: string;
-
-    if (hours < 10) time = `0${hours}:${minutes}${is24Hour ? '' : partOfDay}`;
-    else if (minutes < 10) time = `${hours}:0${minutes}${is24Hour ? '' : partOfDay}`;
-    else time = `${hours}:${minutes}${is24Hour ? '' : partOfDay}`;
+    const time = `${(hours < 10) ? `0${hours}` : hours}:${(minutes < 10) ? `0${minutes}` : minutes}${is24Hour ? '' : partOfDay}`;
 
     return `${day} ${monthsArray[month]} - ${time}`;
   }
