@@ -22,31 +22,34 @@ const DateTimeSelector = ({ showModal, setShowModal, onTimeChange, initialTime, 
   const createTime = ({hours, minutes}: {hours?: number, minutes?: number}) => {
     const tempTime = {...timeObj};
 
-    // when switching between AM/PM, this ensures that the hours update accordingly
-    if (!is24Hour && hours !== undefined && hours >= 12 && partOfDay === 'AM') {
-      hours = hours - 12;
-    }
-
-    if (hours !== undefined) {
-      if (is24Hour || partOfDay === 'AM') {
-        tempTime.hours = hours;
-      } else if (partOfDay === 'PM') {
-        tempTime.hours = hours + 12;
+    // I don't want this part to run when there is no scroller time selector
+    if (mode === 'DateTime') {
+      // when switching between AM/PM, this ensures that the hours update accordingly
+      if (!is24Hour && hours !== undefined && hours >= 12 && partOfDay === 'AM') {
+        hours = hours - 12;
       }
-    }
-    if (minutes !== undefined) tempTime.minutes = minutes;
 
-    setTimeObj(tempTime);
+      if (hours !== undefined) {
+        if (is24Hour || partOfDay === 'AM') {
+          tempTime.hours = hours;
+        } else if (partOfDay === 'PM') {
+          tempTime.hours = hours + 12;
+        }
+      }
+      if (minutes !== undefined) tempTime.minutes = minutes;
+
+      setTimeObj(tempTime);
+    }
 
     // create the time value
     let d = new Date(date);
-    d.setHours(tempTime.hours, tempTime.minutes, 0, 0);
+    mode === 'DateTime' && d.setHours(tempTime.hours, tempTime.minutes, 0, 0);
 
     updateTime(new Date(d).getTime());
   }
 
   useEffect(() => {
-    updateTime(new Date(date).getTime());
+    createTime(timeObj);
   }, [date])
 
   return (

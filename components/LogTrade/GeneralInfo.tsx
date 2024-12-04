@@ -1,6 +1,5 @@
-import { Modal, Platform, Pressable, TextInput, View } from 'react-native'
+import { Platform, TextInput, View } from 'react-native'
 import { useState } from 'react'
-import DateTimePicker from 'react-native-ui-datepicker'
 import Button from '../Button'
 import { colors } from '@/constants/colors'
 import { useTradeContext } from '@/hooks/useTradeContext'
