@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ScrollView, Text, View } from 'react-native'
 import FilterSection from '@/components/Filter/FilterSection'
 import TradeCard from '@/components/TradingHistory/TradeCard'
