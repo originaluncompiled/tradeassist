@@ -27,8 +27,8 @@ const RootLayout = () => {
       databaseName="trades.db" 
       onInit={migrateDbIfNeeded}
     >
-      <GestureHandlerRootView>
-        <BottomSheetModalProvider>
+      <BottomSheetModalProvider>
+        <GestureHandlerRootView>
           <SafeAreaView style={{ flex: 1, backgroundColor: colors.dark.neutral_8 }}>
             <Stack
               screenOptions={{
@@ -41,8 +41,8 @@ const RootLayout = () => {
               <Stack.Screen name='trade-history' />
             </Stack>
           </SafeAreaView>
-        </BottomSheetModalProvider>
-      </GestureHandlerRootView>
+        </GestureHandlerRootView>
+      </BottomSheetModalProvider>
     </SQLiteProvider>
   );
 };

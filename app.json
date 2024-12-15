@@ -12,6 +12,10 @@
     },
     "newArchEnabled": true,
     "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/app/adaptive-icon.png",
+        "backgroundColor": "#1c1c1c"
+      },
       "package": "com.justoriginal.tradeassist"
     },
     "plugins": [
@@ -20,12 +24,8 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#a2f1c9",
-          "image": "./assets/app/splash-icon.png",
-          "dark": {
-            "image": "./assets/app/splash-icon-dark.png",
-            "backgroundColor": "#1c1c1c"
-          },
+          "image": "./assets/app/splash-icon-dark.png",
+          "backgroundColor": "#1c1c1c",
           "imageWidth": 200
         }
       ],
