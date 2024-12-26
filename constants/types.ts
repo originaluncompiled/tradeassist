@@ -182,6 +182,7 @@ export type DeleteConfirmationProps = {
 
 export type FilterModalProps = {
   bottomSheetRef: React.RefObject<BottomSheetModal>,
+  caption: string,
 }
 
 export type DateTimeSelectorProps = {

@@ -22,7 +22,7 @@ const FilterSection = ({ filters, updateFilters }: FilterSectionProps) => {
 
   return (
     <View className='flex-row items-center justify-between mx-4 mb-2'>
-      <FilterModal bottomSheetRef={bottomSheetRef}/>
+      <FilterModal bottomSheetRef={bottomSheetRef} caption='Filter Trades By'/>
       {filters.length === 0 ?
         <Text className='font-bold text-lg ml-2 text-dark-2'>All Past Trades</Text>
         : 

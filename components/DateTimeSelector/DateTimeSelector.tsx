@@ -11,6 +11,9 @@ const DateTimeSelector = ({ showModal, setShowModal, onTimeChange, initialTime, 
   const [time, setTime] = useState<number>(new Date().getTime());
   const updateTime = (selectedTime: number) => setTime(selectedTime);
   const [date, setDate] = useState(new Date(initialTime));
+  
+  const [dateRange, setDateRange] = useState([new Date(initialTime), new Date(initialTime)]);
+  const [rangeTime, setRangeTime] = useState([initialTime, initialTime]);
 
   const { is24Hour } = useUserSettings();
   // Only used when the user is using the 12 hour clock
@@ -22,7 +25,7 @@ const DateTimeSelector = ({ showModal, setShowModal, onTimeChange, initialTime, 
   const createTime = ({hours, minutes}: {hours?: number, minutes?: number}) => {
     const tempTime = {...timeObj};
 
-    // I don't want this part to run when there is no scroller time selector
+    // Don't want this to run when there is no time selector
     if (mode === 'DateTime') {
       // when switching between AM/PM, this ensures that the hours update accordingly
       if (!is24Hour && hours !== undefined && hours >= 12 && partOfDay === 'AM') {
@@ -52,6 +55,21 @@ const DateTimeSelector = ({ showModal, setShowModal, onTimeChange, initialTime, 
     createTime(timeObj);
   }, [date])
 
+  const createRange = () => {
+    const startDate = new Date(dateRange[0]);
+    const endDate = new Date(dateRange[1]);
+
+    let newRangeTime = [...rangeTime]
+    newRangeTime[0] = startDate.getTime();
+    newRangeTime[1] = endDate.getTime();
+
+    setRangeTime(newRangeTime);
+  }
+
+  useEffect(() => {
+    createRange();
+  }, [dateRange])
+
   return (
     <Modal visible={showModal} onRequestClose={() => setShowModal(false)} animationType='fade' transparent>
       <View className='flex-1 justify-center items-center'>
@@ -60,25 +78,50 @@ const DateTimeSelector = ({ showModal, setShowModal, onTimeChange, initialTime, 
         <View className='p-4 bg-dark-7 border-2 border-dark-6 rounded-2xl w-4/5'>
           <Text className='text-dark-1 font-medium text-xl mb-2 -mt-2 text-center'>{title}</Text>
           {mode === 'DateTime' && <Scroller initialTime={initialTime} selectedDate={date} createTime={createTime} partOfDay={partOfDay} updatePartOfDay={updatePartOfDay} timeObj={timeObj} />}
-          
+          {mode === 'DateRange' ?
           <DateTimePicker
-            mode='single'
-            date={date}
-            onChange={({date}) => setDate(date as Date)}
+            mode='range'
+            startDate={dateRange[0]}
+            endDate={dateRange[1]}
+            onChange={({startDate, endDate}) => {
+              if (startDate && endDate) {
+                setDateRange([startDate as Date, endDate as Date]);
+              } else if (startDate) {
+                setDateRange([...dateRange, startDate as Date]);
+              } else if (endDate) {
+                setDateRange([...dateRange, endDate as Date]);
+              }
+            }}
             calendarTextStyle={{ color: colors.dark.neutral_2 }}
-            selectedItemColor={ `${colors.green_2}B4` }
+            selectedItemColor={colors.green_3}
+            selectedRangeBackgroundColor={`${colors.green_2}B4`}
             headerTextStyle={{ color: colors.dark.neutral_3 }}
             headerButtonColor={ colors.dark.neutral_3 }
-            dayContainerStyle={{ backgroundColor: colors.dark.neutral_6, borderColor: colors.dark.neutral_5, borderRadius: 8 }}
+            dayContainerStyle={{ borderColor: colors.dark.neutral_5, borderRadius: 8 }}
             weekDaysTextStyle={{ color: colors.dark.neutral_2 }}
             monthContainerStyle={{ backgroundColor: colors.dark.neutral_6, borderColor: colors.dark.neutral_5 }}
             yearContainerStyle={{ backgroundColor: colors.dark.neutral_6, borderColor: colors.dark.neutral_5 }}
           />
+          : <DateTimePicker
+              mode='single'
+              date={date}
+              onChange={({date}) => setDate(date as Date)}
+              calendarTextStyle={{ color: colors.dark.neutral_2 }}
+              selectedItemColor={ `${colors.green_2}B4` }
+              headerTextStyle={{ color: colors.dark.neutral_3 }}
+              headerButtonColor={ colors.dark.neutral_3 }
+              dayContainerStyle={{ backgroundColor: colors.dark.neutral_6, borderColor: colors.dark.neutral_5, borderRadius: 8 }}
+              weekDaysTextStyle={{ color: colors.dark.neutral_2 }}
+              monthContainerStyle={{ backgroundColor: colors.dark.neutral_6, borderColor: colors.dark.neutral_5 }}
+              yearContainerStyle={{ backgroundColor: colors.dark.neutral_6, borderColor: colors.dark.neutral_5 }}
+            />
+          }
 
           <View className='flex-row justify-end items-center -mt-8'>
             <Button text='Cancel' buttonAction={() => setShowModal(false)} customClasses='mr-4 bg-dark-6'/>
             <Button text='Done' buttonAction={() => {
-              onTimeChange(time);
+              if (mode === 'DateRange') onTimeChange(rangeTime);
+              else onTimeChange(time);
               setShowModal(false);
             }}/>
           </View>
