@@ -1,8 +1,6 @@
-import { View, Text } from 'react-native';
-import React from 'react';
-import { AccountOverviewProps } from '@/constants/types';
-
-
+import { View, Text } from 'react-native'
+import React from 'react'
+import { AccountOverviewProps } from '@/constants/types'
 
 const AccountOverview = ({ timeline }: AccountOverviewProps) => {
   const account = {

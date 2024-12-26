@@ -1,10 +1,12 @@
-import { ScrollView } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import AccountOverview from '@/components/AccountOverview'
 import CalendarView from '@/components/TradeStats/CalendarView'
-import CurrentStreak from '@/components/TradeStats/CurrentStreak';
-import WinPercentage from '@/components/TradeStats/WinPercentage';
-import TradeDuration from '@/components/TradeStats/TradeDuration';
-import RiskReward from '@/components/TradeStats/RiskReward';
+import CurrentStreak from '@/components/TradeStats/CurrentStreak'
+import WinPercentage from '@/components/TradeStats/WinPercentage'
+import TradeDuration from '@/components/TradeStats/TradeDuration'
+import RiskReward from '@/components/TradeStats/RiskReward'
+import Drawdown from '@/components/TradeStats/Drawdown'
+import DailyReturns from '@/components/TradeStats/DailyReturns'
 
 const Index = () => {
   return (
@@ -20,8 +22,11 @@ const Index = () => {
       <WinPercentage />
       <TradeDuration />
       <RiskReward />
+      <Drawdown />
+      <DailyReturns />
+      <View className='h-[80px] bg-dark-8' />
     </ScrollView>
-  );
+  )
 }
 
 export default Index
