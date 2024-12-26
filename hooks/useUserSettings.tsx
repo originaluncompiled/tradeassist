@@ -9,3 +9,5 @@ export const useUserSettings = create<UserSettingsProps>((set) => ({
   is24Hour: true,
   setIs24Hour: (value: boolean) => set({ is24Hour: value }),
 }))
+
+// TO-DO: Add profile & settings page's stuff to here

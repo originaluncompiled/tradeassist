@@ -29,7 +29,7 @@ const Layout = () => {
             return (
               <Pressable
                 className='rounded-lg px-2'
-                onPressOut={() => setTimeout(() => {router.navigate('/(tabs)/tradehistory')}, 50)}
+                onPressOut={() => setTimeout(() => {router.dismiss()}, 50)}
                 hitSlop={12}
               >
                 <Text className='text-lg font-semibold text-dark-3'>Cancel</Text>
@@ -46,7 +46,7 @@ const Layout = () => {
           headerLeft: () => (
             <Pressable
               className='rounded-lg px-2'
-              onPressOut={() => setTimeout(() => {router.navigate('/(tabs)/tradehistory')}, 50)}
+              onPressOut={() => setTimeout(() => {router.dismiss()}, 50)}
               hitSlop={12}
             >
               <Text className='text-lg font-semibold text-dark-3'>Cancel</Text>

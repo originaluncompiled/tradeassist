@@ -205,3 +205,8 @@ export type ScrollerProps = {
   partOfDay: 'AM' | 'PM',
   timeObj: { hours: number; minutes: number }
 }
+
+export type ChartCardProps = {
+  title: string,
+  children: React.ReactNode
+}

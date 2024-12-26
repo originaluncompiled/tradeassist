@@ -13,7 +13,7 @@ const DeleteConfirmation = () => {
     try {
       await db.runAsync('DELETE FROM trades WHERE id = ?', [tradeId]);
     
-      router.replace('/(tabs)/tradehistory');
+      router.dismiss();
     } catch (error) {
       console.log('Couldn\'t Delete Trade: ', error)
     }
