@@ -73,7 +73,7 @@ const DateTimeSelector = ({ showModal, setShowModal, onTimeChange, initialTime, 
   return (
     <Modal visible={showModal} onRequestClose={() => setShowModal(false)} animationType='fade' transparent>
       <View className='flex-1 justify-center items-center'>
-        <Pressable className='absolute w-full h-full bg-dark-8/40' onPress={() => setShowModal(false)}/>
+        <Pressable className='absolute w-full h-full bg-dark-8/50' onPress={() => setShowModal(false)}/>
 
         <View className='p-4 bg-dark-7 border-2 border-dark-6 rounded-2xl w-4/5'>
           <Text className='text-dark-1 font-medium text-xl mb-2 -mt-2 text-center'>{title}</Text>

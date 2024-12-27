@@ -15,8 +15,8 @@ const CurrentStreak = () => {
             </View>
 
             <View className='ml-2'>
-              <Text className='font-medium text-dark-1 px-3 py-1 mb-2 bg-accent-red rounded-2xl text-center'>2 Days</Text>
-              <Text className='font-medium text-dark-1 px-3 py-1 bg-accent-green rounded-2xl text-center'>5 Days</Text>
+              <Text className='font-medium text-dark-1 px-3 py-1 mb-2 border border-accent-red bg-accent-red/60 rounded-2xl text-center'>2 Days</Text>
+              <Text className='font-medium text-dark-1 px-3 py-1 border border-accent-green bg-accent-green/60 rounded-2xl text-center'>5 Days</Text>
             </View>
           </View>
         </View>
@@ -29,8 +29,8 @@ const CurrentStreak = () => {
             </View>
             
             <View className='ml-2'>
-              <Text className='font-medium text-dark-1 px-3 py-1 mb-2 bg-accent-red rounded-2xl text-center'>3 Trades</Text>
-              <Text className='font-medium text-dark-1 px-3 py-1 bg-accent-green rounded-2xl text-center'>12 Trades</Text>
+              <Text className='font-medium text-dark-1 px-3 py-1 mb-2 border border-accent-red bg-accent-red/60 rounded-2xl text-center'>3 Trades</Text>
+              <Text className='font-medium text-dark-1 px-3 py-1 border border-accent-green bg-accent-green/60 rounded-2xl text-center'>12 Trades</Text>
             </View>
           </View>
         </View>

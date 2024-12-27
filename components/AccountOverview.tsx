@@ -1,8 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import { AccountOverviewProps } from '@/constants/types'
 
-const AccountOverview = ({ timeline }: AccountOverviewProps) => {
+const AccountOverview = () => {
   const account = {
     balance: '$128,043.67',
     return: '+$28,043.67',
@@ -17,7 +16,7 @@ const AccountOverview = ({ timeline }: AccountOverviewProps) => {
       </Text>
 
       <View className='flex-row items-center justify-between pt-1'>
-        <Text className='text-lg text-dark-2'>{timeline}</Text>
+        <Text className='text-lg text-dark-2'>PnL</Text>
         <Text className={`font-bold text-2xl ${account.return[0] === '+' ? 'text-accent-green' : 'text-accent-red'}`}>
           {account.return}
         </Text>

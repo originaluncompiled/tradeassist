@@ -26,7 +26,7 @@ const DeleteConfirmation = () => {
       <View className='flex-1 justify-center items-center'>
         {/* Allows the user to just press anywhere on screen to dismiss */}
         {/* TO-DO: FIX, BECAUSE SOMETHING HERE IS CAUSING THE USER TO HAVE TO CLICK TWICE ON STUFF SOMETIMES */}
-        <Pressable className='absolute w-full h-full bg-dark-8/40' onPressIn={() => setShowModal(false)}/>
+        <Pressable className='absolute w-full h-full bg-dark-8/50' onPressIn={() => setShowModal(false)}/>
 
         <View className='flex-1 justify-center items-center'>
           <View className='border-2 border-dark-6 rounded-2xl p-4 bg-dark-7 w-3/4'>

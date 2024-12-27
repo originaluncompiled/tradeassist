@@ -9,7 +9,7 @@ const RiskReward = () => {
       <View className='flex-1 flex-row justify-between'>
         <View className='flex-1 items-start'>
           <Text className='font-medium text-lg text-dark-2'>Average</Text>
-          <Text className='font-medium text-xl text-dark-1 px-5 py-3 bg-dark-6 rounded-full mt-2'>1 : 2.14</Text>
+          <Text className='font-medium text-xl text-dark-1 px-5 py-3 bg-dark-6 rounded-full mt-2'>1: 2.14</Text>
         </View>
 
         <View className='justify-center pr-4'>

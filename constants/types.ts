@@ -72,6 +72,7 @@ export type TradeContextType = {
 // Props:
 export type TradeCardProps = {
   tradeInfo: Trade,
+  lightBg?: boolean,
 }
 
 export type DeleteSectionProps = {
@@ -104,10 +105,6 @@ export type FilterItemProps = {
     scrollViewRef?: React.RefObject<ScrollView>
   ) => void,
   scrollViewRef: React.RefObject<ScrollView>,
-}
-
-export type AccountOverviewProps = {
-  timeline: string,
 }
 
 export type ButtonProps = {
@@ -209,4 +206,10 @@ export type ScrollerProps = {
 export type ChartCardProps = {
   title: string,
   children: React.ReactNode
+}
+
+export type CalendarModalProps = {
+  showModal: boolean,
+  selectedDate: Date,
+  updateShowModal: (value: boolean) => void
 }

@@ -21,24 +21,6 @@ const Layout = () => {
       }}
     >
       <Stack.Screen
-        name='taketrade'
-        options={{
-          title: 'Take a Trade',
-          headerBackVisible: false,
-          headerLeft: () => {
-            return (
-              <Pressable
-                className='rounded-lg px-2'
-                onPressOut={() => setTimeout(() => {router.dismiss()}, 50)}
-                hitSlop={12}
-              >
-                <Text className='text-lg font-semibold text-dark-3'>Cancel</Text>
-              </Pressable>
-            )
-          }
-        }}
-      />
-      <Stack.Screen
         name='logtrade'
         options={{
           title: 'Log a Trade',

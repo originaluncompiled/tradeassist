@@ -3,13 +3,16 @@ import React, { useEffect } from 'react'
 import { Area, CartesianChart, Line } from 'victory-native'
 import { colors } from '@/constants/colors'
 import { DashPathEffect, useFont } from '@shopify/react-native-skia'
-const font = require('../../assets/Inter.ttf');
+const font = require('../../assets/Inter.ttf')
 
-const Drawdown = () => {
-  const labelFont = useFont(font);
+type DrawdownProps = {
+  drawdown: number[]
+}
+
+const Drawdown = ({drawdown}: DrawdownProps) => {
+  const labelFont = useFont(font, 13);
   const data: {day: number, balance: number}[] = [{day: 0, balance: 0}];
 
-  const drawdown = Array.from({ length: 27 }, () => (Math.random() * 2200 - 1000));
   drawdown.reduce((total, dayReturn, i) => {
     const newTotal = total + dayReturn;
     data.push({ day: i + 1, balance: newTotal });
@@ -36,11 +39,12 @@ const Drawdown = () => {
           }]}
         >
           {({ points }) => (
-            <Area
+            <Line
               points={points.balance}
               color={colors.green_2}
               curveType='cardinal'
-              y0={points.balance[0].y as number}
+              strokeWidth={2}
+              // y0={points.balance[0].y as number}
             />
           )}
         </CartesianChart>

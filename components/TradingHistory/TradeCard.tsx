@@ -5,7 +5,7 @@ import { TradeCardProps, TradePage } from '@/constants/types'
 import { router } from 'expo-router'
 import { useSQLiteContext } from 'expo-sqlite'
 
-const TradeCard = ({ tradeInfo }: TradeCardProps) => {
+const TradeCard = ({ tradeInfo, lightBg }: TradeCardProps) => {
   const formatDate = (date: string) => {
     const newDate = new Date(date);
     return newDate.toLocaleDateString();
@@ -24,9 +24,9 @@ const TradeCard = ({ tradeInfo }: TradeCardProps) => {
   }
 
   return (
-    <View className='flex-row items-center justify-center mx-4 mb-4'>
+    <View className='flex-row items-center justify-center mb-4'>
       <Pressable
-        className='flex-1 mx-[2px] px-4 pt-2 pb-4 rounded-2xl border border-dark-6 active:bg-dark-6 bg-dark-7'
+        className={`flex-1 mx-[2px] px-4 pt-2 pb-4 rounded-2xl border ${lightBg ? 'border-dark-5 activve:bg-dark-5 bg-dark-6' : 'border-dark-6 active:bg-dark-6 bg-dark-7'}`}
         onPress={() => {
           // Sends the user to the logtrade page, with all of the trade's information
           // This allows it to not show/push to the trade page if it couldn't get the trade
