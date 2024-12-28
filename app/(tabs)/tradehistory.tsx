@@ -34,7 +34,7 @@ const TradeHistory = () => {
     const fetchTradeHistory = async () => {
       try {
         // TO-DO: Memoize this for performance, and make it get called as little as possible
-        let fetchedTradeHistory: Trade[] = await db.getAllAsync('SELECT id, date, asset, rating, tradeReturn, balanceChange, direction FROM trades ORDER BY date DESC LIMIT 100');
+        let fetchedTradeHistory: Trade[] = await db.getAllAsync('SELECT id, date, asset, rating, tradeReturn, balanceChange, direction FROM trades ORDER BY date DESC');
 
         setTradeHistory(fetchedTradeHistory);
       } catch (error) {

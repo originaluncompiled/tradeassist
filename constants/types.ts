@@ -203,13 +203,41 @@ export type ScrollerProps = {
   timeObj: { hours: number; minutes: number }
 }
 
+export type TradeData = {
+  tradeData: Trade[],
+}
+
+export type CalendarViewProps = {
+  tradeData: Trade[],
+  showModal: boolean,
+  updateShowModal: (value: boolean) => void,
+}
+
 export type ChartCardProps = {
   title: string,
   children: React.ReactNode
 }
 
+export type CalendarProps = {
+  calendarData: {
+    date: Date;
+    totalReturn: number;
+    outcome: "WIN" | "LOSS" | "BREAK EVEN";
+    trades: Trade[];
+  }[],
+  updateSelectedDate: (date: Date) => void,
+  updateCalendarModal: (value: boolean) => void,
+}
+
 export type CalendarModalProps = {
+  calendarData: {
+    date: Date;
+    totalReturn: number;
+    outcome: "WIN" | "LOSS" | "BREAK EVEN";
+    trades: Trade[];
+  }[],
   showModal: boolean,
   selectedDate: Date,
-  updateShowModal: (value: boolean) => void
+  tradeData: Trade[],
+  updateShowModal: (value: boolean) => void,
 }

@@ -1,15 +1,11 @@
 import { View, Text } from 'react-native'
-import React, { useEffect } from 'react'
 import { Area, CartesianChart, Line } from 'victory-native'
 import { colors } from '@/constants/colors'
 import { DashPathEffect, useFont } from '@shopify/react-native-skia'
+import { TradeData } from '@/constants/types'
 const font = require('../../assets/Inter.ttf')
 
-type DrawdownProps = {
-  drawdown: number[]
-}
-
-const Drawdown = ({drawdown}: DrawdownProps) => {
+const Drawdown = ({ tradeData }: TradeData) => {
   const labelFont = useFont(font, 13);
   const data: {day: number, balance: number}[] = [{day: 0, balance: 0}];
 

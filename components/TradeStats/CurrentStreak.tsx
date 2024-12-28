@@ -1,7 +1,8 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import { TradeData } from '@/constants/types'
 
-const CurrentStreak = () => {
+const CurrentStreak = ({ tradeData }: TradeData) => {
   return (
     <View className='flex-1 mx-[16px] my-2 rounded-2xl px-4 pt-3 pb-4 bg-dark-7 border border-dark-6'>
       <Text className='font-bold text-xl text-dark-2'>Current Streak</Text>

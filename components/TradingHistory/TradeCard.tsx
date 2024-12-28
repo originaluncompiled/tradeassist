@@ -26,7 +26,7 @@ const TradeCard = ({ tradeInfo, lightBg }: TradeCardProps) => {
   return (
     <View className='flex-row items-center justify-center mb-4'>
       <Pressable
-        className={`flex-1 mx-[2px] px-4 pt-2 pb-4 rounded-2xl border ${lightBg ? 'border-dark-5 activve:bg-dark-5 bg-dark-6' : 'border-dark-6 active:bg-dark-6 bg-dark-7'}`}
+        className={`flex-1 mx-[2px] px-4 pt-2 pb-4 rounded-2xl border ${lightBg ? 'border-dark-5 active:bg-dark-5 bg-dark-6' : 'border-dark-6 active:bg-dark-6 bg-dark-7'}`}
         onPress={() => {
           // Sends the user to the logtrade page, with all of the trade's information
           // This allows it to not show/push to the trade page if it couldn't get the trade
@@ -58,7 +58,7 @@ const TradeCard = ({ tradeInfo, lightBg }: TradeCardProps) => {
             <View
               className={`flex px-2 py-1 mr-2 rounded-lg ${tradeInfo.tradeReturn > 0 ?
                   'bg-accent-green/50 border border-accent-green'
-                  : 'bg-accent-red/50 border border-accent-red'}`}
+                  : (tradeInfo.tradeReturn < 0) ? 'bg-accent-red/50 border border-accent-red' : 'bg-dark-5/50 border border-dark-5'}`}
               >
               <Text className='text-dark-1'>
                 {tradeInfo.tradeReturn.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}

@@ -1,33 +1,27 @@
 import { View, Text, Modal, Pressable } from 'react-native'
-import { CalendarModalProps, Trade } from '@/constants/types'
+import { CalendarModalProps } from '@/constants/types'
 import Separator from '../Separator'
 import TradeCard from '../TradingHistory/TradeCard'
 import { ScrollView } from 'react-native-gesture-handler'
+import { useEffect, useRef, useState } from 'react'
 
-const CalendarModal = ({showModal, updateShowModal, selectedDate}: CalendarModalProps) => {
-  const placeholderTrades: Trade[] = [
-    {
-      id: 1,
-      date: '2022-01-01',
-      asset: 'BTC',
-      rating: 2,
-      tradeReturn: 200,
-      balanceChange: 1,
-      direction: 'Long',
-    },
-    {
-      id: 2,
-      date: '2022-01-01',
-      asset: 'AAPL',
-      rating: 4,
-      tradeReturn: -500,
-      balanceChange: -2.5,
-      direction: 'Short',
-    }
-  ]
+const CalendarModal = ({showModal, updateShowModal, selectedDate, tradeData, calendarData}: CalendarModalProps) => {
+  const [tradeIndex, setTradeIndex] = useState(-1);
+
+  // a useRef makes sure that it actually updates
+  const showModalRef = useRef(showModal);
+  useEffect(() => {
+    showModalRef.current = showModal;
+  }, [showModal])
+
+  useEffect(() => {
+    if (calendarData.length === 0) return;
+    
+    setTradeIndex(calendarData.findIndex((day) => day.date.getTime() === selectedDate.getTime()));
+  }, [calendarData, selectedDate]);
   
   return (
-    <Modal visible={showModal} onRequestClose={() => updateShowModal(false)} animationType='fade' transparent>
+    <Modal visible={showModalRef.current} onRequestClose={() => updateShowModal(false)} animationType='fade' transparent>
       <View className='flex-1 justify-center items-center'>
         <Pressable className='absolute w-full h-full bg-dark-8/50' onPress={() => updateShowModal(false)}/>
 
@@ -35,15 +29,32 @@ const CalendarModal = ({showModal, updateShowModal, selectedDate}: CalendarModal
           <Text className='text-dark-1 font-medium text-xl mb-2 text-center'>Trading Day: {selectedDate.toLocaleDateString()}</Text>
 
           <ScrollView className='max-h-[400]' showsVerticalScrollIndicator={false}>
-            <Text className='text-dark-2 font-medium text-lg'>PnL: <Text className='text-dark-1 font-semibold'>$501.43</Text></Text>
-            <Text className='text-dark-2 font-medium text-lg'>Win Rate: <Text className='text-dark-1 font-semibold'>66.67%</Text></Text>
-            <Text className='text-dark-2 font-medium text-lg mb-2'>Trades Taken: <Text className='text-dark-1 font-semibold'>3</Text></Text>
-
+            {calendarData && tradeIndex !== -1 ?
+              <View>
+                <Text className='text-dark-2 font-medium text-lg'>PnL:&nbsp;
+                  <Text className='text-dark-1 font-semibold'>
+                    {calendarData[tradeIndex].totalReturn.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}
+                    </Text>
+                  </Text>
+                <Text className='text-dark-2 font-medium text-lg'>
+                  Win Rate:&nbsp;
+                  <Text className='text-dark-1 font-semibold'>
+                    {calendarData[tradeIndex].trades.reduce((total, trade) => total + (trade.tradeReturn > 0 ? 1 : 0), 0) / (calendarData[tradeIndex].trades.length / 100)}%
+                  </Text>
+                </Text>
+                <Text className='text-dark-2 font-medium text-lg mb-2'>Trades Taken: <Text className='text-dark-1 font-semibold'>{calendarData[tradeIndex].trades.length}</Text></Text>
+              </View>
+                : <Text className='text-dark-3 text-lg font-semibold text-center my-2'>Couldn't Find Any Trades :(</Text>
+            }
             <Separator margin='mb-4'/>
 
-            <TradeCard tradeInfo={placeholderTrades[0]} lightBg />
-            <TradeCard tradeInfo={placeholderTrades[1]} lightBg />
-            <TradeCard tradeInfo={placeholderTrades[0]} lightBg />
+            {
+              tradeData.map((trade, index: number) => {
+                if (new Date(new Date(trade.date).setHours(0, 0, 0, 0)).getTime() === selectedDate.getTime()) {
+                  return <TradeCard key={index} tradeInfo={trade} lightBg />
+                }
+              })
+            }
           </ScrollView>
           <Pressable
             className='px-2 py-1 border border-dark-5 bg-dark-6 active:bg-dark-3/60 rounded-lg'
