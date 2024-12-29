@@ -5,7 +5,7 @@ import { TradeCardProps, TradePage } from '@/constants/types'
 import { router } from 'expo-router'
 import { useSQLiteContext } from 'expo-sqlite'
 
-const TradeCard = ({ tradeInfo, lightBg }: TradeCardProps) => {
+const TradeCard = ({ tradeInfo, lightBg, onClick, onClickValue }: TradeCardProps) => {
   const formatDate = (date: string) => {
     const newDate = new Date(date);
     return newDate.toLocaleDateString();
@@ -31,6 +31,7 @@ const TradeCard = ({ tradeInfo, lightBg }: TradeCardProps) => {
           // Sends the user to the logtrade page, with all of the trade's information
           // This allows it to not show/push to the trade page if it couldn't get the trade
           sendToTradePage();
+          if (onClick) onClick(onClickValue);
         }}
       >
         <View className='flex flex-row justify-between mb-2'>

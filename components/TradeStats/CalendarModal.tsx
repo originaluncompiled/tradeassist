@@ -45,7 +45,7 @@ const CalendarModal = ({showModal, updateShowModal, selectedDate, tradeData, cal
             {
               tradeData.map((trade, index: number) => {
                 if (new Date(new Date(trade.date).setHours(0, 0, 0, 0)).getTime() === selectedDate.getTime()) {
-                  return <TradeCard key={index} tradeInfo={trade} lightBg />
+                  return <TradeCard key={index} tradeInfo={trade} onClick={updateShowModal} onClickValue={false} lightBg />
                 }
               })
             }

@@ -73,6 +73,8 @@ export type TradeContextType = {
 export type TradeCardProps = {
   tradeInfo: Trade,
   lightBg?: boolean,
+  onClick?: Function,
+  onClickValue?: any, //any because the onClick function can have any parameters
 }
 
 export type DeleteSectionProps = {
