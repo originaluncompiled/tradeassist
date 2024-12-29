@@ -1,9 +1,9 @@
 import { View, Text, Modal, Pressable } from 'react-native'
 import { CalendarModalProps } from '@/constants/types'
-import Separator from '../Separator'
-import TradeCard from '../TradingHistory/TradeCard'
+import Separator from '../../Separator'
+import TradeCard from '../../TradingHistory/TradeCard'
 import { ScrollView } from 'react-native-gesture-handler'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const CalendarModal = ({showModal, updateShowModal, selectedDate, tradeData, calendarData}: CalendarModalProps) => {
   const [tradeIndex, setTradeIndex] = useState(-1);
@@ -27,18 +27,18 @@ const CalendarModal = ({showModal, updateShowModal, selectedDate, tradeData, cal
               <View>
                 <Text className='text-dark-2 font-medium text-lg'>PnL:&nbsp;
                   <Text className='text-dark-1 font-semibold'>
-                    {calendarData[tradeIndex].totalReturn.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}
+                    {calendarData[tradeIndex] && calendarData[tradeIndex].totalReturn.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}
                     </Text>
                   </Text>
                 <Text className='text-dark-2 font-medium text-lg'>
                   Win Rate:&nbsp;
                   <Text className='text-dark-1 font-semibold'>
-                    {calendarData[tradeIndex].trades.reduce((total, trade) => total + (trade.tradeReturn > 0 ? 1 : 0), 0) / (calendarData[tradeIndex].trades.length / 100)}%
+                    {calendarData[tradeIndex]?.trades.reduce((total, trade) => total + (trade.tradeReturn > 0 ? 1 : 0), 0) / (calendarData[tradeIndex]?.trades.length / 100)}%
                   </Text>
                 </Text>
-                <Text className='text-dark-2 font-medium text-lg mb-2'>Trades Taken: <Text className='text-dark-1 font-semibold'>{calendarData[tradeIndex].trades.length}</Text></Text>
+                <Text className='text-dark-2 font-medium text-lg mb-2'>Trades Taken: <Text className='text-dark-1 font-semibold'>{calendarData[tradeIndex]?.trades.length}</Text></Text>
               </View>
-                : <Text className='text-dark-3 text-lg font-semibold text-center my-2'>Couldn't Find Any Trades :(</Text>
+                : <Text className='text-dark-3 text-lg font-semibold text-center my-2'>No Trades Found :(</Text>
             }
             <Separator margin='mb-4'/>
 

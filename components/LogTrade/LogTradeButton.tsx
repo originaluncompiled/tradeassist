@@ -67,7 +67,7 @@ const LogTradeButton = ({ isEditingTrade }: LogTradeButtonProps) => {
         );
       });
       
-      router.navigate('/(tabs)/tradehistory');
+      router.dismiss();
     } catch (error) {
       console.log('Error writing trade:', error);
     }

@@ -1,6 +1,6 @@
 import { ScrollView, View } from 'react-native'
 import AccountOverview from '@/components/AccountOverview'
-import CalendarView from '@/components/TradeStats/CalendarView'
+import CalendarView from '@/components/TradeStats/Calendar/CalendarView'
 import CurrentStreak from '@/components/TradeStats/CurrentStreak'
 import WinPercentage from '@/components/TradeStats/WinRate'
 import TradeDuration from '@/components/TradeStats/TradeDuration'
@@ -13,6 +13,7 @@ import { colors } from '@/constants/colors'
 import { useFocusEffect } from 'expo-router'
 import { useSQLiteContext } from 'expo-sqlite'
 import { Trade } from '@/constants/types'
+import { TradeDataByDay, useStats } from '@/hooks/useStats'
 
 const Index = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -36,7 +37,7 @@ const Index = () => {
   const db = useSQLiteContext();
   const getTradeData = async () => {
     try {
-      const result: Trade[] = await db.getAllAsync('SELECT id, date, asset, rating, tradeReturn, balanceChange, direction FROM trades ORDER BY date DESC');
+      const result: Trade[] = await db.getAllAsync('SELECT id, date, asset, rating, tradeReturn, balanceChange, direction, tradeOutcome FROM trades ORDER BY date DESC');
       
       setTradeData(result);
     } catch (error) {
@@ -47,6 +48,40 @@ const Index = () => {
   useEffect(() => {
     getTradeData();
   }, [, refreshing]);
+
+  const { setTradeDataByDay } = useStats();
+  useEffect(() => {
+    try {
+      let calendarArray: TradeDataByDay = [];
+      tradeData.map((trade) => {
+        // if it's from a different month, then we don't need that trade
+        if (new Date(trade.date).getMonth() !== new Date().getMonth()) return;
+        // if the date already exists, add the trade to it, otherwise add a new object for that day
+        if (calendarArray.find((day) => new Date(day.date.setHours(0, 0, 0, 0)).getTime() === new Date(trade.date).getTime())) {
+          calendarArray[calendarArray.findIndex((day) => new Date(day.date.setHours(0, 0, 0, 0)).getTime() === new Date(trade.date).getTime())].trades.push(trade);
+        } else {
+          calendarArray.push({ date: new Date(trade.date), totalReturn: 0, outcome: 'BREAK EVEN', trades: [trade] });
+        }
+      })
+  
+      calendarArray.map((day) => {
+        day.trades.map((trade) => {
+          day.totalReturn += trade.tradeReturn;
+        })
+  
+        if (day.totalReturn > 0) {
+          day.outcome = 'WIN';
+        } else if (day.totalReturn < 0) {
+          day.outcome = 'LOSS';
+        }
+      })
+  
+      setTradeDataByDay(calendarArray.reverse());
+    } catch (error) {
+      console.log('Error sorting trade data by day: ', error);
+      setTradeDataByDay([]);
+    }
+  }, [tradeData]);
 
   return (
     // TO-DO: Drag-To-Refresh (Same as on Trade History page)
@@ -69,8 +104,9 @@ const Index = () => {
       */}
       
       <CalendarView tradeData={tradeData} />
-      {/* <CurrentStreak tradeData={tradeData} />
-      <WinPercentage tradeData={tradeData} />
+      {/* TRADEDATA IS USED TO CALUCLATE TRADESTREAK */}
+      <CurrentStreak tradeData={tradeData} />
+      {/* <WinPercentage tradeData={tradeData} />
       <TradeDuration tradeData={tradeData} />
       <RiskReward tradeData={tradeData} />
       <Drawdown tradeData={tradeData} />

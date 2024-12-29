@@ -90,6 +90,7 @@ const Calendar = ({ calendarData, updateCalendarModal, updateSelectedDate }: Cal
                     : (calendarData[calendarData.findIndex(day => new Date(day.date).getDate() === currentDay)]?.outcome === 'LOSS' ? 'active:bg-accent-red bg-accent-red/50 border-accent-red border'
                       : (calendarData[calendarData.findIndex(day => new Date(day.date).getDate() === currentDay)]?.outcome === 'BREAK EVEN' ? 'active:bg-dark-5 bg-dark-5/50 border border-dark-5' : 'bg-dark-6/50 border border-dark-6'))
                   }
+                  ${currentDay === new Date().getDate() && 'border-2 border-green-2'}
                 `}
                 onPress={() => {
                   if (calendarData[calendarData.findIndex(day => new Date(day.date).getDate() === currentDay)] === undefined) return;

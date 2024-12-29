@@ -16,7 +16,7 @@ const AccountOverview = () => {
       </Text>
 
       <View className='flex-row items-center justify-between pt-1'>
-        <Text className='text-lg text-dark-2'>PnL</Text>
+        <Text className='text-lg text-dark-2'>All Time PnL</Text>
         <Text className={`font-bold text-2xl ${account.return[0] === '+' ? 'text-accent-green' : 'text-accent-red'}`}>
           {account.return}
         </Text>

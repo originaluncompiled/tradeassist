@@ -9,15 +9,9 @@ export type Trade = {
   asset: string,
   rating: number,
   tradeReturn: number,
+  tradeOutcome: 'WIN' | 'LOSS' | 'BREAK EVEN',
   balanceChange: number,
   direction: 'Long' | 'Short',
-}
-
-export type JournalEntry = {
-  date: string,
-  asset: string,
-  status?: 'Win' | 'Loss' | 'Break Even',
-  snippet?: string,
 }
 
 export type TradePage = {
@@ -80,10 +74,6 @@ export type TradeCardProps = {
 export type DeleteSectionProps = {
   updateLongPressed: (value: boolean) => void,
   updateSelectedTrades: (id: number, action: 'add' | 'remove' | 'clear') => void,
-}
-
-export type JournalCardProps = {
-  journalInfo: JournalEntry,
 }
 
 export type TradePopUpProps = {
@@ -205,10 +195,6 @@ export type ScrollerProps = {
   timeObj: { hours: number; minutes: number }
 }
 
-export type TradeData = {
-  tradeData: Trade[],
-}
-
 export type CalendarViewProps = {
   tradeData: Trade[],
 }
@@ -240,4 +226,8 @@ export type CalendarModalProps = {
   selectedDate: Date,
   tradeData: Trade[],
   updateShowModal: (value: boolean) => void,
+}
+
+export type CurrentStreakProps = {
+  tradeData: Trade[],
 }
