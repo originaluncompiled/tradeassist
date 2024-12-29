@@ -8,12 +8,6 @@ import { useEffect, useRef, useState } from 'react'
 const CalendarModal = ({showModal, updateShowModal, selectedDate, tradeData, calendarData}: CalendarModalProps) => {
   const [tradeIndex, setTradeIndex] = useState(-1);
 
-  // a useRef makes sure that it actually updates
-  const showModalRef = useRef(showModal);
-  useEffect(() => {
-    showModalRef.current = showModal;
-  }, [showModal])
-
   useEffect(() => {
     if (calendarData.length === 0) return;
     
@@ -21,7 +15,7 @@ const CalendarModal = ({showModal, updateShowModal, selectedDate, tradeData, cal
   }, [calendarData, selectedDate]);
   
   return (
-    <Modal visible={showModalRef.current} onRequestClose={() => updateShowModal(false)} animationType='fade' transparent>
+    <Modal visible={showModal} onRequestClose={() => updateShowModal(false)} animationType='fade' transparent>
       <View className='flex-1 justify-center items-center'>
         <Pressable className='absolute w-full h-full bg-dark-8/50' onPress={() => updateShowModal(false)}/>
 

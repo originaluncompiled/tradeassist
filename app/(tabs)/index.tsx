@@ -23,16 +23,11 @@ const Index = () => {
       setRefreshing(false);
     }, 500);
   }, []);
-  
-  const [showCalendarModal, setShowCalendarModal] = useState(false);
-  const updateShowCalendarModal = (value: boolean) => {setShowCalendarModal(value); console.log('yahoooo')}
 
   // auto refreshes the screen when it's focused (when the user comes back to it)
   useFocusEffect(
     useCallback(() => {
       onRefresh();
-      // sets showCalendarModal to false, if the user clicks on a <TradeCard /> (or the page get's unfocused)
-      setShowCalendarModal(false);
     }, [])
   );
 
@@ -73,7 +68,7 @@ const Index = () => {
       <FilterSection filters={filters} updateFilters={updateFilters}/>
       */}
       
-      <CalendarView tradeData={tradeData} showModal={showCalendarModal} updateShowModal={() => updateShowCalendarModal} />
+      <CalendarView tradeData={tradeData} />
       {/* <CurrentStreak tradeData={tradeData} />
       <WinPercentage tradeData={tradeData} />
       <TradeDuration tradeData={tradeData} />

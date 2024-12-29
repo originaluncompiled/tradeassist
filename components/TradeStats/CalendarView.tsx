@@ -4,9 +4,12 @@ import { useEffect, useState } from 'react'
 import { Trade, CalendarViewProps } from '@/constants/types'
 import Calendar from './Calendar'
 
-const CalendarView = ({ tradeData, showModal, updateShowModal }: CalendarViewProps) => {
+const CalendarView = ({ tradeData }: CalendarViewProps) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const updateSelectedDate = (date: Date) => setSelectedDate(date);
+  
+  const [showCalendarModal, setShowCalendarModal] = useState(false);
+  const updateShowCalendarModal = (value: boolean) => setShowCalendarModal(value);
 
   const [calendarData, setCalendarData] = useState<{date: Date, totalReturn: number, outcome: 'WIN' | 'LOSS' | 'BREAK EVEN', trades: Trade[]}[]>([]);
 
@@ -41,8 +44,8 @@ const CalendarView = ({ tradeData, showModal, updateShowModal }: CalendarViewPro
   return (
     <View className='flex-1 mx-[16px] my-2 rounded-2xl px-4 pt-3 pb-4 bg-dark-7 border border-dark-6'>
       {<CalendarModal
-        showModal={showModal}
-        updateShowModal={updateShowModal}
+        showModal={showCalendarModal}
+        updateShowModal={updateShowCalendarModal}
         selectedDate={selectedDate}
         calendarData={calendarData}
         tradeData={tradeData.filter((trade) => new Date(trade.date).getMonth() === new Date().getMonth())}
@@ -52,7 +55,7 @@ const CalendarView = ({ tradeData, showModal, updateShowModal }: CalendarViewPro
 
       <Calendar
         calendarData={calendarData}
-        updateCalendarModal={updateShowModal}
+        updateCalendarModal={updateShowCalendarModal}
         updateSelectedDate={updateSelectedDate}
       />
 

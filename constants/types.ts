@@ -209,8 +209,6 @@ export type TradeData = {
 
 export type CalendarViewProps = {
   tradeData: Trade[],
-  showModal: boolean,
-  updateShowModal: (value: boolean) => void,
 }
 
 export type ChartCardProps = {
