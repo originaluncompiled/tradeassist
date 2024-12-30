@@ -30,6 +30,8 @@ const CurrentStreak = ({ tradeData }: CurrentStreakProps) => {
     for (let i = previousStreakStart; i >= 0; i--) {
       if (tradeDataByDay[i].outcome === previousStreakType) {
         previousStreak++;
+      }else if (tradeDataByDay[i].outcome === 'BREAK EVEN') {
+        continue;
       } else {
         break;
       }
@@ -66,8 +68,8 @@ const CurrentStreak = ({ tradeData }: CurrentStreakProps) => {
     for (let i = previousStreakStart; i < tradeData.length; i++) {
       if (tradeData[i].tradeOutcome === previousStreakType) {
         previousStreak++;
-      // } else if (tradeData[i].tradeOutcome === 'BREAK EVEN') {
-      //   return
+      } else if (tradeData[i].tradeOutcome === 'BREAK EVEN') {
+        continue;
       } else {
         break;
       }
