@@ -1,27 +1,40 @@
 import { View, Text } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { TradeData } from '@/constants/types'
 
 const RiskReward = ({ tradeData }: TradeData) => {
   const [riskRewardInfo, setRiskRewardInfo] = useState({ avgRiskReward: 0, highestRiskReward: 0, lowestRiskReward: 0 });
 
-  const getRiskReward = () => {
-    const totalRiskReward = tradeData.reduce((total, trade) => total + trade.target / trade.risk, 0); // in milliseconds
-    const avgRiskReward = Number((totalRiskReward / tradeData.length).toFixed(2));
+  const getRiskReward = useMemo(() => {
+    let amountOfValidTrades = tradeData.length;
+    const totalRiskReward = tradeData.reduce((total, trade) => {
+      if (trade.target === 0 || trade.risk === 0) return total;
 
-    const riskRewardArray = tradeData.map((trade) => trade.target / trade.risk);
+      // 'valid trades' are trades where there are both a target and a risk value
+      amountOfValidTrades++;
+      return total + (trade.target / trade.risk);
+    }, 0); // in milliseconds
+    // only calculate risk/reward where there are target and risk values
+    const avgRiskReward = Number((totalRiskReward / amountOfValidTrades).toFixed(2));
+
+    const riskRewardArray: number[] = [];
+    tradeData.forEach((trade) => {
+      const riskReward = trade.target / trade.risk;
+
+      if (riskReward > 0) riskRewardArray.push(riskReward);
+    });
 
     const longestTradeDuration = Math.max(...riskRewardArray);
     const shortestTradeDuration = Math.min(...riskRewardArray);
 
-    setRiskRewardInfo({ avgRiskReward: avgRiskReward, highestRiskReward: longestTradeDuration, lowestRiskReward: shortestTradeDuration });
-  }
+    return { avgRiskReward: avgRiskReward, highestRiskReward: longestTradeDuration, lowestRiskReward: shortestTradeDuration };
+  }, [tradeData]);
 
   useEffect(() => {
     if (tradeData.length < 1) return;
-
-    getRiskReward();
-  }, [tradeData]);
+    
+    setRiskRewardInfo(getRiskReward);
+  }, [getRiskReward]);
 
   return (
     <View className='flex-1 mx-[16px] my-2 rounded-2xl px-4 pt-3 pb-4 bg-dark-7 border border-dark-6'>

@@ -1,11 +1,12 @@
 import { View, Text } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { TradeData } from '@/constants/types'
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 const TradeDuration = ({ tradeData }: TradeData) => {
   const [tradeDurationInfo, setTradeDurationInfo] = useState({ avgTradeDuration: 0, longestTradeDuration: 0, shortestTradeDuration: 0 });
 
-  const getTradeDurations = () => {
+  const getTradeDurations = useMemo(() => {
     // tradedurations get set to be in minutes, because that's the smallest time unit we want to display
     const totalTradeDuration = tradeData.reduce((total, trade) => total + (trade.exitTime - trade.entryTime), 0); // in milliseconds
     const avgTradeDuration = Math.round((totalTradeDuration / 1000 / 60) / tradeData.length);
@@ -15,12 +16,14 @@ const TradeDuration = ({ tradeData }: TradeData) => {
     const longestTradeDuration = Math.max(...tradeDurationArray);
     const shortestTradeDuration = Math.min(...tradeDurationArray);
 
-    setTradeDurationInfo({ avgTradeDuration: avgTradeDuration, longestTradeDuration: longestTradeDuration, shortestTradeDuration: shortestTradeDuration });
-  }
+    return { avgTradeDuration: avgTradeDuration, longestTradeDuration: longestTradeDuration, shortestTradeDuration: shortestTradeDuration };
+  }, [tradeData]);
 
   useEffect(() => {
-    getTradeDurations()
-  }, [tradeData]);
+    if (tradeData.length < 1) return;
+
+    setTradeDurationInfo(getTradeDurations)
+  }, [getTradeDurations]);
 
   const formatDuration = (duration: number) => {
     let formattedDuration = '';

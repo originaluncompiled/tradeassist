@@ -1,11 +1,11 @@
 import { View, Text } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { TradeData } from '@/constants/types'
 
 const WinRate = ({ tradeData }: TradeData) => {
   const [winRateInfo, setWinRateInfo] = useState({ winRate: 0, profitFactor: 0, wins: 0, losses: 0, breakEvens: 0 });
 
-  const getWinRateInfo = () => {
+  const getWinRateInfo = useMemo(() => {
     const wins = tradeData.filter((trade) => trade.tradeOutcome === 'WIN').length;
     const losses = tradeData.filter((trade) => trade.tradeOutcome === 'LOSS').length;
     const breakEvens = tradeData.filter((trade) => trade.tradeOutcome === 'BREAK EVEN').length;
@@ -18,14 +18,14 @@ const WinRate = ({ tradeData }: TradeData) => {
 
     const profitFactor = Number((grossWins / ((grossLosses * -1) + grossBreakEvens)).toFixed(2));
 
-    setWinRateInfo({ winRate: winRate, profitFactor: profitFactor, wins: wins, losses: losses, breakEvens: breakEvens });
-  };
+    return { winRate: winRate, profitFactor: profitFactor, wins: wins, losses: losses, breakEvens: breakEvens };
+  }, [tradeData]);
 
   useEffect(() => {
     if (tradeData.length < 1) return;
 
-    getWinRateInfo();
-  }, [tradeData]);
+    setWinRateInfo(getWinRateInfo);
+  }, [getWinRateInfo]);
 
   return (
     <View className='flex-1 mx-[16px] my-2 rounded-2xl px-4 pt-3 pb-4 bg-dark-7 border border-dark-6'>

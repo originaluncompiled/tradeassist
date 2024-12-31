@@ -15,7 +15,7 @@ const DailyPnL = () => {
 
   return (
     <View className='flex-1 mx-[16px] my-2 rounded-2xl px-4 pt-3 pb-4 bg-dark-7 border border-dark-6'>
-      <Text className='font-bold text-xl text-dark-2'>Daily PnL - Last 30 Days</Text>
+      <Text className='font-bold text-xl mb-2 text-dark-2'>Daily PnL - Last 30 Days</Text>
       <View style={{ height: 300 }}>
         {tradeDataByDay.length > 0 &&
           <CartesianChart
@@ -31,13 +31,6 @@ const DailyPnL = () => {
               lineColor: colors.dark.neutral_4,
               linePathEffect: <DashPathEffect intervals={[5, 5]} />
             }]}
-            xAxis={{
-              font: labelFont,
-              labelColor: colors.dark.neutral_2,
-              formatXLabel(label) {
-                return `${new Date(label).toLocaleDateString('en-US', { day: 'numeric' })}`
-              },
-            }}
             onChartBoundsChange={(chartBounds) => {
               chartBounds = {
                 ...chartBounds,

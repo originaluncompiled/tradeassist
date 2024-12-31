@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useStats } from '@/hooks/useStats'
 import { TradeData } from '@/constants/types'
 
@@ -7,7 +7,7 @@ const CurrentStreak = ({ tradeData }: TradeData) => {
   const { tradeDataByDay } = useStats();
 
   const [dayStreak, setDayStreaks] = useState({ current: NaN, currentStreakType: 'WIN', previous: NaN, previousStreakType: 'LOSS' });
-  const getDayStreaks = () => {
+  const getDayStreaks = useMemo(() => {
     let currentStreak = 0;
     let currentStreakType = tradeDataByDay[tradeDataByDay.findLastIndex((day) => day.outcome === 'WIN' || day.outcome === 'LOSS')]?.outcome;
     
@@ -37,11 +37,11 @@ const CurrentStreak = ({ tradeData }: TradeData) => {
       }
     }
 
-    setDayStreaks({ current: currentStreak, currentStreakType: currentStreakType, previous: previousStreak, previousStreakType: previousStreakType });
-  }
+    return { current: currentStreak, currentStreakType: currentStreakType, previous: previousStreak, previousStreakType: previousStreakType };
+  }, [tradeDataByDay]);
 
   const [tradeStreak, setTradeStreaks] = useState({ current: NaN, currentStreakType: 'WIN', previous: NaN, previousStreakType: 'LOSS' });
-  const getTradeStreaks = () => {
+  const getTradeStreaks = useMemo(() => {
     let currentStreak = 0;
     let currentStreakType = tradeData[tradeData.findIndex((trade) => trade.tradeOutcome === 'WIN' || trade.tradeOutcome === 'LOSS')]?.tradeOutcome;
     
@@ -75,15 +75,17 @@ const CurrentStreak = ({ tradeData }: TradeData) => {
       }
     }
 
-    setTradeStreaks({ current: currentStreak, currentStreakType: currentStreakType, previous: previousStreak, previousStreakType: previousStreakType });
-  }
+    return { current: currentStreak, currentStreakType: currentStreakType, previous: previousStreak, previousStreakType: previousStreakType };
+  }, [tradeData]);
 
   useEffect(() => {
     if (tradeDataByDay.length < 1 && tradeData.length < 1) return;
     
-    getDayStreaks();
-    getTradeStreaks();
-  }, [tradeDataByDay])
+    setDayStreaks(getDayStreaks);
+
+    if (getTradeStreaks === undefined) return;
+    setTradeStreaks(getTradeStreaks);
+  }, [getDayStreaks, getTradeStreaks]);
 
   return (
     <View className='flex-1 mx-[16px] my-2 rounded-2xl px-4 pt-3 pb-4 bg-dark-7 border border-dark-6'>

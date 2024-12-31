@@ -3,14 +3,14 @@ import { Area, CartesianChart, Line } from 'victory-native'
 import { colors } from '@/constants/colors'
 import { DashPathEffect, useFont } from '@shopify/react-native-skia'
 import { TradeData } from '@/constants/types'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 const font = require('../../assets/Inter.ttf')
 
 const Drawdown = ({ tradeData }: TradeData) => {
   const labelFont = useFont(font, 12);
   const [graphData, setGraphData] = useState<{day: number, balance: number}[]>([{ day: 0, balance: 0 }]);
 
-  const getDrawdown = () => {
+  const getDrawdown = useMemo(() => {
     let data: {day: number, balance: number}[] = [{ day: 0, balance: 0 }];
     // tradeData goes from the latest trade to the oldest trade
     const drawdownArray = tradeData.toReversed().map((trade) => trade.tradeReturn);
@@ -22,15 +22,15 @@ const Drawdown = ({ tradeData }: TradeData) => {
 
       return total = total + currentValue;
     }, 0);
-
-    setGraphData(data);
-  };
+    
+    return data;
+  }, [tradeData]);
 
   useEffect(() => {
     if (tradeData.length < 1) return;
 
-    getDrawdown();
-  }, [tradeData]);
+    setGraphData(getDrawdown);
+  }, [getDrawdown]);
 
   return (
     <View className='flex-1 mx-[16px] my-2 rounded-2xl px-4 pt-3 pb-4 bg-dark-7 border border-dark-6'>

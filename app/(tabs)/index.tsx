@@ -2,7 +2,7 @@ import { ScrollView, View } from 'react-native'
 import AccountOverview from '@/components/AccountOverview'
 import CalendarView from '@/components/TradeStats/Calendar/CalendarView'
 import CurrentStreak from '@/components/TradeStats/CurrentStreak'
-import WinPercentage from '@/components/TradeStats/WinRate'
+import WinRate from '@/components/TradeStats/WinRate'
 import TradeDuration from '@/components/TradeStats/TradeDuration'
 import RiskReward from '@/components/TradeStats/RiskReward'
 import Drawdown from '@/components/TradeStats/Drawdown'
@@ -118,7 +118,7 @@ const Index = () => {
       
       <CalendarView tradeData={tradeData} />
       <CurrentStreak tradeData={tradeData} />
-      <WinPercentage tradeData={tradeData} />
+      <WinRate tradeData={tradeData} />
       <TradeDuration tradeData={tradeData} />
       <RiskReward tradeData={tradeData} />
       <Drawdown tradeData={tradeData} />

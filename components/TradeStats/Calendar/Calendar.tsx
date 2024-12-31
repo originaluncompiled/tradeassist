@@ -96,8 +96,10 @@ const Calendar = ({ calendarData, updateCalendarModal, updateSelectedDate }: Cal
                 `}
                 onPress={() => {
                   if (calendarData[calendarData.findIndex(day => new Date(day.date).getDate() === currentDay)] === undefined) return;
+                  
+                  const day = calendarData.findIndex(day => new Date(day.date).getDate() === currentDay);
 
-                  updateSelectedDate(new Date(new Date(calendarData[0].date).setHours(0, 0, 0, 0)));
+                  updateSelectedDate(new Date(new Date(calendarData[day].date).setHours(0, 0, 0, 0)));
                   updateCalendarModal(true);
                 }}
               >
