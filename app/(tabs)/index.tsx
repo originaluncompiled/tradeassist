@@ -6,13 +6,13 @@ import WinPercentage from '@/components/TradeStats/WinRate'
 import TradeDuration from '@/components/TradeStats/TradeDuration'
 import RiskReward from '@/components/TradeStats/RiskReward'
 import Drawdown from '@/components/TradeStats/Drawdown'
-import DailyReturns from '@/components/TradeStats/DailyReturns'
+import DailyPnL from '@/components/TradeStats/DailyPnL'
 import { RefreshControl } from 'react-native-gesture-handler'
 import { useCallback, useEffect, useState } from 'react'
 import { colors } from '@/constants/colors'
 import { useFocusEffect } from 'expo-router'
 import { useSQLiteContext } from 'expo-sqlite'
-import { Trade } from '@/constants/types'
+import { TradePage } from '@/constants/types'
 import { TradeDataByDay, useStats } from '@/hooks/useStats'
 
 const Index = () => {
@@ -32,12 +32,12 @@ const Index = () => {
     }, [])
   );
 
-  const [tradeData, setTradeData] = useState<Trade[]>([]);
+  const [tradeData, setTradeData] = useState<TradePage[]>([]);
 
   const db = useSQLiteContext();
   const getTradeData = async () => {
     try {
-      const result: Trade[] = await db.getAllAsync('SELECT id, date, asset, rating, tradeReturn, balanceChange, direction, tradeOutcome FROM trades ORDER BY date DESC');
+      const result: TradePage[] = await db.getAllAsync('SELECT * FROM trades ORDER BY date DESC');
       
       setTradeData(result);
     } catch (error) {
@@ -106,11 +106,11 @@ const Index = () => {
       <CalendarView tradeData={tradeData} />
       {/* TRADEDATA IS USED TO CALUCLATE TRADESTREAK */}
       <CurrentStreak tradeData={tradeData} />
-      {/* <WinPercentage tradeData={tradeData} />
+      <WinPercentage tradeData={tradeData} />
       <TradeDuration tradeData={tradeData} />
       <RiskReward tradeData={tradeData} />
       <Drawdown tradeData={tradeData} />
-      <DailyReturns tradeData={tradeData} /> */}
+      <DailyPnL />
       <View className='h-[80px] bg-dark-8' />
     </ScrollView>
   )

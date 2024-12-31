@@ -8,8 +8,8 @@ export type Trade = {
   date: string,
   asset: string,
   rating: number,
-  tradeReturn: number,
   tradeOutcome: 'WIN' | 'LOSS' | 'BREAK EVEN',
+  tradeReturn: number,
   balanceChange: number,
   direction: 'Long' | 'Short',
 }
@@ -196,7 +196,7 @@ export type ScrollerProps = {
 }
 
 export type CalendarViewProps = {
-  tradeData: Trade[],
+  tradeData: TradePage[],
 }
 
 export type ChartCardProps = {
@@ -209,7 +209,7 @@ export type CalendarProps = {
     date: Date;
     totalReturn: number;
     outcome: "WIN" | "LOSS" | "BREAK EVEN";
-    trades: Trade[];
+    trades: TradePage[];
   }[],
   updateSelectedDate: (date: Date) => void,
   updateCalendarModal: (value: boolean) => void,
@@ -220,14 +220,14 @@ export type CalendarModalProps = {
     date: Date;
     totalReturn: number;
     outcome: "WIN" | "LOSS" | "BREAK EVEN";
-    trades: Trade[];
+    trades: TradePage[];
   }[],
   showModal: boolean,
   selectedDate: Date,
-  tradeData: Trade[],
+  tradeData: TradePage[],
   updateShowModal: (value: boolean) => void,
 }
 
-export type CurrentStreakProps = {
-  tradeData: Trade[],
+export type TradeData = {
+  tradeData: TradePage[],
 }

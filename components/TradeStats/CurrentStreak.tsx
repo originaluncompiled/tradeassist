@@ -1,9 +1,9 @@
 import { View, Text } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useStats } from '@/hooks/useStats';
-import { CurrentStreakProps } from '@/constants/types';
+import { useStats } from '@/hooks/useStats'
+import { TradeData } from '@/constants/types'
 
-const CurrentStreak = ({ tradeData }: CurrentStreakProps) => {
+const CurrentStreak = ({ tradeData }: TradeData) => {
   const { tradeDataByDay } = useStats();
 
   const [dayStreak, setDayStreaks] = useState({ current: NaN, currentStreakType: 'WIN', previous: NaN, previousStreakType: 'LOSS' });
