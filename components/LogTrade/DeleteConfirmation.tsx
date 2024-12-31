@@ -4,6 +4,7 @@ import { useSQLiteContext } from 'expo-sqlite';
 import { router } from 'expo-router';
 import useDisplayDelete from '@/hooks/useDisplayDelete';
 import { useTradeContext } from '@/hooks/useTradeContext';
+import { colors } from '@/constants/colors';
 
 const DeleteConfirmation = () => {
   const { tradeState } = useTradeContext();
@@ -22,13 +23,16 @@ const DeleteConfirmation = () => {
   const {showModal, setShowModal} = useDisplayDelete();
 
   return (
-    <Modal style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} visible={showModal} onRequestClose={() => setShowModal(false)} animationType='fade' transparent>
-      <View className='flex-1 justify-center items-center'>
-        {/* Allows the user to just press anywhere on screen to dismiss */}
-        {/* TO-DO: FIX, BECAUSE SOMETHING HERE IS CAUSING THE USER TO HAVE TO CLICK TWICE ON STUFF SOMETIMES */}
-        <Pressable className='absolute w-full h-full bg-dark-8/50' onPressIn={() => setShowModal(false)}/>
-
-        <View className='flex-1 justify-center items-center'>
+    <Modal
+      style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+      visible={showModal}
+      onRequestClose={() => setShowModal(false)}
+      animationType='fade'
+      transparent
+    >
+        <Pressable className='flex-1 justify-center items-center bg-dark-8/50'
+          onPress={() => setShowModal(false)}
+        >
           <View className='border-2 border-dark-6 rounded-2xl p-4 bg-dark-7 w-3/4'>
             <Text className='text-dark-2 italic font-semibold text-2xl pb-1'>Are You Sure?</Text>
             <Text className='font-medium text-lg'>
@@ -53,8 +57,7 @@ const DeleteConfirmation = () => {
               </Pressable>
             </View>
           </View>
-        </View>
-      </View>
+        </Pressable>
     </Modal>
   )
 }

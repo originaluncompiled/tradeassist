@@ -79,8 +79,7 @@ const Index = () => {
           day.outcome = 'LOSS';
         }
       })
-  
-      console.log('calendar array updated')
+
       return calendarArray.toReversed();
     } catch (error) {
       console.log('Error sorting trade data by day: ', error);
@@ -89,7 +88,6 @@ const Index = () => {
   }, [tradeData]);
 
   const updateTradeDataByDay = useCallback((data: TradeDataByDay | undefined) => {
-    console.log('update trade data by day called')
     if (!data) return;
     setTradeDataByDay(data);
   }, []);
