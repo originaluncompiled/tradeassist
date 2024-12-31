@@ -7,7 +7,7 @@ import { useStats } from '@/hooks/useStats'
 
 const CalendarView = ({ tradeData }: CalendarViewProps) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const updateSelectedDate = (date: Date) => setSelectedDate(date);
+  const updateSelectedDate = (date: Date) => setSelectedDate(new Date(date.setHours(0, 0, 0, 0)));
   
   const [showCalendarModal, setShowCalendarModal] = useState(false);
   const updateShowCalendarModal = (value: boolean) => setShowCalendarModal(value);
@@ -24,7 +24,7 @@ const CalendarView = ({ tradeData }: CalendarViewProps) => {
         tradeData={tradeData.filter((trade) => new Date(trade.date).getMonth() === new Date().getMonth())}
       />}
       {/* TO-DO: Have ability to switch between months (using filters???) */}
-      <Text className='font-bold text-xl text-dark-2'>Trade Calendar - {new Date(new Date().getFullYear(), new Date().getMonth()).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</Text>
+      <Text className='font-bold text-xl text-dark-2'>Trade Calendar - {new Date(new Date().getTime()).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</Text>
 
       <Calendar
         calendarData={tradeDataByDay}

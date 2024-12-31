@@ -11,7 +11,7 @@ const CalendarModal = ({showModal, updateShowModal, selectedDate, tradeData, cal
   useEffect(() => {
     if (calendarData.length === 0) return;
     
-    setTradeIndex(calendarData.findIndex((day) => day.date.getTime() === selectedDate.getTime()));
+    setTradeIndex(calendarData.findIndex((day) => new Date(day.date).getTime() === selectedDate.getTime()));
   }, [calendarData, selectedDate]);
   
   return (
@@ -44,7 +44,9 @@ const CalendarModal = ({showModal, updateShowModal, selectedDate, tradeData, cal
 
             {
               tradeData.map((trade, index: number) => {
-                if (new Date(new Date(trade.date).setHours(0, 0, 0, 0)).getTime() === selectedDate.getTime()) {
+                const tradeDate = new Date(trade.date).setHours(0, 0, 0, 0);
+
+                if (tradeDate === selectedDate.getTime()) {
                   return <TradeCard key={index} tradeInfo={trade} onClick={updateShowModal} onClickValue={false} lightBg />
                 }
               })

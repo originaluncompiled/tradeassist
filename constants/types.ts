@@ -206,7 +206,7 @@ export type ChartCardProps = {
 
 export type CalendarProps = {
   calendarData: {
-    date: Date;
+    date: string;
     totalReturn: number;
     outcome: "WIN" | "LOSS" | "BREAK EVEN";
     trades: TradePage[];
@@ -217,7 +217,7 @@ export type CalendarProps = {
 
 export type CalendarModalProps = {
   calendarData: {
-    date: Date;
+    date: string;
     totalReturn: number;
     outcome: "WIN" | "LOSS" | "BREAK EVEN";
     trades: TradePage[];

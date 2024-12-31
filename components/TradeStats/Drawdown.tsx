@@ -13,7 +13,7 @@ const Drawdown = ({ tradeData }: TradeData) => {
   const getDrawdown = () => {
     let data: {day: number, balance: number}[] = [{ day: 0, balance: 0 }];
     // tradeData goes from the latest trade to the oldest trade
-    const drawdownArray = tradeData.reverse().map((trade) => trade.tradeReturn);
+    const drawdownArray = tradeData.toReversed().map((trade) => trade.tradeReturn);
     drawdownArray.reduce((total, currentValue, index) => {      
       data.push({
         day: index + 1,

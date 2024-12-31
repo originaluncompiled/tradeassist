@@ -8,7 +8,7 @@ import RiskReward from '@/components/TradeStats/RiskReward'
 import Drawdown from '@/components/TradeStats/Drawdown'
 import DailyPnL from '@/components/TradeStats/DailyPnL'
 import { RefreshControl } from 'react-native-gesture-handler'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { colors } from '@/constants/colors'
 import { useFocusEffect } from 'expo-router'
 import { useSQLiteContext } from 'expo-sqlite'
@@ -20,9 +20,6 @@ const Index = () => {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 500);
   }, []);
 
   // auto refreshes the screen when it's focused (when the user comes back to it)
@@ -35,37 +32,44 @@ const Index = () => {
   const [tradeData, setTradeData] = useState<TradePage[]>([]);
 
   const db = useSQLiteContext();
-  const getTradeData = async () => {
+  const fetchTradeData = async () => {
     try {
       const result: TradePage[] = await db.getAllAsync('SELECT * FROM trades ORDER BY date DESC');
       
+      // If there was no change in the trade data/database, then we don't need to cause a bunch of re-renders by updating tradeData
+      if (JSON.stringify(result) === JSON.stringify(tradeData)) {
+        setRefreshing(false);
+        return;
+      };
       setTradeData(result);
+      setRefreshing(false);
     } catch (error) {
       console.log('Error fetching trade info: ', error);
     }
-  }
+  };
 
   useEffect(() => {
-    getTradeData();
-  }, [, refreshing]);
+    fetchTradeData();
+  }, [refreshing]);
 
   const { setTradeDataByDay } = useStats();
-  useEffect(() => {
+  const sortedTradeDataByDay = useMemo(() => {
     try {
       let calendarArray: TradeDataByDay = [];
-      tradeData.map((trade) => {
+
+      tradeData.forEach((trade) => {
         // if it's from a different month, then we don't need that trade
         if (new Date(trade.date).getMonth() !== new Date().getMonth()) return;
         // if the date already exists, add the trade to it, otherwise add a new object for that day
-        if (calendarArray.find((day) => new Date(day.date.setHours(0, 0, 0, 0)).getTime() === new Date(trade.date).getTime())) {
-          calendarArray[calendarArray.findIndex((day) => new Date(day.date.setHours(0, 0, 0, 0)).getTime() === new Date(trade.date).getTime())].trades.push(trade);
+        if (calendarArray.find((day) => new Date(new Date(day.date).setHours(0, 0, 0, 0)).getTime() === new Date(trade.date).getTime())) {
+          calendarArray[calendarArray.findIndex((day) => new Date(new Date(day.date).setHours(0, 0, 0, 0)).getTime() === new Date(trade.date).getTime())].trades.push(trade);
         } else {
-          calendarArray.push({ date: new Date(trade.date), totalReturn: 0, outcome: 'BREAK EVEN', trades: [trade] });
+          calendarArray.push({ date: trade.date.toString(), totalReturn: 0, outcome: 'BREAK EVEN', trades: [trade] });
         }
       })
   
-      calendarArray.map((day) => {
-        day.trades.map((trade) => {
+      calendarArray.forEach((day) => {
+        day.trades.forEach((trade) => {
           day.totalReturn += trade.tradeReturn;
         })
   
@@ -76,12 +80,23 @@ const Index = () => {
         }
       })
   
-      setTradeDataByDay(calendarArray.reverse());
+      console.log('calendar array updated')
+      return calendarArray.toReversed();
     } catch (error) {
       console.log('Error sorting trade data by day: ', error);
-      setTradeDataByDay([]);
+      return [];
     }
   }, [tradeData]);
+
+  const updateTradeDataByDay = useCallback((data: TradeDataByDay | undefined) => {
+    console.log('update trade data by day called')
+    if (!data) return;
+    setTradeDataByDay(data);
+  }, []);
+
+  useEffect(() => {
+    updateTradeDataByDay(sortedTradeDataByDay);
+  }, [sortedTradeDataByDay]);
 
   return (
     // TO-DO: Drag-To-Refresh (Same as on Trade History page)
@@ -104,7 +119,6 @@ const Index = () => {
       */}
       
       <CalendarView tradeData={tradeData} />
-      {/* TRADEDATA IS USED TO CALUCLATE TRADESTREAK */}
       <CurrentStreak tradeData={tradeData} />
       <WinPercentage tradeData={tradeData} />
       <TradeDuration tradeData={tradeData} />

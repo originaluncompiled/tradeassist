@@ -1,7 +1,7 @@
 import { TradePage } from '@/constants/types'
 import { create } from 'zustand'
 
-export type TradeDataByDay = {date: Date, totalReturn: number, outcome: 'WIN' | 'LOSS' | 'BREAK EVEN', trades: TradePage[]}[]
+export type TradeDataByDay = {date: string, totalReturn: number, outcome: 'WIN' | 'LOSS' | 'BREAK EVEN', trades: TradePage[]}[]
 
 type StatsProps = {
   tradeDataByDay: TradeDataByDay,

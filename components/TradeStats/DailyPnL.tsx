@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Bar, CartesianChart } from 'victory-native'
 import { colors } from '@/constants/colors'
 import { DashPathEffect, useFont } from '@shopify/react-native-skia'
@@ -8,11 +8,6 @@ const font = require('../../assets/Inter.ttf')
 
 const DailyPnL = () => {
   const { tradeDataByDay } = useStats();
-  const [graphData, setGraphData] = useState(tradeDataByDay?.reverse());
-
-  useEffect(() => {
-    setGraphData(tradeDataByDay?.reverse());
-  }, [tradeDataByDay]);
 
   const [chartBounds, setChartBounds] = useState({ bottom: 0, left: 0, right: 0, top: 0 });
 
@@ -22,9 +17,9 @@ const DailyPnL = () => {
     <View className='flex-1 mx-[16px] my-2 rounded-2xl px-4 pt-3 pb-4 bg-dark-7 border border-dark-6'>
       <Text className='font-bold text-xl text-dark-2'>Daily PnL - Last 30 Days</Text>
       <View style={{ height: 300 }}>
-        {graphData.length > 0 &&
+        {tradeDataByDay.length > 0 &&
           <CartesianChart
-            data={graphData}
+            data={tradeDataByDay}
             xKey='date'
             yKeys={['totalReturn']}
             yAxis={[{
@@ -40,15 +35,15 @@ const DailyPnL = () => {
               font: labelFont,
               labelColor: colors.dark.neutral_2,
               formatXLabel(label) {
-                return `${label?.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`
+                return `${new Date(label).toLocaleDateString('en-US', { day: 'numeric' })}`
               },
             }}
             onChartBoundsChange={(chartBounds) => {
               chartBounds = {
                 ...chartBounds,
                 // Extend the bounds to account for the full width of edge bars, so that they don't get cut off
-                left: chartBounds.left + ((chartBounds.right - chartBounds.left) / (graphData.length) / 4),
-                right: chartBounds.right - ((chartBounds.right - chartBounds.left) / (graphData.length) / 4),
+                left: chartBounds.left + ((chartBounds.right - chartBounds.left) / (tradeDataByDay.length) / 4),
+                right: chartBounds.right - ((chartBounds.right - chartBounds.left) / (tradeDataByDay.length) / 4),
               }
               setChartBounds(chartBounds);
             }}
@@ -60,7 +55,7 @@ const DailyPnL = () => {
                 chartBounds={chartBounds}
                 color={colors.green_2}
                 roundedCorners={{ topLeft: 5, topRight: 5 }}
-                barWidth={(chartBounds.right - chartBounds.left) / (graphData.length + 1)}
+                barWidth={(chartBounds.right - chartBounds.left) / (tradeDataByDay.length + 1)}
               />
             )}
           </CartesianChart>

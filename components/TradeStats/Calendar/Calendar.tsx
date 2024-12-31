@@ -21,7 +21,7 @@ const Calendar = ({ calendarData, updateCalendarModal, updateSelectedDate }: Cal
   useEffect(() => {
     // on first load, calendarData is empty, which causes all kinds of not fun things
     if (calendarData.length > 0) {
-      getMonthInfo(calendarData[0].date);
+      getMonthInfo(new Date(calendarData[0].date));
       createCalendarLayoutArray();
     };
   }, [calendarData])
@@ -95,7 +95,7 @@ const Calendar = ({ calendarData, updateCalendarModal, updateSelectedDate }: Cal
                 onPress={() => {
                   if (calendarData[calendarData.findIndex(day => new Date(day.date).getDate() === currentDay)] === undefined) return;
 
-                  updateSelectedDate(new Date(calendarData[0].date.getFullYear(), calendarData[0].date.getMonth(), currentDay, 0, 0, 0, 0));
+                  updateSelectedDate(new Date(new Date(calendarData[0].date).setHours(0, 0, 0, 0)));
                   updateCalendarModal(true);
                 }}
               >

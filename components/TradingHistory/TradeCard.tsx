@@ -8,7 +8,7 @@ import { useSQLiteContext } from 'expo-sqlite'
 const TradeCard = ({ tradeInfo, lightBg, onClick, onClickValue }: TradeCardProps) => {
   const formatDate = (date: string) => {
     const newDate = new Date(date);
-    return newDate.toLocaleDateString();
+    return newDate.toLocaleDateString('en-us', { month: '2-digit', day: '2-digit', year: 'numeric' });
   }
 
   // Send the trade's information that corresponds to the trade card clicked
