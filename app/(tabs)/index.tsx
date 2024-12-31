@@ -64,7 +64,7 @@ const Index = () => {
         if (calendarArray.find((day) => new Date(new Date(day.date).setHours(0, 0, 0, 0)).getTime() === new Date(trade.date).getTime())) {
           calendarArray[calendarArray.findIndex((day) => new Date(new Date(day.date).setHours(0, 0, 0, 0)).getTime() === new Date(trade.date).getTime())].trades.push(trade);
         } else {
-          calendarArray.push({ date: trade.date.toString(), totalReturn: 0, outcome: 'BREAK EVEN', trades: [trade] });
+          calendarArray.push({ date: `${trade.date}`, totalReturn: 0, outcome: 'BREAK EVEN', trades: [trade] });
         }
       })
   

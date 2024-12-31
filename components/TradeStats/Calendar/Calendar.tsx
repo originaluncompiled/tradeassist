@@ -1,13 +1,13 @@
 import { View, Text, Pressable } from 'react-native'
 import { CalendarProps } from '@/constants/types'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 const Calendar = ({ calendarData, updateCalendarModal, updateSelectedDate }: CalendarProps) => {
   const [monthInfo, setMonthInfo] = useState({ firstDayOfMonth: 0, monthLength: 0, lastDayOfMonth: 0 });
   const [calendarLayout, setCalendarLayout] = useState<('empty' | number)[][]>([]);
 
-  const getMonthInfo = (date: Date) => {
-    const formattedDate = new Date(date);
+  const getMonthInfo = useMemo(() => {
+    const formattedDate = new Date(calendarData[0]?.date);
     
     // returns 1-31, because it's used as a 'counter' for how many days to display on the calendar
     const daysInMonth = new Date(formattedDate.getFullYear(), formattedDate.getMonth() + 1, 0).getDate();
@@ -15,16 +15,8 @@ const Calendar = ({ calendarData, updateCalendarModal, updateSelectedDate }: Cal
     const firstDayOfMonth = new Date(formattedDate.getFullYear(), formattedDate.getMonth(), 1).getDay();
     const lastDayOfMonth = new Date(formattedDate.getFullYear(), formattedDate.getMonth(), daysInMonth).getDay();
     
-    setMonthInfo({ monthLength: daysInMonth, firstDayOfMonth: firstDayOfMonth, lastDayOfMonth: lastDayOfMonth });
-  };
-
-  useEffect(() => {
-    // on first load, calendarData is empty, which causes all kinds of not fun things
-    if (calendarData.length > 0) {
-      getMonthInfo(new Date(calendarData[0].date));
-      createCalendarLayoutArray();
-    };
-  }, [calendarData])
+    return { monthLength: daysInMonth, firstDayOfMonth: firstDayOfMonth, lastDayOfMonth: lastDayOfMonth };
+  }, [calendarData]);
 
   const createCalendarLayoutArray = () => {
     const emptyStartingDays = 6 - (6 - monthInfo.firstDayOfMonth);
@@ -46,7 +38,17 @@ const Calendar = ({ calendarData, updateCalendarModal, updateSelectedDate }: Cal
 
     // an array (month) containing arrays (weeks) containing 'empty' or numbers (days)
     setCalendarLayout(calendarArray);
-  }
+  };
+
+  useEffect(() => {
+    if (calendarData.length < 1) return; 
+
+    setMonthInfo(getMonthInfo);
+  }, [getMonthInfo])
+
+  useEffect(() => {
+    createCalendarLayoutArray();
+  }, [monthInfo]);
 
   return (
     <View>
