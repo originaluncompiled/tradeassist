@@ -1,5 +1,5 @@
 import { ScrollView, View } from 'react-native'
-import AccountOverview from '@/components/AccountOverview'
+import AccountOverview from '@/components/TradeStats/AccountOverview'
 import CalendarView from '@/components/TradeStats/Calendar/CalendarView'
 import CurrentStreak from '@/components/TradeStats/CurrentStreak'
 import WinRate from '@/components/TradeStats/WinRate'
