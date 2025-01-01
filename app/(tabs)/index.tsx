@@ -58,8 +58,6 @@ const Index = () => {
       let calendarArray: TradeDataByDay = [];
 
       tradeData.forEach((trade) => {
-        // if it's from a different month, then we don't need that trade
-        if (new Date(trade.date).getMonth() !== new Date().getMonth()) return;
         // if the date already exists, add the trade to it, otherwise add a new object for that day
         if (calendarArray.find((day) => new Date(new Date(day.date).setHours(0, 0, 0, 0)).getTime() === new Date(trade.date).getTime())) {
           calendarArray[calendarArray.findIndex((day) => new Date(new Date(day.date).setHours(0, 0, 0, 0)).getTime() === new Date(trade.date).getTime())].trades.push(trade);

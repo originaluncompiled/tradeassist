@@ -7,7 +7,7 @@ const Calendar = ({ calendarData, updateCalendarModal, updateSelectedDate }: Cal
   const [calendarLayout, setCalendarLayout] = useState<('empty' | number)[][]>([]);
 
   const getMonthInfo = useMemo(() => {
-    const formattedDate = new Date(calendarData[0]?.date);
+    const formattedDate = new Date();
     
     // returns 1-31, because it's used as a 'counter' for how many days to display on the calendar
     const daysInMonth = new Date(formattedDate.getFullYear(), formattedDate.getMonth() + 1, 0).getDate();
@@ -16,10 +16,10 @@ const Calendar = ({ calendarData, updateCalendarModal, updateSelectedDate }: Cal
     const lastDayOfMonth = new Date(formattedDate.getFullYear(), formattedDate.getMonth(), daysInMonth).getDay();
     
     return { monthLength: daysInMonth, firstDayOfMonth: firstDayOfMonth, lastDayOfMonth: lastDayOfMonth };
-  }, [calendarData]);
+  }, []);
 
   const createCalendarLayoutArray = () => {
-    const emptyStartingDays = 6 - (6 - monthInfo.firstDayOfMonth);
+    const emptyStartingDays = monthInfo.firstDayOfMonth;
     const emptyEndingDays = 6 - monthInfo.lastDayOfMonth;
 
     const amountOfWeeks = Math.ceil((emptyStartingDays + monthInfo.monthLength + emptyEndingDays) / 7);
@@ -28,10 +28,10 @@ const Calendar = ({ calendarData, updateCalendarModal, updateSelectedDate }: Cal
       return Array.from({ length: 7 }).map((_, dayIndex) => {
         const currentDay = dayIndex + 1 + (weekIndex * 7);
 
-        if (currentDay < emptyStartingDays || currentDay > emptyStartingDays + monthInfo.monthLength) {
+        if (currentDay <= emptyStartingDays || currentDay > emptyStartingDays + monthInfo.monthLength) {
           return 'empty';
         } else {
-          return currentDay;
+          return currentDay - emptyStartingDays;
         }
       });
     });
@@ -41,8 +41,6 @@ const Calendar = ({ calendarData, updateCalendarModal, updateSelectedDate }: Cal
   };
 
   useEffect(() => {
-    if (calendarData.length < 1) return; 
-
     setMonthInfo(getMonthInfo);
   }, [getMonthInfo])
 
@@ -88,18 +86,18 @@ const Calendar = ({ calendarData, updateCalendarModal, updateSelectedDate }: Cal
                 className={`
                   flex-1 items-center justify-center mt-2 rounded-lg px-2 py-2
                   ${dayIndex !== 6 && 'mr-1'} 
-                  ${calendarData[calendarData.findIndex(day => new Date(day.date).getDate() === currentDay)]?.outcome === 'WIN' ? 'active:bg-accent-green bg-accent-green/50 border-accent-green border'
-                    : (calendarData[calendarData.findIndex(day => new Date(day.date).getDate() === currentDay)]?.outcome === 'LOSS' ? 'active:bg-accent-red bg-accent-red/50 border-accent-red border'
-                      : (calendarData[calendarData.findIndex(day => new Date(day.date).getDate() === currentDay)]?.outcome === 'BREAK EVEN' ? 'active:bg-dark-5 bg-dark-5/50 border border-dark-5' : 'bg-dark-6/50 border border-dark-6'))
+                  ${calendarData[calendarData.findIndex(day => new Date(day?.date).getDate() === currentDay)]?.outcome === 'WIN' ? 'active:bg-accent-green bg-accent-green/50 border-accent-green border'
+                    : (calendarData[calendarData.findIndex(day => new Date(day?.date).getDate() === currentDay)]?.outcome === 'LOSS' ? 'active:bg-accent-red bg-accent-red/50 border-accent-red border'
+                      : (calendarData[calendarData.findIndex(day => new Date(day?.date).getDate() === currentDay)]?.outcome === 'BREAK EVEN' ? 'active:bg-dark-5 bg-dark-5/50 border border-dark-5' : 'bg-dark-6/50 border border-dark-6'))
                   }
                   ${currentDay === new Date().getDate() && 'border-2 border-green-2'}
                 `}
                 onPress={() => {
-                  if (calendarData[calendarData.findIndex(day => new Date(day.date).getDate() === currentDay)] === undefined) return;
+                  if (calendarData[calendarData.findIndex(day => new Date(day?.date).getDate() === currentDay)] === undefined) return;
                   
-                  const day = calendarData.findIndex(day => new Date(day.date).getDate() === currentDay);
+                  const day = calendarData.findIndex(day => new Date(day?.date).getDate() === currentDay);
 
-                  updateSelectedDate(new Date(new Date(calendarData[day].date).setHours(0, 0, 0, 0)));
+                  updateSelectedDate(new Date(new Date(calendarData[day]?.date).setHours(0, 0, 0, 0)));
                   updateCalendarModal(true);
                 }}
               >

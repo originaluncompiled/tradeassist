@@ -37,8 +37,8 @@ const CalendarModal = ({showModal, updateShowModal, selectedDate, tradeData, cal
                   </Text>
                 </Text>
                 <Text className='text-dark-2 font-medium text-lg mb-2'>Trades Taken: <Text className='text-dark-1 font-semibold'>{calendarData[tradeIndex]?.trades.length}</Text></Text>
-              </View>
-                : <Text className='text-dark-3 text-lg font-semibold text-center my-2'>No Trades Found :(</Text>
+              </View> :
+              <Text className='text-dark-3 text-lg font-semibold text-center my-2'>No Trades Found :(</Text>
             }
             <Separator margin='mb-4'/>
 
