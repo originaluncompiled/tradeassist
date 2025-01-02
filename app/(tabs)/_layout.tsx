@@ -44,7 +44,7 @@ const Layout = () => {
       }}
     >
       <Tabs.Screen
-        name='index'
+        name='stats'
         options={{
           headerShown: false,
           tabBarShowLabel: false,

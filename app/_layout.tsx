@@ -28,18 +28,20 @@ const RootLayout = () => {
     >
       <GestureHandlerRootView>
         <BottomSheetModalProvider>
-            <SafeAreaView style={{ flex: 1, backgroundColor: colors.dark.neutral_8 }}>
-              <Stack
-                screenOptions={{
-                  headerShown: false,
-                  contentStyle: {
-                    backgroundColor: colors.dark.neutral_8 
-                  }
-                }}>
-                <Stack.Screen name='(tabs)' />
-                <Stack.Screen name='trade-history' />
-              </Stack>
-            </SafeAreaView>
+          <SafeAreaView style={{ flex: 1, backgroundColor: colors.dark.neutral_8 }}>
+            <Stack
+              screenOptions={{
+                headerShown: false,
+                contentStyle: {
+                  backgroundColor: colors.dark.neutral_8 
+                }
+              }}>
+              <Stack.Screen name='index' />
+              <Stack.Screen name='setup' />
+              <Stack.Screen name='(tabs)' />
+              <Stack.Screen name='trade-history' />
+            </Stack>
+          </SafeAreaView>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
     </SQLiteProvider>

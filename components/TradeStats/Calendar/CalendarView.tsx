@@ -29,7 +29,7 @@ const CalendarView = ({ tradeData }: CalendarViewProps) => {
 
   useEffect(() => {
     setCalendarData(filteredTradeData);
-  }, [filteredTradeData]);
+  }, [tradeDataByDay]);
 
   return (
     <View className='flex-1 mx-[16px] my-2 rounded-2xl px-4 pt-3 pb-4 bg-dark-7 border border-dark-6'>
@@ -53,10 +53,16 @@ const CalendarView = ({ tradeData }: CalendarViewProps) => {
 
       <View className='flex-1'>
         <View className='flex-row justify-between mt-1'>
-          <Text className='text-dark-2'><Text className='text-dark-1 font-semibold text-lg'></Text> Winning Days</Text>
-          <Text className='text-dark-2'><Text className='text-dark-1 font-semibold text-lg'></Text> Break Even Days</Text>
+          <Text className='text-dark-2'><Text className='text-dark-1 font-semibold text-lg'>
+            {calendarData?.filter(day => day.outcome === 'WIN').length
+          }</Text> Winning Days</Text>
+          <Text className='text-dark-2'><Text className='text-dark-1 font-semibold text-lg'>
+            {calendarData?.filter(day => day.outcome === 'BREAK EVEN').length}
+          </Text> Break Even Days</Text>
         </View>
-        <Text className='text-dark-2'><Text className='text-dark-1 font-semibold text-lg'></Text> Losing Days</Text>
+        <Text className='text-dark-2'><Text className='text-dark-1 font-semibold text-lg'>
+          {calendarData?.filter(day => day.outcome === 'LOSS').length}
+        </Text> Losing Days</Text>
       </View>
     </View>
   )

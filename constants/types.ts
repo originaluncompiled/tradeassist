@@ -165,8 +165,8 @@ export type LogTradeButtonProps = {
 }
 
 export type DeleteConfirmationProps = {
-  updateLongPressed: (value: boolean) => void,
-  updateSelectedTrades: (id: number, action: 'add' | 'remove' | 'clear') => void,
+  showModal: boolean,
+  setShowModal: (value: boolean) => void
 }
 
 export type FilterModalProps = {
@@ -230,4 +230,23 @@ export type CalendarModalProps = {
 
 export type TradeData = {
   tradeData: TradePage[],
+}
+
+export type ProgressBarProps = {
+  setupProgress: 1 | 2,
+}
+
+export type AssetTradedProps = {
+  accountInfo: { accountName: string, currencyCode: string, startingAccountBalance: string, market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto', assets: []},
+  updateAccountInfo: (info: Partial<{ accountName: string, currencyCode: string, startingAccountBalance: string, market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto', assets: []}>) => void,
+}
+
+export type StepOneProps = {
+  accountInfo: { accountName: string, currencyCode: string, startingAccountBalance: string, market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto', assets: []},
+  updateAccountInfo: (info: Partial<{ accountName: string, currencyCode: string, startingAccountBalance: string, market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto', assets: []}>) => void,
+}
+
+export type WarningModalProps = {
+  showModal: boolean,
+  updateShowModal: (value: boolean) => void,
 }

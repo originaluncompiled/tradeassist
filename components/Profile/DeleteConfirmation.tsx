@@ -1,25 +1,33 @@
 import { View, Text, Modal, Pressable } from 'react-native'
-import React from 'react'
+import { useEffect, useState } from 'react'
 import { useSQLiteContext } from 'expo-sqlite'
 import { router } from 'expo-router'
-import useDisplayDelete from '@/hooks/useDisplayDelete'
-import { useTradeContext } from '@/hooks/useTradeContext'
+import { DeleteConfirmationProps } from '@/constants/types'
+import { useUserSettings } from '@/hooks/useUserSettings'
 
-const DeleteConfirmation = () => {
-  const { tradeState } = useTradeContext();
+const DeleteConfirmation = ({ showModal, setShowModal }: DeleteConfirmationProps) => {
+  const { setAccountId, accountId } = useUserSettings();
 
   const db = useSQLiteContext();
-  const deleteTrade = async (tradeId: number) => {
+  const deleteAccount = async () => {
     try {
-      await db.runAsync('DELETE FROM trades WHERE id = ?', [tradeId]);
+      await db.runAsync('DELETE FROM accounts WHERE id = ?', [accountId]);
     
-      router.dismiss();
+      setAccountId(0);
+      router.dismissTo('/');
     } catch (error) {
-      console.log('Couldn\'t Delete Trade: ', error)
+      console.log('Couldn\'t Delete Account: ', error)
     }
   }
 
-  const {showModal, setShowModal} = useDisplayDelete();
+  const [count, setCount] = useState(4);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount((prevCount) => prevCount - 1);
+    }, 1000);
+    if (count === 0) clearInterval(interval);
+  }, []);
 
   return (
     <Modal
@@ -33,9 +41,9 @@ const DeleteConfirmation = () => {
         onPress={() => setShowModal(false)}
       >
         <View className='border-2 border-dark-6 rounded-2xl p-4 bg-dark-7 w-3/4'>
-          <Text className='text-dark-2 italic font-semibold text-2xl pb-1'>Are You Sure?</Text>
+          <Text className='text-dark-1 font-semibold text-2xl pb-1'>Are You Sure?</Text>
           <Text className='font-medium text-lg'>
-            <Text className='text-dark-1'>Do you really want to delete this trade? </Text>
+            <Text className='text-dark-3'>Do You really want to delete this account? You will lose all trades linked to it. </Text>
             <Text className='text-accent-red'>This cannot be undone!</Text>
           </Text>
           <View className='flex-row items-center justify-end mt-4'>
@@ -46,13 +54,14 @@ const DeleteConfirmation = () => {
               <Text className='text-lg font-medium text-dark-3'>Cancel</Text>
             </Pressable>
             <Pressable
-              className='px-2 py-1 rounded-lg border border-accent-red bg-accent-red/20 active:bg-accent-red/60'
+              className={`px-2 py-1 rounded-lg border border-accent-red bg-accent-red/20 ${count < 1 && 'active:bg-accent-red/60'}`}
               onPress={() => {
-                setShowModal(false);
-                deleteTrade(tradeState.id ? tradeState.id : 0);
+                if (count < 0) {
+                  deleteAccount();
+                }
               }}
             >
-              <Text className='text-lg  font-medium text-accent-red'>Delete</Text>
+              <Text className='text-lg  font-medium text-accent-red'>{count + 1 > 0 ? `Wait (${count})` : 'Delete'}</Text>
             </Pressable>
           </View>
         </View>

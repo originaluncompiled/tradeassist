@@ -69,7 +69,7 @@ const DailyPnL = () => {
               />
             )}
           </CartesianChart> :
-          <View className='flex-1 justify-center items-center'><Text className='text-dark-1 text-lg'>No Trades This Month</Text></View>
+          <View className='flex-1 justify-center items-center'><Text className='text-dark-1 text-lg'>No Trades Found</Text></View>
         }
       </View>
     </View>

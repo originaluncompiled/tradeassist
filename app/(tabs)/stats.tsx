@@ -15,7 +15,7 @@ import { useSQLiteContext } from 'expo-sqlite'
 import { TradePage } from '@/constants/types'
 import { TradeDataByDay, useStats } from '@/hooks/useStats'
 
-const Index = () => {
+const Stats = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
@@ -126,4 +126,4 @@ const Index = () => {
   )
 }
 
-export default Index
+export default Stats

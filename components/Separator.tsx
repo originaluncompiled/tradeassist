@@ -2,12 +2,13 @@ import { View } from 'react-native'
 import React from 'react'
 
 type SeparatorProps = {
-  margin?: string
+  margin?: string,
+  color?: string,
 }
 
-const Separator = ({ margin }: SeparatorProps) => {
+const Separator = ({ margin, color }: SeparatorProps) => {
   return (
-    <View className={`border rounded-sm border-dark-4/10 ${margin}`} />
+    <View className={`border rounded-sm border-dark-4/10 ${margin} ${color}`} />
   )
 }
 
