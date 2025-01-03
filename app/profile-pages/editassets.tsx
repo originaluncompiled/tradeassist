@@ -29,7 +29,7 @@ const editassets = () => {
 
   useEffect(() => {
     fetchAssets();
-  })
+  }, [])
 
   return (
     <View className='flex-1 bg-dark-8 px-8'>

@@ -29,7 +29,7 @@ const index = () => {
     } catch(error) {
       console.log('Error updating account info and navigating: ', error);
     }
-  }, [accountId]);
+  }, [accounts]);
 
   const db = useSQLiteContext();
   useEffect(() => {
@@ -50,7 +50,7 @@ const index = () => {
 
     fetchAccounts();
     // every time there's a new account created (indicated by the newAccountId changing) we should fetch the accounts, with that new one now
-  }, [newAccountId]);
+  }, [accountId, newAccountId]);
 
   return (
     <View className='flex-1 m-4'>
