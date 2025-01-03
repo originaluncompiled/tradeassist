@@ -18,7 +18,6 @@ export type TradePage = {
   id?: number,
   asset: string,
   date: Date,
-  assetType: 'Stocks' | 'Futures' | 'Forex' | 'Crypto' | 'Options',
   tradeReturn: number,
   tradeOutcome: 'WIN' | 'LOSS' | 'BREAK EVEN',
   direction: 'Long' | 'Short',
@@ -40,7 +39,6 @@ export type TradePage = {
 export type TradeAction = 
   { type: 'ASSET', payload: string} |
   { type: 'DATE', payload: Date} |
-  { type: 'ASSET_TYPE', payload: 'Stocks' | 'Futures' | 'Forex' | 'Crypto' | 'Options'} |
   { type: 'TRADE_RETURN', payload: number} |
   { type: 'TRADE_OUTCOME', payload: 'WIN' | 'LOSS' | 'BREAK EVEN'} |
   { type: 'DIRECTION', payload: 'Long' | 'Short'} |

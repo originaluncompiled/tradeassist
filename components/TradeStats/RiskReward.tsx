@@ -6,7 +6,7 @@ const RiskReward = ({ tradeData }: TradeData) => {
   const [riskRewardInfo, setRiskRewardInfo] = useState({ avgRiskReward: 0, highestRiskReward: 0, lowestRiskReward: 0 });
 
   const getRiskReward = useMemo(() => {
-    let amountOfValidTrades = tradeData.length;
+    let amountOfValidTrades = 0;
     const totalRiskReward = tradeData.reduce((total, trade) => {
       if (trade.target === 0 || trade.risk === 0) return total;
 
@@ -16,6 +16,7 @@ const RiskReward = ({ tradeData }: TradeData) => {
     }, 0); // in milliseconds
     // only calculate risk/reward where there are target and risk values
     const avgRiskReward = Number((totalRiskReward / amountOfValidTrades).toFixed(2));
+    console.log(totalRiskReward, amountOfValidTrades, avgRiskReward);
 
     const riskRewardArray: number[] = [];
     tradeData.forEach((trade) => {
@@ -24,8 +25,8 @@ const RiskReward = ({ tradeData }: TradeData) => {
       if (riskReward > 0) riskRewardArray.push(riskReward);
     });
 
-    const longestTradeDuration = Math.max(...riskRewardArray);
-    const shortestTradeDuration = Math.min(...riskRewardArray);
+    const longestTradeDuration = Math.max(...riskRewardArray).toString().includes('Infinity') ? 0 : Math.max(...riskRewardArray);
+    const shortestTradeDuration = Math.max(...riskRewardArray).toString().includes('Infinity') ? 0 : Math.min(...riskRewardArray);
 
     return { avgRiskReward: avgRiskReward, highestRiskReward: longestTradeDuration, lowestRiskReward: shortestTradeDuration };
   }, [tradeData]);

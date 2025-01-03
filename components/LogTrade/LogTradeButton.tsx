@@ -4,6 +4,7 @@ import { useSQLiteContext } from 'expo-sqlite'
 import { LogTradeButtonProps, TradePage } from '@/constants/types'
 import { useEffect, useRef } from 'react'
 import { useTradeContext } from '@/hooks/useTradeContext'
+import { useUserSettings } from '@/hooks/useUserSettings'
 
 const LogTradeButton = ({ isEditingTrade }: LogTradeButtonProps) => {
   const { tradeState } = useTradeContext();
@@ -14,6 +15,8 @@ const LogTradeButton = ({ isEditingTrade }: LogTradeButtonProps) => {
   useEffect(() => {
     tradeStateRef.current = tradeState;
   }, [tradeState]);
+
+  const { accountId } = useUserSettings();
   
   const db = useSQLiteContext();
 
@@ -22,9 +25,9 @@ const LogTradeButton = ({ isEditingTrade }: LogTradeButtonProps) => {
       await db.withTransactionAsync(async () => {
         const result = await db.runAsync(
           `INSERT INTO trades (
+            accountId,
             asset,
             date,
-            assetType,
             tradeReturn,
             tradeOutcome,
             direction,
@@ -44,9 +47,9 @@ const LogTradeButton = ({ isEditingTrade }: LogTradeButtonProps) => {
           )
           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
           [
+            accountId,
             state.asset,
             new Date(state.date).toISOString(),
-            state.assetType,
             state.tradeReturn,
             state.tradeOutcome,
             state.direction,
@@ -79,9 +82,9 @@ const LogTradeButton = ({ isEditingTrade }: LogTradeButtonProps) => {
         const result = await db.runAsync(
           `UPDATE trades
           SET
+            accountId = ?,
             asset = ?,
             date = ?,
-            assetType = ?,
             tradeReturn = ?,
             tradeOutcome = ?,
             direction = ?,
@@ -100,9 +103,9 @@ const LogTradeButton = ({ isEditingTrade }: LogTradeButtonProps) => {
             notes = ?
           WHERE id = ?`, 
           [
+            accountId,
             state.asset,
             new Date(state.date).toISOString(),
-            state.assetType,
             state.tradeReturn,
             state.tradeOutcome,
             state.direction,

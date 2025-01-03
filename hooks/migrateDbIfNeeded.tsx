@@ -30,7 +30,6 @@ export const migrateDbIfNeeded = async (db: SQLiteDatabase): Promise<void> => {
         accountId INTEGER NOT NULL,
         asset TEXT DEFAULT '',
         date TEXT DEFAULT '',
-        assetType TEXT DEFAULT 'Stocks',
         tradeReturn REAL DEFAULT 0,
         tradeOutcome TEXT DEFAULT 'BREAK EVEN',
         direction TEXT DEFAULT 'Long',

@@ -1,7 +1,6 @@
 import { View, Text } from 'react-native'
 import React, { useEffect, useMemo, useState } from 'react'
 import { TradeData } from '@/constants/types'
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 const TradeDuration = ({ tradeData }: TradeData) => {
   const [tradeDurationInfo, setTradeDurationInfo] = useState({ avgTradeDuration: 0, longestTradeDuration: 0, shortestTradeDuration: 0 });

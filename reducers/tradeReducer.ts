@@ -3,7 +3,6 @@ import { TradeAction, TradePage } from "@/constants/types"
 export const initialTrade: TradePage = {
   asset: '',
   date: new Date(),
-  assetType: 'Stocks',
   tradeReturn: 0,
   tradeOutcome: 'BREAK EVEN',
   direction: 'Long',
@@ -34,12 +33,6 @@ export const tradeReducer = (state: TradePage, action: TradeAction): TradePage =
       return {
         ...state,
         date: action.payload
-      };
-    }
-    case 'ASSET_TYPE': {
-      return {
-        ...state,
-        assetType: action.payload
       };
     }
     case 'TRADE_RETURN': {

@@ -4,8 +4,8 @@ import { View, Image, Text, Pressable } from 'react-native'
 
 const ProfileSection = () => {
   return (
-    // TO-DO: Add a section for when the user hasn't made an account
-    // TO-DO: Make accounts work
+    // TO-DO: Add section for seeing/editing assets
+    // TO-DO: Add section for seeing which account youre on (name of it)
     <View className='flex-row mb-4'>
       <Image
         source={require('../../assets/images/profilePicturePlaceholder.jpg')}

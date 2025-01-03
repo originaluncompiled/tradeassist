@@ -109,7 +109,7 @@ const Stats = () => {
         />
       }
     >
-      <AccountOverview />
+      <AccountOverview tradeData={tradeData} />
       {/* TO-DO: Make this work
       <FilterSection filters={filters} updateFilters={updateFilters}/>
       */}

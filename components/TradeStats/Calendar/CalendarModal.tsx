@@ -11,7 +11,7 @@ const CalendarModal = ({showModal, updateShowModal, selectedDate, tradeData, cal
   useEffect(() => {
     if (calendarData.length === 0) return;
     
-    setTradeIndex(calendarData.findIndex((day) => new Date(day.date).getTime() === selectedDate.getTime()));
+    setTradeIndex(calendarData.findIndex((day) => new Date(new Date(day.date).setHours(0, 0, 0, 0)).getTime() === selectedDate.getTime()));
   }, [calendarData, selectedDate]);
   
   return (
