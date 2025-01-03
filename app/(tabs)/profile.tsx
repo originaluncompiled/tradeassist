@@ -16,7 +16,7 @@ const Profile = () => {
   const { setAccountId, accountId } = useUserSettings();
   useEffect(() => {
     if (accountId === 0) router.dismissTo('/');
-  })
+  }, [accountId])
 
   return (
     <View className='flex-1 bg-dark-8 p-4'>

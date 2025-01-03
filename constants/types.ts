@@ -271,3 +271,10 @@ export type WarningModalProps = {
   showModal: boolean,
   updateShowModal: (value: boolean) => void,
 }
+
+export type AssetCardProps = {
+  id: number,
+  market: string,
+  assets: {assetName: string, contractSize?: string, pipSize?: string}[],
+  updateAssets: (info: {assetName: string, contractSize?: string, pipSize?: string}[]) => void
+}

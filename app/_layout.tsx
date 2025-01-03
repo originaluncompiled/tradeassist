@@ -40,6 +40,7 @@ const RootLayout = () => {
               <Stack.Screen name='setup' />
               <Stack.Screen name='(tabs)' />
               <Stack.Screen name='trade-history' />
+              <Stack.Screen name='profile-pages' />
             </Stack>
           </SafeAreaView>
         </BottomSheetModalProvider>

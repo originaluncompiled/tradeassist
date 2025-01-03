@@ -1,6 +1,5 @@
 import { View, Text, Pressable } from 'react-native'
 import Separator from '@/components/Separator'
-import Button from '@/components/Button'
 import { router, useLocalSearchParams } from 'expo-router'
 import { useUserSettings } from '@/hooks/useUserSettings'
 import { useEffect, useState } from 'react'
@@ -9,10 +8,11 @@ import { colors } from '@/constants/colors'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
 const index = () => {
+  const { accountId, setAccountId, setMarket, setStartingBalance } = useUserSettings();
+  const [accounts, setAccounts] = useState<{ id: number, name: string, market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto', startingBalance: number }[]>([]);
+
   // Get the account's id from the query params (sent from the setup page)
   const { newAccountId } = useLocalSearchParams<{ newAccountId: string }>();
-
-  const { accountId, setAccountId } = useUserSettings();
   useEffect(() => {
     if (newAccountId) {
       setAccountId(Number(newAccountId));
@@ -20,25 +20,28 @@ const index = () => {
   }, [newAccountId]);
 
   useEffect(() => {
-    // might be an issue if the first account has an id of zero (don't know if that's possible)
-    if (accountId || newAccountId) {
+    try {
+      if (!accountId || accountId === 0) return;
+
+      setMarket(accounts[accounts.findIndex(account => account.id === accountId)].market);
+      setStartingBalance(accounts[accounts.findIndex(account => account.id === accountId)].startingBalance);
       router.replace('/stats');
-    };
+    } catch(error) {
+      console.log('Error updating account info and navigating: ', error);
+    }
   }, [accountId]);
 
   const db = useSQLiteContext();
-  const [accounts, setAccounts] = useState<{ id: number, name: string }[]>([]);
-
   useEffect(() => {
     const fetchAccounts = async () => {
       try {
-        // TO-DO: Memoize this for performance, and make it get called as little as possible
-        let fetchedAccounts: { id: number, name: string }[] = await db.getAllAsync('SELECT id, name, market FROM accounts ORDER BY name DESC');
+        let fetchedAccounts: {
+          id: number,
+          name: string,
+          market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto',
+          startingBalance: number
+        }[] = await db.getAllAsync('SELECT id, name, market, startingBalance FROM accounts ORDER BY name DESC');
 
-        // If there was no change in the accounts, then we don't need to cause a bunch of re-renders by updating the accounts list
-        if (JSON.stringify(fetchedAccounts) === JSON.stringify(accounts)) {
-          return;
-        };
         setAccounts(fetchedAccounts);
       } catch (error) {
         console.log('Error fetching accounts: ', error);
@@ -46,7 +49,8 @@ const index = () => {
     }
 
     fetchAccounts();
-  }, [])
+    // every time there's a new account created (indicated by the newAccountId changing) we should fetch the accounts, with that new one now
+  }, [newAccountId]);
 
   return (
     <View className='flex-1 m-4'>
@@ -55,7 +59,17 @@ const index = () => {
       <View className='flex-1'>
         {
           accounts.map((account) => (
-            <Button key={account.id} icon='account' text={account.name} type='large' buttonAction={() => setAccountId(account.id)} />
+            <Pressable
+              key={account.id} 
+              className='flex-row justify-between border rounded-lg border-dark-5 bg-dark-6 active:bg-dark-5 p-3 my-2'
+              onPress={() => setAccountId(account.id)}
+            >
+              <View className='flex-row items-center'>
+                <MaterialCommunityIcons name='account' size={18} color={colors.dark.neutral_1} style={{ paddingLeft: 4, paddingRight: 8}} />
+                <Text className='text-dark-1 text-lg font-bold'>{account.name}</Text>
+              </View>
+              <Text className='text-dark-2 text-lg font-bold'>{account.market}</Text>
+            </Pressable>
           ))
         }
         <Pressable

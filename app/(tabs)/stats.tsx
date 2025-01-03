@@ -14,6 +14,7 @@ import { useFocusEffect } from 'expo-router'
 import { useSQLiteContext } from 'expo-sqlite'
 import { TradePage } from '@/constants/types'
 import { TradeDataByDay, useStats } from '@/hooks/useStats'
+import { useUserSettings } from '@/hooks/useUserSettings'
 
 const Stats = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -30,11 +31,12 @@ const Stats = () => {
   );
 
   const [tradeData, setTradeData] = useState<TradePage[]>([]);
+  const { accountId } = useUserSettings();
 
   const db = useSQLiteContext();
   const fetchTradeData = async () => {
     try {
-      const result: TradePage[] = await db.getAllAsync('SELECT * FROM trades ORDER BY date DESC');
+      const result: TradePage[] = await db.getAllAsync('SELECT * FROM trades WHERE accountId = ? ORDER BY date DESC', [accountId]);
       
       // If there was no change in the trade data/database, then we don't need to cause a bunch of re-renders by updating tradeData
       if (JSON.stringify(result) === JSON.stringify(tradeData)) {

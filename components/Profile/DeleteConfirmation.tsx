@@ -14,11 +14,16 @@ const DeleteConfirmation = ({ showModal, setShowModal }: DeleteConfirmationProps
       await db.runAsync('DELETE FROM accounts WHERE id = ?', [accountId]);
     
       setAccountId(0);
-      router.dismissTo('/');
     } catch (error) {
       console.log('Couldn\'t Delete Account: ', error)
     }
   }
+  // only go back to the accounts page after the account id has been reset, so that the user doesn't get redirected to the deleted account's stats page
+  useEffect(() => {
+    if (accountId === 0) {
+      router.dismissTo('/');
+    }
+  }, [accountId]);
 
   const [count, setCount] = useState(4);
 

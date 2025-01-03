@@ -9,6 +9,7 @@ import { useSQLiteContext } from 'expo-sqlite'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { colors } from '@/constants/colors'
 import { useFocusEffect } from 'expo-router'
+import { useUserSettings } from '@/hooks/useUserSettings'
 
 const TradeHistory = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -26,12 +27,13 @@ const TradeHistory = () => {
 
   const db = useSQLiteContext();
   const [tradeHistory, setTradeHistory] = useState<Trade[]>([]);
+  const { accountId } = useUserSettings();
 
   useEffect(() => {
     const fetchTradeHistory = async () => {
       try {
         // TO-DO: Memoize this for performance, and make it get called as little as possible
-        let fetchedTradeHistory: Trade[] = await db.getAllAsync('SELECT id, date, asset, rating, tradeReturn, balanceChange, direction FROM trades ORDER BY date DESC');
+        let fetchedTradeHistory: Trade[] = await db.getAllAsync('SELECT id, date, asset, rating, tradeReturn, balanceChange, direction FROM trades WHERE accountId = ? ORDER BY date DESC', [accountId]);
 
         // If there was no change in the trade history/the database, then we don't need to cause a bunch of re-renders by updating the trade history
         if (JSON.stringify(fetchedTradeHistory) === JSON.stringify(tradeHistory)) {

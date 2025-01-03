@@ -16,7 +16,6 @@ const RiskReward = ({ tradeData }: TradeData) => {
     }, 0); // in milliseconds
     // only calculate risk/reward where there are target and risk values
     const avgRiskReward = Number((totalRiskReward / amountOfValidTrades).toFixed(2));
-    console.log(totalRiskReward, amountOfValidTrades, avgRiskReward);
 
     const riskRewardArray: number[] = [];
     tradeData.forEach((trade) => {
