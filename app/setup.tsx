@@ -62,51 +62,51 @@ const setup = () => {
 
       if (newAccountId === 0) return;
       
-      accountInfo.assets.forEach(async (asset) => {
+      for (const asset of accountInfo.assets) {
         await db.withTransactionAsync(async () => {
           if (accountInfo.market === 'Forex' && asset.pipSize) {
-            const accountsResult = await db.runAsync(
+            await db.runAsync(
               `INSERT INTO assets (
                 accountId,
-                assetName TEXT NOT NULL,
-                pipSize REAL DEFAULT NULL,
+                assetName,
+                pipSize
               )
-              VALUES (?, ?, ?, ?)`, 
+              VALUES (?, ?, ?)`, 
               [
                 newAccountId,
                 asset.assetName,
-                asset.pipSize,
+                asset.pipSize
               ]
             );
           } else if (accountInfo.market === 'Futures' && asset.contractSize) {
-            const accountsResult = await db.runAsync(
+            await db.runAsync(
               `INSERT INTO assets (
                 accountId,
-                assetName TEXT NOT NULL,
-                contractSize REAL DEFAULT NULL,
+                assetName,
+                contractSize
               )
-              VALUES (?, ?, ?, ?)`, 
+              VALUES (?, ?, ?)`, 
               [
                 newAccountId,
                 asset.assetName,
-                asset.contractSize,
+                asset.contractSize
               ]
             );
           } else if (accountInfo.market === 'Crypto' || accountInfo.market === 'Stocks') {
-            const accountsResult = await db.runAsync(
+            await db.runAsync(
               `INSERT INTO assets (
                 accountId,
-                assetName TEXT NOT NULL,
+                assetName
               )
-              VALUES (?, ?, ?, ?)`, 
+              VALUES (?, ?)`, 
               [
                 newAccountId,
-                asset.assetName,
+                asset.assetName
               ]
             );
           }
         });
-      });
+      }
 
       router.dismissTo({ pathname: '/', params: { newAccountId: newAccountId } });
     } catch (error) {

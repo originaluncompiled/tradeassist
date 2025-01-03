@@ -21,10 +21,8 @@ const Profile = () => {
   return (
     <View className='flex-1 bg-dark-8 p-4'>
       {showModal && <DeleteConfirmation showModal={showModal} setShowModal={setShowModal}/>}
-      {/* <ProfileSection /> */}
-      {/* <Separator /> */}
-      
-      {/* SECTION ABOUT OTHER ACCOUNTS (Not another TradeAssist account, but another trading account (for e.g. you could have one for your crypto trading and another for stocks trading)) */}
+      {/* <ProfileSection />
+      <Separator /> */}
 
       <GeneralOptions />
       <Separator margin='my-4'/>

@@ -273,8 +273,28 @@ export type WarningModalProps = {
 }
 
 export type AssetCardProps = {
+  accountId: number,
   id: number,
   market: string,
-  assets: {assetName: string, contractSize?: string, pipSize?: string}[],
-  updateAssets: (info: {assetName: string, contractSize?: string, pipSize?: string}[]) => void
+  assets: {
+    accountId: number,
+    assetName: string,
+    contractSize?: string | null,
+    pipSize?: string | null
+  }[],
+  updateAssets: (info: {
+    accountId: number,
+    assetName: string,
+    contractSize?: string | null,
+    pipSize?: string | null
+  }[]) => void
+}
+
+export type EditAssetsButtonProps = {
+  assets: {
+    accountId: number,
+    assetName: string,
+    contractSize?: string | null,
+    pipSize?: string | null
+  }[]
 }

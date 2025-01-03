@@ -31,7 +31,6 @@ const StepTwo = ({ updateAccountInfo, accountInfo }: SetupStepProps) => {
         <Pressable
           className='flex-row items-center justify-center p-3 mb-5 mt-5 border border-dashed rounded-lg border-dark-6 bg-dark-7/50 active:bg-dark-6/50'
           onPress={() => {
-            // TO-DO: If they switch markets, clear the assets array
             if (accountInfo.market === 'Forex') {
               updateAccountInfo({ assets: [...accountInfo.assets, { assetName: '', pipSize: '' }] })
             } else if (accountInfo.market === 'Futures') {

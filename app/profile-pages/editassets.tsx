@@ -5,6 +5,7 @@ import { colors } from '@/constants/colors'
 import { useUserSettings } from '@/hooks/useUserSettings'
 import AssetCard from '@/components/Profile/AssetCard'
 import { useSQLiteContext } from 'expo-sqlite'
+import EditAssetsButton from '@/components/Profile/EditAssetsButton'
 
 const editassets = () => {
   // Prevents the add button from being above the keyboard when it's is open
@@ -12,16 +13,26 @@ const editassets = () => {
   Keyboard.addListener('keyboardDidShow', () => setKeyboardVisible(true));
   Keyboard.addListener('keyboardDidHide', () => setKeyboardVisible(false));
 
-  const [assets, setAssets] = useState<{assetName: string, contractSize?: string, pipSize?: string}[]>([]);
-  const updateAssets = (info: typeof assets) => setAssets([...info]);
+  const [assets, setAssets] = useState<{
+    accountId: number,
+    assetName: string,
+    contractSize?: string | null,
+    pipSize?: string | null
+  }[]>([]);
+  const updateAssets = (info: {
+    accountId: number,
+    assetName: string,
+    contractSize?: string | null,
+    pipSize?: string | null
+  }[]) => setAssets([...info]);
 
   const { market, accountId } = useUserSettings();
   const db = useSQLiteContext();
   const fetchAssets = async () => {
     try {
-      const result = await db.getAllAsync('SELECT * FROM assets WHERE accountId = ?', [accountId]);
-      console.log(result)
-      // setAssets(result);
+      const result: typeof assets = await db.getAllAsync('SELECT * FROM assets WHERE accountId = ?', [accountId]);
+      
+      setAssets(result);
     } catch (error) {
       console.log('Error fetching trade info: ', error);
     }
@@ -37,7 +48,7 @@ const editassets = () => {
         <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='handled' keyboardDismissMode='on-drag'>
           {
             assets.map((asset, index) => (
-              <AssetCard key={index} id={index} market={market} assets={assets} updateAssets={updateAssets} />
+              <AssetCard key={index} accountId={accountId} id={index} market={market} assets={assets} updateAssets={updateAssets} />
             ))
           }
         </ScrollView>
@@ -48,13 +59,12 @@ const editassets = () => {
           <Pressable
             className='flex-row items-center justify-center p-3 mb-5 mt-5 border border-dashed rounded-lg border-dark-6 bg-dark-7/50 active:bg-dark-6/50'
             onPress={() => {
-              // TO-DO: If they switch markets, clear the assets array
               if (market === 'Forex') {
-                updateAssets([...assets, { assetName: '', pipSize: '' }] )
+                updateAssets([...assets, { accountId: accountId, assetName: '', pipSize: '' }])
               } else if (market === 'Futures') {
-                updateAssets([...assets, { assetName: '', contractSize: '' }] )
+                updateAssets([...assets, { accountId: accountId, assetName: '', contractSize: '' }])
               } else {
-                updateAssets([...assets, { assetName: '' }] )
+                updateAssets([...assets, { accountId: accountId, assetName: '' }])
               }
             }}
           >
@@ -67,19 +77,7 @@ const editassets = () => {
             </Text>
           </Pressable>
           
-          <Pressable
-            className='rounded-lg mb-4 bg-green-2/75 active:bg-green-2 border-2 border-green-2'
-            onPress={() => {
-              console.log('save pairs')
-            }}
-          >
-            <Text className='text-lg text-dark-7 font-bold text-center p-3'>
-              Save {market === 'Forex' ? 'Pairs'
-                : market === 'Futures' ? 'Contracts'
-                : market === 'Crypto' ? 'Coins'
-                : 'Stocks'}
-            </Text>
-          </Pressable>
+          <EditAssetsButton assets={assets} />
         </View>
       }
     </View>

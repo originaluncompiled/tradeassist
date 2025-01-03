@@ -1,21 +1,21 @@
 import { View, Text, TextInput, Platform, Pressable } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { colors } from '@/constants/colors'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { AssetCardProps } from '@/constants/types'
 
-const AssetCard = ({ id, market, assets, updateAssets }: AssetCardProps) => {
+const AssetCard = ({ id, market, assets, updateAssets, accountId }: AssetCardProps) => {
   const createAssets = (text: string, action: 'name' | 'pip' | 'contract') => {
     const newAssets = [...assets];
     switch (action) {
       case 'name':
-        assets[id] = { assetName: text, pipSize: assets[id].pipSize, contractSize: assets[id].contractSize };
+        newAssets[id] = { accountId, assetName: text, pipSize: assets[id].pipSize, contractSize: assets[id].contractSize };
         break;
       case 'pip':
-        assets[id] = { assetName: assets[id].assetName, pipSize: text, contractSize: assets[id].contractSize };
+        newAssets[id] = { accountId, assetName: assets[id].assetName, pipSize: text, contractSize: assets[id].contractSize };
         break;
       case 'contract':
-        assets[id] = { assetName: assets[id].assetName, pipSize: assets[id].pipSize, contractSize: text };
+        newAssets[id] = { accountId, assetName: assets[id].assetName, pipSize: assets[id].pipSize, contractSize: text };
         break;
     }
     updateAssets(newAssets);
@@ -51,7 +51,7 @@ const AssetCard = ({ id, market, assets, updateAssets }: AssetCardProps) => {
               <Text className='text-dark-2 font-semibold text-lg'>Pip&nbsp;Size:</Text>
               <TextInput
                 className='w-1/2 text-lg text-center text-dark-1 border-b border-dark-3 px-2'
-                value={assets[id].pipSize}
+                value={assets[id].pipSize?.toString()}
                 onChangeText={(text) => createAssets(text, 'pip')}
                 placeholder='0.0001'
                 inputMode='numeric'
@@ -70,7 +70,7 @@ const AssetCard = ({ id, market, assets, updateAssets }: AssetCardProps) => {
               <Text className='text-dark-2 font-semibold text-lg'>Contract&nbsp;Size:</Text>
               <TextInput
                 className='w-1/2 text-lg text-center text-dark-1 border-b border-dark-3 px-2'
-                value={assets[id].contractSize}
+                value={assets[id].contractSize?.toString()}
                 onChangeText={(text) => createAssets(text, 'contract')}
                 placeholder='$50'
                 inputMode='numeric'
