@@ -1,13 +1,13 @@
 import { View, Text, TextInput } from 'react-native'
 import { colors } from '@/constants/colors'
 import AssetTraded from './AssetTraded'
-import { StepOneProps } from '@/constants/types'
+import { SetupStepProps } from '@/constants/types'
 import DropDownPicker from 'react-native-dropdown-picker'
 import { useEffect, useState } from 'react'
-import { countryCurrencyCodes } from '@/utils/country-currency-codes'
+import { countryCurrencyCodes } from '@/constants/country-currency-codes'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
-const StepOne = ({ updateAccountInfo, accountInfo }: StepOneProps) => {
+const StepOne = ({ updateAccountInfo, accountInfo }: SetupStepProps) => {
   const [open, setOpen] = useState(false);
   const [dropdownValue, setDropdownValue] = useState(accountInfo.currencyCode);
   useEffect(() => {

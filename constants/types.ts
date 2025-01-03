@@ -236,14 +236,37 @@ export type ProgressBarProps = {
   setupProgress: 1 | 2,
 }
 
-export type AssetTradedProps = {
-  accountInfo: { accountName: string, currencyCode: string, startingAccountBalance: string, market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto', assets: []},
-  updateAccountInfo: (info: Partial<{ accountName: string, currencyCode: string, startingAccountBalance: string, market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto', assets: []}>) => void,
+export type SetupStepProps = {
+  accountInfo: {
+    accountName: string,
+    currencyCode: string,
+    startingAccountBalance: string,
+    market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto',
+    assets: {assetName: string, contractSize?: string, pipSize?: string}[]
+  },
+  updateAccountInfo: (info: Partial<{
+    accountName: string,
+    currencyCode: string,
+    startingAccountBalance: string, market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto',
+    assets: {assetName: string, contractSize?: string, pipSize?: string}[]
+  }>) => void,
 }
 
-export type StepOneProps = {
-  accountInfo: { accountName: string, currencyCode: string, startingAccountBalance: string, market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto', assets: []},
-  updateAccountInfo: (info: Partial<{ accountName: string, currencyCode: string, startingAccountBalance: string, market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto', assets: []}>) => void,
+export type StepTwoProps = {
+  id: number,
+  accountInfo: {
+    accountName: string,
+    currencyCode: string,
+    startingAccountBalance: string,
+    market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto',
+    assets: {assetName: string, contractSize?: string, pipSize?: string}[]
+  },
+  updateAccountInfo: (info: Partial<{
+    accountName: string,
+    currencyCode: string,
+    startingAccountBalance: string, market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto',
+    assets: {assetName: string, contractSize?: string, pipSize?: string}[]
+  }>) => void,
 }
 
 export type WarningModalProps = {

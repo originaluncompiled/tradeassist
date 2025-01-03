@@ -5,7 +5,7 @@ export const countryCurrencyCodes = [
   { label: 'GBP', value: 'GBP' },
   { label: 'AUD', value: 'AUD' },
   { label: 'CAD', value: 'CAD' },
-  { label: '', value: '' }, // empty string is to separate the most common currencies with the alphabetically sorted ones
+  { label: ' ', value: ' ' }, // empty string is to separate the most common currencies with the alphabetically sorted ones
   { label: 'AED', value: 'AED' },
   { label: 'AFN', value: 'AFN' },
   { label: 'ALL', value: 'ALL' },

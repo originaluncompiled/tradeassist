@@ -21,7 +21,8 @@ const setup = () => {
     // we want the user to still be able to make the textinput blank if they wanted to
     startingAccountBalance: string,
     market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto',
-    assets: []
+    // we want the user to still be able to make the textinput blank if they wanted to
+    assets: {assetName: string, contractSize?: string, pipSize?: string}[]
   }>({ accountName: '', currencyCode: '', startingAccountBalance: '', market: 'Forex', assets: [] });
   const updateAccountInfo = (info: Partial<typeof accountInfo>) => setAccountInfo({...accountInfo, ...info});
 
@@ -30,7 +31,11 @@ const setup = () => {
   const updateShowModal = (value: boolean) => setShow(value);
 
   const handleFinishSetup = async () => {
-    if (accountInfo.accountName === '' || accountInfo.currencyCode === '' || accountInfo.startingAccountBalance === '') {
+    if (
+      accountInfo.accountName === '' || accountInfo.accountName === ' ' ||
+      accountInfo.currencyCode === '' || accountInfo.currencyCode === ' ' ||
+      accountInfo.startingAccountBalance === '' || accountInfo.startingAccountBalance === ' '
+    ) {
       updateShowModal(true);
       return;
     }
@@ -55,24 +60,53 @@ const setup = () => {
         newAccountId = accountsResult.lastInsertRowId;
       });
 
-      // TO-DO: When you've implemented the ability to create an asset
-      // await db.withTransactionAsync(async () => {
-      //   const accountsResult = await db.runAsync(
-      //     `INSERT INTO assets (
-      //       accountId,
-      //       assetName TEXT NOT NULL,
-      //       contractSize REAL DEFAULT NULL,
-      //       pipSize REAL DEFAULT NULL,
-      //     )
-      //     VALUES (?, ?, ?, ?)`, 
-      //     [
-      //       newAccountId,
-      //       accountInfo.currencyCode,
-      //       accountInfo.market,
-      //       accountInfo.startingAccountBalance,
-      //     ]
-      //   );
-      // });
+      if (newAccountId === 0) return;
+      
+      accountInfo.assets.forEach(async (asset) => {
+        await db.withTransactionAsync(async () => {
+          if (accountInfo.market === 'Forex' && asset.pipSize) {
+            const accountsResult = await db.runAsync(
+              `INSERT INTO assets (
+                accountId,
+                assetName TEXT NOT NULL,
+                pipSize REAL DEFAULT NULL,
+              )
+              VALUES (?, ?, ?, ?)`, 
+              [
+                newAccountId,
+                asset.assetName,
+                asset.pipSize,
+              ]
+            );
+          } else if (accountInfo.market === 'Futures' && asset.contractSize) {
+            const accountsResult = await db.runAsync(
+              `INSERT INTO assets (
+                accountId,
+                assetName TEXT NOT NULL,
+                contractSize REAL DEFAULT NULL,
+              )
+              VALUES (?, ?, ?, ?)`, 
+              [
+                newAccountId,
+                asset.assetName,
+                asset.contractSize,
+              ]
+            );
+          } else if (accountInfo.market === 'Crypto' || accountInfo.market === 'Stocks') {
+            const accountsResult = await db.runAsync(
+              `INSERT INTO assets (
+                accountId,
+                assetName TEXT NOT NULL,
+              )
+              VALUES (?, ?, ?, ?)`, 
+              [
+                newAccountId,
+                asset.assetName,
+              ]
+            );
+          }
+        });
+      });
 
       router.dismissTo({ pathname: '/', params: { newAccountId: newAccountId } });
     } catch (error) {
@@ -81,17 +115,17 @@ const setup = () => {
   }
 
   return (
-    <View className='flex-1 items-between m-10'>
+    <View className='flex-1 m-10'>
       {show && <WarningModal showModal={show} updateShowModal={updateShowModal} />}
       <ProgressBar setupProgress={setupProgress}/>
       {setupProgress === 1 ?
-        <StepOne updateAccountInfo={updateAccountInfo} accountInfo={accountInfo}/>
-        : <StepTwo />
+        <StepOne updateAccountInfo={updateAccountInfo} accountInfo={accountInfo} />
+        : <StepTwo updateAccountInfo={updateAccountInfo} accountInfo={accountInfo} />
       }
 
       {!keyboardVisible &&
         <View className='flex-row justify-between'>
-          <Button text='Cancel' customClasses='bg-dark-6 px-4 py-2' buttonAction={() => router.dismiss()} />
+          <Button text='Cancel' customClasses='bg-dark-6 px-4 py-2' buttonAction={() => router.dismissTo('/')} />
           <View className='flex-row'>
             {setupProgress === 2 &&
             <Button text='Back' customClasses='mr-4 bg-dark-6 px-4 py-2' buttonAction={() => {

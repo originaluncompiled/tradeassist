@@ -61,7 +61,7 @@ const DeleteConfirmation = ({ showModal, setShowModal }: DeleteConfirmationProps
                 }
               }}
             >
-              <Text className='text-lg  font-medium text-accent-red'>{count + 1 > 0 ? `Wait (${count})` : 'Delete'}</Text>
+              <Text className='text-lg  font-medium text-accent-red'>{count + 1 > 0 ? `Wait (${count + 1})` : 'Delete'}</Text>
             </Pressable>
           </View>
         </View>
