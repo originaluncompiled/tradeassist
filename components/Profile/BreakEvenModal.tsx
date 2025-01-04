@@ -1,12 +1,58 @@
 import { View, Text, Modal, Pressable, TextInput, Platform } from 'react-native'
-import { ModalProps } from '@/constants/types'
+import { ModalProps, Trade } from '@/constants/types'
 import { colors } from '@/constants/colors'
 import { useState } from 'react';
 import { useUserSettings } from '@/hooks/useUserSettings';
+import { useSQLiteContext } from 'expo-sqlite';
 
 const BreakEvenModal = ({showModal, updateShowModal}: ModalProps) => {
   const { breakEvenBuffer, setBreakEvenBuffer } = useUserSettings();
   const [value, setValue] = useState(breakEvenBuffer.toString());
+
+  const { accountId } = useUserSettings();
+  const db = useSQLiteContext();
+  const editBreakEven = async () => {
+    try {
+      await db.withTransactionAsync(async () => {
+        const result = await db.runAsync(
+          `UPDATE accounts
+          SET
+            breakEvenBuffer = ?
+          WHERE id = ?`,
+          [
+            Number(value) > 100 ? 100 : Number(value),
+            accountId
+          ]
+        );
+      });
+
+      const trades: { tradeReturn: number, risk: number }[] = await db.getAllAsync('SELECT tradeReturn, risk FROM trades WHERE accountId = ? ORDER BY date DESC', [accountId]);
+
+      // update every trade, so that it reflects the new break even buffer
+      for (const trade of trades) {
+        const breakEvenAmount = trade.risk * (Number(value) > 100 ? 100 : Number(value) / 100);
+        const newTradeOutcome = (trade.tradeReturn <= breakEvenAmount && trade.tradeReturn >= -breakEvenAmount) ? 'BREAK EVEN'
+          : trade.tradeReturn > 0 ? 'WIN'
+          : 'LOSS';
+
+        await db.runAsync(
+          `UPDATE trades
+          SET
+            tradeOutcome = ?
+          WHERE accountId = ?`,
+          [
+            newTradeOutcome,
+            accountId
+          ]
+        );
+      }
+
+      setBreakEvenBuffer(Number(value) > 100 ? 100 : Number(value));
+      updateShowModal(false);
+    } catch (error) {
+      console.log('Error changing break even buffer:', error);
+    }
+  }
 
   return (
     <Modal visible={showModal} onRequestClose={() => updateShowModal(false)} animationType='fade' transparent>
@@ -43,8 +89,7 @@ const BreakEvenModal = ({showModal, updateShowModal}: ModalProps) => {
             <Pressable
               className='px-2 py-1 rounded-lg border border-green-2 bg-green-2/40 active:bg-green-2/60'
               onPress={() => {
-                setBreakEvenBuffer(Number(value) > 100 ? 100 : Number(value));
-                updateShowModal(false);
+                editBreakEven();
               }}
             >
               <Text className='text-lg  font-medium text-green-2'>Done</Text>

@@ -27,13 +27,13 @@ const TradeHistory = () => {
 
   const db = useSQLiteContext();
   const [tradeHistory, setTradeHistory] = useState<Trade[]>([]);
-  const { accountId } = useUserSettings();
+  const { accountId, breakEvenBuffer } = useUserSettings();
 
   useEffect(() => {
     const fetchTradeHistory = async () => {
       try {
         // TO-DO: Memoize this for performance, and make it get called as little as possible
-        let fetchedTradeHistory: Trade[] = await db.getAllAsync('SELECT id, date, asset, rating, tradeReturn, balanceChange, direction FROM trades WHERE accountId = ? ORDER BY date DESC', [accountId]);
+        let fetchedTradeHistory: Trade[] = await db.getAllAsync('SELECT id, date, asset, rating, tradeOutcome, tradeReturn, balanceChange, direction FROM trades WHERE accountId = ? ORDER BY date DESC', [accountId]);
 
         // If there was no change in the trade history/the database, then we don't need to cause a bunch of re-renders by updating the trade history
         if (JSON.stringify(fetchedTradeHistory) === JSON.stringify(tradeHistory)) {

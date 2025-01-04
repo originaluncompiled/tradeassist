@@ -20,6 +20,7 @@ const TradeCard = ({ tradeInfo, lightBg, onClick, onClickValue }: TradeCardProps
     try {
       const result: TradePage[] = await db.getAllAsync(`SELECT * FROM trades WHERE id = ?`, [tradeInfo.id]);
       // Stringify it so it can be passed to the trade page
+      
       router.push({ pathname: '/trade-history/logtrade', params: { trade: JSON.stringify(result[0]) } });
     } catch (error) {
       console.log('Error fetching trade info: ', error);
