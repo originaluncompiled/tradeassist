@@ -5,6 +5,15 @@ export const migrateDbIfNeeded = async (db: SQLiteDatabase): Promise<void> => {
     'PRAGMA user_version'
   );
 
+  // CREATE TABLE IF NOT EXISTS balanceHistory (
+  //   id INTEGER PRIMARY KEY AUTOINCREMENT,
+  //   name TEXT NOT NULL,
+  //   currency TEXT NOT NULL,
+  //   market TEXT NOT NULL,
+  //   startingBalance REAL NOT NULl DEFAULT 0,
+  //   breakEvenBuffer REAL NOT NULL DEFAULT 1
+  // );
+
   if (version?.user_version === 0) {
     await db.execAsync(`
       PRAGMA journal_mode = WAL;
@@ -14,7 +23,8 @@ export const migrateDbIfNeeded = async (db: SQLiteDatabase): Promise<void> => {
         name TEXT NOT NULL,
         currency TEXT NOT NULL,
         market TEXT NOT NULL,
-        startingBalance REAL NOT NULl DEFAULT 0
+        startingBalance REAL NOT NULl DEFAULT 0,
+        breakEvenBuffer REAL NOT NULL DEFAULT 1
       );
       CREATE TABLE IF NOT EXISTS assets (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

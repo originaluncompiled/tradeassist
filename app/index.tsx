@@ -8,8 +8,15 @@ import { colors } from '@/constants/colors'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
 const index = () => {
-  const { accountId, setAccountId, setMarket, setStartingBalance, setCurrency } = useUserSettings();
-  const [accounts, setAccounts] = useState<{ id: number, name: string, currency: string, market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto', startingBalance: number }[]>([]);
+  const { accountId, setAccountId, setMarket, setStartingBalance, setCurrency, setBreakEvenBuffer } = useUserSettings();
+  const [accounts, setAccounts] = useState<{
+    id: number,
+    name: string,
+    currency: string,
+    market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto',
+    startingBalance: number,
+    breakEvenBuffer: number
+  }[]>([]);
 
   // Get the account's id from the query params (sent from the setup page)
   const { newAccountId } = useLocalSearchParams<{ newAccountId: string }>();
@@ -26,6 +33,7 @@ const index = () => {
       setMarket(accounts[accounts.findIndex(account => account.id === accountId)].market);
       setStartingBalance(accounts[accounts.findIndex(account => account.id === accountId)].startingBalance);
       setCurrency(accounts[accounts.findIndex(account => account.id === accountId)].currency);
+      setBreakEvenBuffer(accounts[accounts.findIndex(account => account.id === accountId)].breakEvenBuffer);
       router.replace('/stats');
     } catch(error) {
       console.log('Error updating account info and navigating: ', error);
@@ -41,8 +49,9 @@ const index = () => {
           name: string,
           currency: string,
           market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto',
-          startingBalance: number
-        }[] = await db.getAllAsync('SELECT id, name, currency, market, startingBalance FROM accounts ORDER BY name DESC');
+          startingBalance: number,
+          breakEvenBuffer: number
+        }[] = await db.getAllAsync('SELECT * FROM accounts ORDER BY name DESC');
 
         setAccounts(fetchedAccounts);
       } catch (error) {

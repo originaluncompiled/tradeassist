@@ -14,6 +14,8 @@ type UserSettingsProps = {
   setCurrency: (value: string) => void,
   startingBalance: number,
   setStartingBalance: (value: number) => void,
+  breakEvenBuffer: number,
+  setBreakEvenBuffer: (value: number) => void,
 }
 
 export const useUserSettings = create<UserSettingsProps>((set) => ({
@@ -30,4 +32,6 @@ export const useUserSettings = create<UserSettingsProps>((set) => ({
   setCurrency: (value: string) => set({ currency: value }),
   startingBalance: 0,
   setStartingBalance: (value: number) => set({ startingBalance: value }),
+  breakEvenBuffer: 1,
+  setBreakEvenBuffer: (value: number) => set({ breakEvenBuffer: value }),
 }))

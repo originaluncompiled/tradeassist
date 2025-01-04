@@ -74,7 +74,6 @@ const CurrentStreak = ({ tradeData }: TradeData) => {
         break;
       }
     }
-
     return { current: currentStreak, currentStreakType: currentStreakType, previous: previousStreak, previousStreakType: previousStreakType };
   }, [tradeData]);
 

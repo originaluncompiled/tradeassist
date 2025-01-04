@@ -31,7 +31,7 @@ const Stats = () => {
   );
 
   const [tradeData, setTradeData] = useState<TradePage[]>([]);
-  const { accountId } = useUserSettings();
+  const { accountId, breakEvenBuffer } = useUserSettings();
 
   const db = useSQLiteContext();
   const fetchTradeData = async () => {
@@ -72,10 +72,14 @@ const Stats = () => {
         day.trades.forEach((trade) => {
           day.totalReturn += trade.tradeReturn;
         })
-  
-        if (day.totalReturn > 0) {
+        let totalRisk = 0;
+        day.trades.forEach((trade) => {
+          totalRisk += trade.risk;
+        })
+        
+        if (day.totalReturn > (totalRisk * (breakEvenBuffer / 100))) {
           day.outcome = 'WIN';
-        } else if (day.totalReturn < 0) {
+        } else if (day.totalReturn < -(totalRisk * (breakEvenBuffer / 100))) {
           day.outcome = 'LOSS';
         }
       })

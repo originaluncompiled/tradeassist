@@ -162,9 +162,9 @@ export type LogTradeButtonProps = {
   isEditingTrade: boolean,
 }
 
-export type DeleteConfirmationProps = {
+export type ModalProps = {
   showModal: boolean,
-  setShowModal: (value: boolean) => void
+  updateShowModal: (value: boolean) => void
 }
 
 export type FilterModalProps = {

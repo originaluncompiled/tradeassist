@@ -60,9 +60,9 @@ const TradeCard = ({ tradeInfo, lightBg, onClick, onClickValue }: TradeCardProps
           <View className='flex-row'>
             {/* $ Made/Lost */}
             <View
-              className={`flex px-2 py-1 mr-2 rounded-lg ${tradeInfo.tradeReturn > 0 ?
+              className={`flex px-2 py-1 mr-2 rounded-lg ${tradeInfo.tradeOutcome === 'WIN' ?
                   'bg-accent-green/50 border border-accent-green'
-                  : (tradeInfo.tradeReturn < 0) ? 'bg-accent-red/50 border border-accent-red' : 'bg-dark-5/50 border border-dark-5'}`}
+                  : (tradeInfo.tradeOutcome === 'LOSS') ? 'bg-accent-red/50 border border-accent-red' : 'bg-dark-5/50 border border-dark-5'}`}
               >
               <Text className='text-dark-1'>
                 {tradeInfo.tradeReturn.toLocaleString('en-US', { style: 'currency', currency: currency })}

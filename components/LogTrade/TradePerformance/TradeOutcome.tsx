@@ -1,19 +1,23 @@
 import { View, Text } from 'react-native'
 import { useEffect } from 'react'
 import { TradeOutcomeProps } from '@/constants/types';
+import { useUserSettings } from '@/hooks/useUserSettings';
 
 const TradeOutcome = ({ tradeState, handleInputChange }: TradeOutcomeProps) => {
-  const { tradeOutcome, tradeReturn } = tradeState;
+  const { tradeOutcome, tradeReturn, risk } = tradeState;
+  const { breakEvenBuffer } = useUserSettings();
 
   useEffect(() => {
-    if (tradeReturn > 0) {
-      handleInputChange('WIN', 'TRADE_OUTCOME');
-    } else if (tradeReturn < 0) {
-      handleInputChange('LOSS', 'TRADE_OUTCOME');
-    } else {
+    if (!risk) return;
+    
+    if (tradeReturn <= (risk * (breakEvenBuffer / 100)) && tradeReturn >= -(risk * (breakEvenBuffer / 100))) {
       handleInputChange('BREAK EVEN', 'TRADE_OUTCOME');
+    } else if (tradeReturn > 0) {
+      handleInputChange('WIN', 'TRADE_OUTCOME');
+    } else {
+      handleInputChange('LOSS', 'TRADE_OUTCOME');
     }
-  }, [tradeReturn])
+  }, [tradeReturn, risk])
 
   return (
     <View>

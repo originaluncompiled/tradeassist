@@ -47,14 +47,16 @@ const setup = () => {
             name,
             currency,
             market,
-            startingBalance
+            startingBalance,
+            breakEvenBuffer
           )
-          VALUES (?, ?, ?, ?)`, 
+          VALUES (?, ?, ?, ?, ?)`, 
           [
             accountInfo.accountName,
             accountInfo.currencyCode,
             accountInfo.market,
             accountInfo.startingAccountBalance,
+            1
           ]
         );
         newAccountId = accountsResult.lastInsertRowId;
@@ -62,6 +64,19 @@ const setup = () => {
 
       if (newAccountId === 0) return;
       
+      // await db.withTransactionAsync(async () => {
+      //   await db.runAsync(
+      //     `INSERT INTO transactionHistory (
+      //       accountId
+      //     )
+      //     VALUES (?, ?)`, 
+      //     [
+      //       newAccountId,
+      //       // other important stuff (like date, amount, balance before and balance after)
+      //     ]
+      //   );
+      // });
+
       for (const asset of accountInfo.assets) {
         await db.withTransactionAsync(async () => {
             await db.runAsync(

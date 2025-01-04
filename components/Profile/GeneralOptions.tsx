@@ -2,12 +2,17 @@ import { Text, View } from 'react-native'
 import Button from '../Button'
 import { useUserSettings } from '@/hooks/useUserSettings';
 import { router } from 'expo-router';
+import BreakEvenModal from './BreakEvenModal';
+import { useState } from 'react';
 
 const GeneralOptions = () => {
-  const { market, startingBalance, currency } = useUserSettings();
+  const { market, startingBalance, currency, breakEvenBuffer } = useUserSettings();
+  const [showBreakEven, setShowBreakEven] = useState(false);
+  const updateShowBreakEven = (value: boolean) => setShowBreakEven(value);
 
   return (
     <View>
+      {showBreakEven && <BreakEvenModal showModal={showBreakEven} updateShowModal={updateShowBreakEven} />}
       <View className='flex-row justify-between items-center mt-3 mx-2'>
         <Text className='text-dark-2 font-medium text-lg'>Balance History</Text>
         <Button
@@ -38,10 +43,10 @@ const GeneralOptions = () => {
       <View className='flex-row justify-between items-center mt-3 mx-2'>
         <Text className='text-dark-2 font-medium text-lg'>Break Even Buffer</Text>
         <Button
-          text='0%'
+          text={`${breakEvenBuffer}%`}
           icon='arrow-expand-horizontal'
           buttonAction={() => {
-            console.log('break even buffer modal')
+            updateShowBreakEven(true);
           }}
         />
       </View>

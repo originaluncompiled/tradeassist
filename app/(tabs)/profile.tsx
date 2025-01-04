@@ -1,5 +1,4 @@
 import { Pressable, Text, View } from 'react-native'
-import ProfileSection from '@/components/Profile/ProfileSection'
 import Separator from '@/components/Separator'
 import GeneralOptions from '@/components/Profile/GeneralOptions'
 import { useEffect, useState } from 'react'
@@ -10,8 +9,8 @@ import { router } from 'expo-router'
 import { useUserSettings } from '@/hooks/useUserSettings'
 
 const Profile = () => {
-  const [showModal, setShowModal] = useState(false);
-  const updateShowModal = (value: boolean) => setShowModal(value);
+  const [showDelete, setShowDelete] = useState(false);
+  const updateShowDelete = (value: boolean) => setShowDelete(value);
   
   const { setAccountId, accountId } = useUserSettings();
   useEffect(() => {
@@ -20,8 +19,8 @@ const Profile = () => {
 
   return (
     <View className='flex-1 bg-dark-8 p-4'>
-      {showModal && <DeleteConfirmation showModal={showModal} setShowModal={setShowModal}/>}
-      {/* MAYBE JUST SHOW ACCOUNT INFO???
+      {showDelete && <DeleteConfirmation showModal={showDelete} updateShowModal={updateShowDelete}/>}
+      {/* TO-DO: MAYBE JUST SHOW ACCOUNT INFO???
       <ProfileSection />
       <Separator /> */}
 
@@ -40,7 +39,7 @@ const Profile = () => {
       <Pressable
         className='flex-row items-center justify-left p-3 my-2 mt-3 mx-2 border rounded-lg border-accent-red bg-accent-red/50 active:bg-accent-red'
         onPress={() => {
-          updateShowModal(true);
+          setShowDelete(true);
         }}
       >
         <MaterialCommunityIcons name='delete-forever' size={18} color={colors.dark.neutral_1} style={{ paddingLeft: 4, paddingRight: 8}} />
