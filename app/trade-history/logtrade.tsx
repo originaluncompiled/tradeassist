@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Keyboard } from 'react-native'
+import { View, Text, ScrollView, Keyboard, } from 'react-native'
 import GeneralInfo from '@/components/LogTrade/GeneralInfo'
 import TradePerformance from '@/components/LogTrade/TradePerformance/TradePerformance'
 import TradeTimes from '@/components/LogTrade/TradeTimes/TradeTimes'
@@ -60,7 +60,6 @@ const LogTrade = () => {
           </Text>
 
           <GeneralInfo />
-          {/* <AssetTraded /> */}
           <TradePerformance />
           <TradeInfo />
           <TradeTimes />

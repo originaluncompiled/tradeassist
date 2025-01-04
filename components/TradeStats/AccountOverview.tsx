@@ -10,7 +10,8 @@ const AccountOverview = ({ tradeData }: TradeData) => {
 
   const calculatedPNL = useMemo(() => {
     const totalPnL = tradeData.reduce((total, trade) => trade.tradeReturn + total, 0);
-    return totalPnL;
+    const totalFees = tradeData.reduce((total, trade) => trade.commission + total, 0);
+    return totalPnL - totalFees;
   }, [tradeData]);
 
   useEffect(() => {
