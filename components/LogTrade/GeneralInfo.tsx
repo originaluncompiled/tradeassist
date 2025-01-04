@@ -52,7 +52,7 @@ const GeneralInfo = () => {
           multiline={Platform.OS === "ios" ? false : true} // for some reason fixes the placeholder dissapearing on Android when swiping
           scrollEnabled={false}
           className='text-dark-1 font-bold text-lg border-b border-dark-3 px-2 w-32 h-14'
-          maxLength={8}
+          maxLength={10}
           textAlign='center'
         />
       </View>

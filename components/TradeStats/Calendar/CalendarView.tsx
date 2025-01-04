@@ -4,8 +4,11 @@ import { useEffect, useMemo, useState } from 'react'
 import { CalendarViewProps } from '@/constants/types'
 import Calendar from './Calendar'
 import { TradeDataByDay, useStats } from '@/hooks/useStats'
+import { useUserSettings } from '@/hooks/useUserSettings'
 
 const CalendarView = ({ tradeData }: CalendarViewProps) => {
+  const { locale } = useUserSettings();
+
   const [selectedDate, setSelectedDate] = useState(new Date());
   const updateSelectedDate = (date: Date) => setSelectedDate(new Date(date.setHours(0, 0, 0, 0)));
   
@@ -43,7 +46,7 @@ const CalendarView = ({ tradeData }: CalendarViewProps) => {
         />
       }
       {/* TO-DO: Have ability to switch between months (using filters???) */}
-      <Text className='font-bold text-xl text-dark-2'>Trade Calendar - {new Date(new Date().getTime()).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</Text>
+      <Text className='font-bold text-xl text-dark-2'>Trade Calendar - {new Date(new Date().getTime()).toLocaleDateString(locale, { month: 'long', year: 'numeric' })}</Text>
 
       <Calendar
         calendarData={calendarData}

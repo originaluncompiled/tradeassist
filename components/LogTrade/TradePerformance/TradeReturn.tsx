@@ -2,9 +2,12 @@ import { View, Text, TextInput, Platform } from 'react-native'
 import { colors } from '@/constants/colors'
 import { InputChangeAsProp } from '@/constants/types'
 import { useEffect, useState } from 'react'
+import { useUserSettings } from '@/hooks/useUserSettings'
 
 const TradeReturn = ({ tradeState, handleInputChange }: InputChangeAsProp) => {
-  const [value, setValue] = useState<string>(tradeState.tradeReturn.toString());
+  const { currency } = useUserSettings();
+
+  const [value, setValue] = useState(tradeState.tradeReturn.toString());
   useEffect(() => {
     handleEndEditing();
   }, [])
@@ -15,7 +18,7 @@ const TradeReturn = ({ tradeState, handleInputChange }: InputChangeAsProp) => {
     }
     // regex to remove any formatting, so when formatting it again, it doesn't try to convert '$' and stuff to numbers and give NaN
     const unformattedValue = value.replace(/[^0-9.-]+/g, '');
-    setValue(Number(unformattedValue).toLocaleString('en-US', {style: 'currency', currency: 'USD'}))
+    setValue(Number(unformattedValue).toLocaleString('en-US', {style: 'currency', currency: currency}));
   }
 
   const handleChangeText = (text: string) => {

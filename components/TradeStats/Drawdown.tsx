@@ -4,9 +4,12 @@ import { colors } from '@/constants/colors'
 import { DashPathEffect, useFont } from '@shopify/react-native-skia'
 import { TradeData } from '@/constants/types'
 import { useEffect, useMemo, useState } from 'react'
+import { useUserSettings } from '@/hooks/useUserSettings'
 const font = require('../../assets/Inter.ttf')
 
 const Drawdown = ({ tradeData }: TradeData) => {
+  const { currency } = useUserSettings();
+
   const labelFont = useFont(font, 12);
   const [graphData, setGraphData] = useState<{day: number, balance: number}[]>([{ day: 0, balance: 0 }]);
 
@@ -46,7 +49,7 @@ const Drawdown = ({ tradeData }: TradeData) => {
               font: labelFont,
               labelColor: colors.dark.neutral_2,
               formatYLabel(label) {
-                return `${label.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 })}`
+                return `${label.toLocaleString('en-US', { style: 'currency', currency: currency, maximumFractionDigits: 0 })}`
               },
               lineColor: colors.dark.neutral_4,
               linePathEffect: <DashPathEffect intervals={[5, 5]} />

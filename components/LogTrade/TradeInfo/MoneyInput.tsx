@@ -2,8 +2,10 @@ import { View, Text, TextInput, Platform } from 'react-native'
 import { useEffect, useState } from 'react'
 import { colors } from '@/constants/colors'
 import { MoneyInputProps } from '@/constants/types'
+import { useUserSettings } from '@/hooks/useUserSettings'
 
 const MoneyInput = ({ text, handleInputChange, dispatchAction, initialValue }: MoneyInputProps) => {
+  const { currency } = useUserSettings();
   const [value, setValue] = useState<string>(`${initialValue}`);
   useEffect(() => {
     handleEndEditing();
@@ -17,7 +19,7 @@ const MoneyInput = ({ text, handleInputChange, dispatchAction, initialValue }: M
     let unformattedValue = value.replace(/[^0-9.-]+/g, '');
 
     handleInputChange(Number(unformattedValue), dispatchAction);
-    setValue(Number(unformattedValue).toLocaleString('en-US', {style: 'currency', currency: 'USD'}));
+    setValue(Number(unformattedValue).toLocaleString('en-US', {style: 'currency', currency: currency}));
   }
 
   return (

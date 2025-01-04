@@ -4,9 +4,12 @@ import { Bar, CartesianChart } from 'victory-native'
 import { colors } from '@/constants/colors'
 import { DashPathEffect, useFont } from '@shopify/react-native-skia'
 import { TradeDataByDay, useStats } from '@/hooks/useStats'
+import { useUserSettings } from '@/hooks/useUserSettings'
 const font = require('../../assets/Inter.ttf')
 
 const DailyPnL = () => {
+  const { currency } = useUserSettings();
+
   const { tradeDataByDay } = useStats();
   const [calendarData, setCalendarData] = useState<TradeDataByDay>([]);
   
@@ -43,7 +46,7 @@ const DailyPnL = () => {
               font: labelFont,
               labelColor: colors.dark.neutral_2,
               formatYLabel(label) {
-                return `${label.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 })}`
+                return `${label.toLocaleString('en-US', { style: 'currency', currency: currency, maximumFractionDigits: 0 })}`
               },
               lineColor: colors.dark.neutral_4,
               linePathEffect: <DashPathEffect intervals={[5, 5]} />

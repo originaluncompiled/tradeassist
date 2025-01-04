@@ -17,47 +17,17 @@ const EditAssetsButton = ({ assets }: EditAssetsButtonProps) => {
 
       for (const asset of assets) {
         await db.withTransactionAsync(async () => {
-          if (market === 'Forex' && asset.pipSize) {
-            await db.runAsync(
-              `INSERT INTO assets (
-                accountId,
-                assetName,
-                pipSize
-              )
-              VALUES (?, ?, ?)`, 
-              [
-                accountId,
-                asset.assetName,
-                asset.pipSize
-              ]
-            );
-          } else if (market === 'Futures' && asset.contractSize) {
-            await db.runAsync(
-              `INSERT INTO assets (
-                accountId,
-                assetName,
-                contractSize
-              )
-              VALUES (?, ?, ?)`, 
-              [
-                accountId,
-                asset.assetName,
-                asset.contractSize
-              ]
-            );
-          } else if (market === 'Crypto' || market === 'Stocks') {
-            await db.runAsync(
-              `INSERT INTO assets (
-                accountId,
-                assetName
-              )
-              VALUES (?, ?)`, 
-              [
-                accountId,
-                asset.assetName
-              ]
-            );
-          }
+          await db.runAsync(
+            `INSERT INTO assets (
+              accountId,
+              assetName
+            )
+            VALUES (?, ?)`, 
+            [
+              accountId,
+              asset.assetName
+            ]
+          );
         });
       }
 

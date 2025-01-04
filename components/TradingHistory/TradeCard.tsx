@@ -4,11 +4,14 @@ import { colors } from '@/constants/colors'
 import { TradeCardProps, TradePage } from '@/constants/types'
 import { router } from 'expo-router'
 import { useSQLiteContext } from 'expo-sqlite'
+import { useUserSettings } from '@/hooks/useUserSettings'
 
 const TradeCard = ({ tradeInfo, lightBg, onClick, onClickValue }: TradeCardProps) => {
+  const { locale, currency } = useUserSettings();
+
   const formatDate = (date: string) => {
     const newDate = new Date(date);
-    return newDate.toLocaleDateString('en-us', { month: '2-digit', day: '2-digit', year: 'numeric' });
+    return newDate.toLocaleDateString(locale, { month: '2-digit', day: '2-digit', year: 'numeric' });
   }
 
   // Send the trade's information that corresponds to the trade card clicked
@@ -62,7 +65,7 @@ const TradeCard = ({ tradeInfo, lightBg, onClick, onClickValue }: TradeCardProps
                   : (tradeInfo.tradeReturn < 0) ? 'bg-accent-red/50 border border-accent-red' : 'bg-dark-5/50 border border-dark-5'}`}
               >
               <Text className='text-dark-1'>
-                {tradeInfo.tradeReturn.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
+                {tradeInfo.tradeReturn.toLocaleString('en-US', { style: 'currency', currency: currency })}
               </Text>
             </View>
 
@@ -77,10 +80,10 @@ const TradeCard = ({ tradeInfo, lightBg, onClick, onClickValue }: TradeCardProps
             </View>
           </View>
 
-          {/* Balance Change */}
-          <Text className={`font-bold text-lg ${tradeInfo.balanceChange > 0 ? 'text-accent-green' : 'text-accent-red'}`}>
-            {(tradeInfo.balanceChange > 0 ? '+' : '') + (tradeInfo.balanceChange / 100).toLocaleString('en-US', { style: 'percent', maximumFractionDigits: 2 })}
-          </Text>
+          {/* TO-DO: Balance Change */}
+          {/* <Text className={`font-bold text-lg ${tradeInfo.balanceChange > 0 ? 'text-accent-green' : 'text-accent-red'}`}>
+            {(tradeInfo.balanceChange > 0 ? '+' : '') + (tradeInfo.balanceChange / 100).toLocaleString(locale, { style: 'percent', maximumFractionDigits: 2 })}
+          </Text> */}
         </View>
       </Pressable>
     </View>

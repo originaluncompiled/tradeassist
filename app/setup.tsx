@@ -22,7 +22,7 @@ const setup = () => {
     startingAccountBalance: string,
     market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto',
     // we want the user to still be able to make the textinput blank if they wanted to
-    assets: {assetName: string, contractSize?: string, pipSize?: string}[]
+    assets: {assetName: string}[]
   }>({ accountName: '', currencyCode: '', startingAccountBalance: '', market: 'Forex', assets: [] });
   const updateAccountInfo = (info: Partial<typeof accountInfo>) => setAccountInfo({...accountInfo, ...info});
 
@@ -64,35 +64,6 @@ const setup = () => {
       
       for (const asset of accountInfo.assets) {
         await db.withTransactionAsync(async () => {
-          if (accountInfo.market === 'Forex' && asset.pipSize) {
-            await db.runAsync(
-              `INSERT INTO assets (
-                accountId,
-                assetName,
-                pipSize
-              )
-              VALUES (?, ?, ?)`, 
-              [
-                newAccountId,
-                asset.assetName,
-                asset.pipSize
-              ]
-            );
-          } else if (accountInfo.market === 'Futures' && asset.contractSize) {
-            await db.runAsync(
-              `INSERT INTO assets (
-                accountId,
-                assetName,
-                contractSize
-              )
-              VALUES (?, ?, ?)`, 
-              [
-                newAccountId,
-                asset.assetName,
-                asset.contractSize
-              ]
-            );
-          } else if (accountInfo.market === 'Crypto' || accountInfo.market === 'Stocks') {
             await db.runAsync(
               `INSERT INTO assets (
                 accountId,
@@ -105,7 +76,7 @@ const setup = () => {
               ]
             );
           }
-        });
+        );
       }
 
       router.dismissTo({ pathname: '/', params: { newAccountId: newAccountId } });

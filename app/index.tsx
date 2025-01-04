@@ -8,8 +8,8 @@ import { colors } from '@/constants/colors'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
 const index = () => {
-  const { accountId, setAccountId, setMarket, setStartingBalance } = useUserSettings();
-  const [accounts, setAccounts] = useState<{ id: number, name: string, market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto', startingBalance: number }[]>([]);
+  const { accountId, setAccountId, setMarket, setStartingBalance, setCurrency } = useUserSettings();
+  const [accounts, setAccounts] = useState<{ id: number, name: string, currency: string, market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto', startingBalance: number }[]>([]);
 
   // Get the account's id from the query params (sent from the setup page)
   const { newAccountId } = useLocalSearchParams<{ newAccountId: string }>();
@@ -25,6 +25,7 @@ const index = () => {
 
       setMarket(accounts[accounts.findIndex(account => account.id === accountId)].market);
       setStartingBalance(accounts[accounts.findIndex(account => account.id === accountId)].startingBalance);
+      setCurrency(accounts[accounts.findIndex(account => account.id === accountId)].currency);
       router.replace('/stats');
     } catch(error) {
       console.log('Error updating account info and navigating: ', error);
@@ -38,9 +39,10 @@ const index = () => {
         let fetchedAccounts: {
           id: number,
           name: string,
+          currency: string,
           market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto',
           startingBalance: number
-        }[] = await db.getAllAsync('SELECT id, name, market, startingBalance FROM accounts ORDER BY name DESC');
+        }[] = await db.getAllAsync('SELECT id, name, currency, market, startingBalance FROM accounts ORDER BY name DESC');
 
         setAccounts(fetchedAccounts);
       } catch (error) {

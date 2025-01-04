@@ -5,7 +5,6 @@ export const migrateDbIfNeeded = async (db: SQLiteDatabase): Promise<void> => {
     'PRAGMA user_version'
   );
 
-  // 'contractSize', 'pipSize' can be NULL if the market is not 'futures', or 'forex' respectively
   if (version?.user_version === 0) {
     await db.execAsync(`
       PRAGMA journal_mode = WAL;
@@ -21,8 +20,6 @@ export const migrateDbIfNeeded = async (db: SQLiteDatabase): Promise<void> => {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         accountId INTEGER NOT NULL,
         assetName TEXT NOT NULL,
-        contractSize REAL DEFAULT NULL,
-        pipSize REAL DEFAULT NULL,
         FOREIGN KEY (accountId) REFERENCES accounts (id) ON DELETE CASCADE
       );
       CREATE TABLE IF NOT EXISTS trades (

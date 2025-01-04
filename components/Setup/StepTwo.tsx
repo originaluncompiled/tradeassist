@@ -30,15 +30,7 @@ const StepTwo = ({ updateAccountInfo, accountInfo }: SetupStepProps) => {
       {!keyboardVisible &&
         <Pressable
           className='flex-row items-center justify-center p-3 mb-5 mt-5 border border-dashed rounded-lg border-dark-6 bg-dark-7/50 active:bg-dark-6/50'
-          onPress={() => {
-            if (accountInfo.market === 'Forex') {
-              updateAccountInfo({ assets: [...accountInfo.assets, { assetName: '', pipSize: '' }] })
-            } else if (accountInfo.market === 'Futures') {
-              updateAccountInfo({ assets: [...accountInfo.assets, { assetName: '', contractSize: '' }] })
-            } else {
-              updateAccountInfo({ assets: [...accountInfo.assets, { assetName: '' }] })
-            }
-          }}
+          onPress={() => updateAccountInfo({ assets: [...accountInfo.assets, { assetName: '' }] }) }
         >
           <MaterialCommunityIcons name='plus-thick' size={18} color={colors.dark.neutral_3} style={{ paddingLeft: 4, paddingRight: 8}} />
           <Text className='text-dark-3 text-lg font-bold'>

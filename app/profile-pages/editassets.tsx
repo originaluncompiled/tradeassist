@@ -15,15 +15,11 @@ const editassets = () => {
 
   const [assets, setAssets] = useState<{
     accountId: number,
-    assetName: string,
-    contractSize?: string | null,
-    pipSize?: string | null
+    assetName: string
   }[]>([]);
   const updateAssets = (info: {
     accountId: number,
-    assetName: string,
-    contractSize?: string | null,
-    pipSize?: string | null
+    assetName: string
   }[]) => setAssets([...info]);
 
   const { market, accountId } = useUserSettings();
@@ -58,15 +54,7 @@ const editassets = () => {
         <View>
           <Pressable
             className='flex-row items-center justify-center p-3 mb-5 mt-5 border border-dashed rounded-lg border-dark-6 bg-dark-7/50 active:bg-dark-6/50'
-            onPress={() => {
-              if (market === 'Forex') {
-                updateAssets([...assets, { accountId: accountId, assetName: '', pipSize: '' }])
-              } else if (market === 'Futures') {
-                updateAssets([...assets, { accountId: accountId, assetName: '', contractSize: '' }])
-              } else {
-                updateAssets([...assets, { accountId: accountId, assetName: '' }])
-              }
-            }}
+            onPress={() => updateAssets([...assets, { accountId: accountId, assetName: '' } ]) }
           >
             <MaterialCommunityIcons name='plus-thick' size={18} color={colors.dark.neutral_3} style={{ paddingLeft: 4, paddingRight: 8}} />
             <Text className='text-dark-3 text-lg font-bold'>

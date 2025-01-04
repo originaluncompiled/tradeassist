@@ -240,13 +240,13 @@ export type SetupStepProps = {
     currencyCode: string,
     startingAccountBalance: string,
     market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto',
-    assets: {assetName: string, contractSize?: string, pipSize?: string}[]
+    assets: {assetName: string }[]
   },
   updateAccountInfo: (info: Partial<{
     accountName: string,
     currencyCode: string,
     startingAccountBalance: string, market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto',
-    assets: {assetName: string, contractSize?: string, pipSize?: string}[]
+    assets: {assetName: string }[]
   }>) => void,
 }
 
@@ -257,13 +257,13 @@ export type StepTwoProps = {
     currencyCode: string,
     startingAccountBalance: string,
     market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto',
-    assets: {assetName: string, contractSize?: string, pipSize?: string}[]
+    assets: {assetName: string }[]
   },
   updateAccountInfo: (info: Partial<{
     accountName: string,
     currencyCode: string,
     startingAccountBalance: string, market: 'Forex' | 'Futures' | 'Stocks' | 'Crypto',
-    assets: {assetName: string, contractSize?: string, pipSize?: string}[]
+    assets: {assetName: string }[]
   }>) => void,
 }
 
@@ -278,23 +278,17 @@ export type AssetCardProps = {
   market: string,
   assets: {
     accountId: number,
-    assetName: string,
-    contractSize?: string | null,
-    pipSize?: string | null
+    assetName: string
   }[],
   updateAssets: (info: {
     accountId: number,
-    assetName: string,
-    contractSize?: string | null,
-    pipSize?: string | null
+    assetName: string
   }[]) => void
 }
 
 export type EditAssetsButtonProps = {
   assets: {
     accountId: number,
-    assetName: string,
-    contractSize?: string | null,
-    pipSize?: string | null
+    assetName: string
   }[]
 }

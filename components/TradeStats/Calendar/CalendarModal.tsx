@@ -4,8 +4,10 @@ import Separator from '../../Separator'
 import TradeCard from '../../TradingHistory/TradeCard'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useEffect, useState } from 'react'
+import { useUserSettings } from '@/hooks/useUserSettings'
 
 const CalendarModal = ({showModal, updateShowModal, selectedDate, tradeData, calendarData}: CalendarModalProps) => {
+  const { currency } = useUserSettings();
   const [tradeIndex, setTradeIndex] = useState(-1);
 
   useEffect(() => {
@@ -27,7 +29,7 @@ const CalendarModal = ({showModal, updateShowModal, selectedDate, tradeData, cal
               <View>
                 <Text className='text-dark-2 font-medium text-lg'>PnL:&nbsp;
                   <Text className='text-dark-1 font-semibold'>
-                    {calendarData[tradeIndex] && calendarData[tradeIndex].totalReturn.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}
+                    {calendarData[tradeIndex] && calendarData[tradeIndex].totalReturn.toLocaleString('en-US', {style: 'currency', currency: currency})}
                     </Text>
                   </Text>
                 <Text className='text-dark-2 font-medium text-lg'>

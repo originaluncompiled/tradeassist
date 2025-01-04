@@ -4,14 +4,14 @@ import { useUserSettings } from '@/hooks/useUserSettings';
 import { router } from 'expo-router';
 
 const GeneralOptions = () => {
-  const { market, startingBalance } = useUserSettings();
+  const { market, startingBalance, currency } = useUserSettings();
 
   return (
     <View>
       <View className='flex-row justify-between items-center mt-3 mx-2'>
         <Text className='text-dark-2 font-medium text-lg'>Balance History</Text>
         <Button
-          text={startingBalance?.toLocaleString('en-us', { style: 'currency', currency: 'USD' }) || (0).toLocaleString('en-us', { style: 'currency', currency: 'USD' })}
+          text={startingBalance?.toLocaleString('en-US', { style: 'currency', currency: currency }) || (0).toLocaleString('en-US', { style: 'currency', currency: currency })}
           icon='history'
           buttonAction={() => {
             console.log('account balance history page')

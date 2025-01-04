@@ -21,7 +21,8 @@ const Profile = () => {
   return (
     <View className='flex-1 bg-dark-8 p-4'>
       {showModal && <DeleteConfirmation showModal={showModal} setShowModal={setShowModal}/>}
-      {/* <ProfileSection />
+      {/* MAYBE JUST SHOW ACCOUNT INFO???
+      <ProfileSection />
       <Separator /> */}
 
       <GeneralOptions />
