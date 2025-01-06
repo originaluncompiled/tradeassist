@@ -47,8 +47,8 @@ const setup = () => {
             name,
             currency,
             market,
-            startingBalance,
-            breakEvenBuffer
+            starting_balance,
+            break_even_buffer
           )
           VALUES (?, ?, ?, ?, ?)`, 
           [
@@ -67,7 +67,7 @@ const setup = () => {
       // await db.withTransactionAsync(async () => {
       //   await db.runAsync(
       //     `INSERT INTO transactionHistory (
-      //       accountId
+      //       account_id
       //     )
       //     VALUES (?, ?)`, 
       //     [
@@ -81,8 +81,8 @@ const setup = () => {
         await db.withTransactionAsync(async () => {
             await db.runAsync(
               `INSERT INTO assets (
-                accountId,
-                assetName
+                account_id,
+                asset_name
               )
               VALUES (?, ?)`, 
               [

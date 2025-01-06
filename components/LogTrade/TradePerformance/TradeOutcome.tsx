@@ -8,8 +8,6 @@ const TradeOutcome = ({ tradeState, handleInputChange }: TradeOutcomeProps) => {
   const { breakEvenBuffer } = useUserSettings();
 
   useEffect(() => {
-    if (!risk) return;
-    
     if (tradeReturn <= (risk * (breakEvenBuffer / 100)) && tradeReturn >= -(risk * (breakEvenBuffer / 100))) {
       handleInputChange('BREAK EVEN', 'TRADE_OUTCOME');
     } else if (tradeReturn > 0) {

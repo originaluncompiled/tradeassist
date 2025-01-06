@@ -12,15 +12,15 @@ const EditAssetsButton = ({ assets }: EditAssetsButtonProps) => {
   const saveAssets = async () => {
     try {
       await db.withTransactionAsync(async () => {
-        await db.runAsync('DELETE FROM assets WHERE accountId = ?', [accountId]); // first clear assets
+        await db.runAsync('DELETE FROM assets WHERE account_id = ?', [accountId]); // first clear assets
       });
 
       for (const asset of assets) {
         await db.withTransactionAsync(async () => {
           await db.runAsync(
             `INSERT INTO assets (
-              accountId,
-              assetName
+              account_id,
+              asset_name
             )
             VALUES (?, ?)`, 
             [

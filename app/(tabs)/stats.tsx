@@ -15,6 +15,7 @@ import { useSQLiteContext } from 'expo-sqlite'
 import { TradePage } from '@/constants/types'
 import { TradeDataByDay, useStats } from '@/hooks/useStats'
 import { useUserSettings } from '@/hooks/useUserSettings'
+import { snakeToCamel } from '@/utils/mapSql'
 
 const Stats = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -36,14 +37,14 @@ const Stats = () => {
   const db = useSQLiteContext();
   const fetchTradeData = async () => {
     try {
-      const result: TradePage[] = await db.getAllAsync('SELECT * FROM trades WHERE accountId = ? ORDER BY date DESC', [accountId]);
+      const result: TradePage[] = await db.getAllAsync('SELECT * FROM trades WHERE account_id = ? ORDER BY date DESC', [accountId]);
       
       // If there was no change in the trade data/database, then we don't need to cause a bunch of re-renders by updating tradeData
-      if (JSON.stringify(result) === JSON.stringify(tradeData)) {
+      if (JSON.stringify(snakeToCamel(result)) === JSON.stringify(tradeData)) {
         setRefreshing(false);
         return;
       };
-      setTradeData(result);
+      setTradeData(snakeToCamel(result));
       setRefreshing(false);
     } catch (error) {
       console.log('Error fetching trade info: ', error);

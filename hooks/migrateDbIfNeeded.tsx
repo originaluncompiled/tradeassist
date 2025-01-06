@@ -5,15 +5,6 @@ export const migrateDbIfNeeded = async (db: SQLiteDatabase): Promise<void> => {
     'PRAGMA user_version'
   );
 
-  // CREATE TABLE IF NOT EXISTS balanceHistory (
-  //   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  //   name TEXT NOT NULL,
-  //   currency TEXT NOT NULL,
-  //   market TEXT NOT NULL,
-  //   startingBalance REAL NOT NULl DEFAULT 0,
-  //   breakEvenBuffer REAL NOT NULL DEFAULT 1
-  // );
-
   if (version?.user_version === 0) {
     await db.execAsync(`
       PRAGMA journal_mode = WAL;
@@ -23,37 +14,47 @@ export const migrateDbIfNeeded = async (db: SQLiteDatabase): Promise<void> => {
         name TEXT NOT NULL,
         currency TEXT NOT NULL,
         market TEXT NOT NULL,
-        startingBalance REAL NOT NULl DEFAULT 0,
-        breakEvenBuffer REAL NOT NULL DEFAULT 1
+        starting_balance REAL NOT NULl DEFAULT 0,
+        break_even_buffer REAL NOT NULL DEFAULT 1
+      );
+      CREATE TABLE IF NOT EXISTS balanceHistory (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        account_id INTEGER NOT NULL,
+        value DECIMAL NOT NULL DEFAULT 0,
+        time TEXT DEFAULT '',
+        tx_type TEXT DEFAULT '',
+        currency TEXT DEFAULT '',
+        balance_after_tx DECIMAL DEFAULT 0,
+        FOREIGN KEY (account_id) REFERENCES accounts (id) ON DELETE CASCADE
       );
       CREATE TABLE IF NOT EXISTS assets (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        accountId INTEGER NOT NULL,
-        assetName TEXT NOT NULL,
-        FOREIGN KEY (accountId) REFERENCES accounts (id) ON DELETE CASCADE
+        account_id INTEGER NOT NULL,
+        asset_name TEXT NOT NULL,
+        FOREIGN KEY (account_id) REFERENCES accounts (id) ON DELETE CASCADE
       );
       CREATE TABLE IF NOT EXISTS trades (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        accountId INTEGER NOT NULL,
+        account_id INTEGER NOT NULL,
         asset TEXT DEFAULT '',
         date TEXT DEFAULT '',
-        tradeReturn REAL DEFAULT 0,
-        tradeOutcome TEXT DEFAULT 'BREAK EVEN',
+        trade_return REAL DEFAULT 0,
+        trade_outcome TEXT DEFAULT 'BREAK EVEN',
         direction TEXT DEFAULT 'Long',
         rating INTEGER DEFAULT 0,
-        balanceChange REAL DEFAULT 0,
-        takeProfit REAL DEFAULT 0,
-        stopLoss REAL DEFAULT 0,
+        balance_change REAL DEFAULT 0,
+        take_profit DECIMAL DEFAULT 0,
+        stop_loss DECIMAL DEFAULT 0,
         target REAL DEFAULT 0,
         risk REAL DEFAULT 0,
-        entry REAL DEFAULT 0,
-        exit REAL DEFAULT 0,
-        entryTime INTEGER,
-        exitTime INTEGER,
-        amountTraded INTEGER DEFAULT 0,
+        entry DECIMAL DEFAULT 0,
+        exit DECIMAL DEFAULT 0,
+        entry_time INTEGER,
+        exit_time INTEGER,
+        amount_traded DECIMAL DEFAULT 0,
         commission REAL DEFAULT 0,
         notes TEXT DEFAULT '',
-        FOREIGN KEY (accountId) REFERENCES accounts (id) ON DELETE CASCADE
+        FOREIGN KEY (account_id) REFERENCES accounts (id) ON DELETE CASCADE
       )
     `)
   };

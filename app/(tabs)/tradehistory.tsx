@@ -10,6 +10,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { colors } from '@/constants/colors'
 import { useFocusEffect } from 'expo-router'
 import { useUserSettings } from '@/hooks/useUserSettings'
+import { snakeToCamel } from '@/utils/mapSql'
 
 const TradeHistory = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -27,20 +28,20 @@ const TradeHistory = () => {
 
   const db = useSQLiteContext();
   const [tradeHistory, setTradeHistory] = useState<Trade[]>([]);
-  const { accountId, breakEvenBuffer } = useUserSettings();
+  const { accountId } = useUserSettings();
 
   useEffect(() => {
     const fetchTradeHistory = async () => {
       try {
         // TO-DO: Memoize this for performance, and make it get called as little as possible
-        let fetchedTradeHistory: Trade[] = await db.getAllAsync('SELECT id, date, asset, rating, tradeOutcome, tradeReturn, balanceChange, direction FROM trades WHERE accountId = ? ORDER BY date DESC', [accountId]);
+        let fetchedTradeHistory: Trade[] = await db.getAllAsync('SELECT id, date, asset, rating, trade_outcome, trade_return, balance_change, direction FROM trades WHERE account_id = ? ORDER BY date DESC', [accountId]);
 
         // If there was no change in the trade history/the database, then we don't need to cause a bunch of re-renders by updating the trade history
-        if (JSON.stringify(fetchedTradeHistory) === JSON.stringify(tradeHistory)) {
+        if (JSON.stringify(snakeToCamel(fetchedTradeHistory)) === JSON.stringify(tradeHistory)) {
           setRefreshing(false);
           return;
         };
-        setTradeHistory(fetchedTradeHistory);
+        setTradeHistory(snakeToCamel(fetchedTradeHistory));
         setRefreshing(false);
       } catch (error) {
         console.log('Error fetching trade history: ', error);

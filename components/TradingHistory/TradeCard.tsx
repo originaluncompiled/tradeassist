@@ -5,6 +5,7 @@ import { TradeCardProps, TradePage } from '@/constants/types'
 import { router } from 'expo-router'
 import { useSQLiteContext } from 'expo-sqlite'
 import { useUserSettings } from '@/hooks/useUserSettings'
+import { snakeToCamel } from '@/utils/mapSql'
 
 const TradeCard = ({ tradeInfo, lightBg, onClick, onClickValue }: TradeCardProps) => {
   const { locale, currency } = useUserSettings();
@@ -21,7 +22,8 @@ const TradeCard = ({ tradeInfo, lightBg, onClick, onClickValue }: TradeCardProps
       const result: TradePage[] = await db.getAllAsync(`SELECT * FROM trades WHERE id = ?`, [tradeInfo.id]);
       // Stringify it so it can be passed to the trade page
       
-      router.push({ pathname: '/trade-history/logtrade', params: { trade: JSON.stringify(result[0]) } });
+      const camelCaseResult = snakeToCamel(result);
+      router.push({ pathname: '/trade-history/logtrade', params: { trade: JSON.stringify(camelCaseResult[0]) } });
     } catch (error) {
       console.log('Error fetching trade info: ', error);
     }

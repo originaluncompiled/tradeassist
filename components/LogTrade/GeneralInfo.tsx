@@ -8,6 +8,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import DropDownPicker, { ItemType } from 'react-native-dropdown-picker'
 import { useSQLiteContext } from 'expo-sqlite'
 import { useUserSettings } from '@/hooks/useUserSettings'
+import { snakeToCamel } from '@/utils/mapSql'
 
 const GeneralInfo = () => {
   const { tradeState, dispatch } = useTradeContext();
@@ -43,9 +44,9 @@ const GeneralInfo = () => {
   const db = useSQLiteContext();
   const fetchAssets = async () => {
     try {
-      const result: { accountId: number, assetName: string, id: number }[] = await db.getAllAsync('SELECT * FROM assets WHERE accountId = ?', [accountId]);
+      const result: { accountId: number, assetName: string, id: number }[] = await db.getAllAsync('SELECT * FROM assets WHERE account_id = ?', [accountId]);
       
-      const resultArray = result.map(asset => {return { label: asset.assetName, value: asset.assetName }}) || [];
+      const resultArray = snakeToCamel(result).map(asset => {return { label: asset.assetName, value: asset.assetName }}) || [];
       setItems(resultArray);
     } catch (error) {
       console.log('Error fetching trade info: ', error);

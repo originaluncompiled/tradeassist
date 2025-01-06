@@ -4,6 +4,7 @@ import { colors } from '@/constants/colors'
 import { useState } from 'react';
 import { useUserSettings } from '@/hooks/useUserSettings';
 import { useSQLiteContext } from 'expo-sqlite';
+import { snakeToCamel } from '@/utils/mapSql';
 
 const BreakEvenModal = ({showModal, updateShowModal}: ModalProps) => {
   const { breakEvenBuffer, setBreakEvenBuffer } = useUserSettings();
@@ -17,7 +18,7 @@ const BreakEvenModal = ({showModal, updateShowModal}: ModalProps) => {
         const result = await db.runAsync(
           `UPDATE accounts
           SET
-            breakEvenBuffer = ?
+            break_even_buffer = ?
           WHERE id = ?`,
           [
             Number(value) > 100 ? 100 : Number(value),
@@ -26,10 +27,10 @@ const BreakEvenModal = ({showModal, updateShowModal}: ModalProps) => {
         );
       });
 
-      const trades: { tradeReturn: number, risk: number }[] = await db.getAllAsync('SELECT tradeReturn, risk FROM trades WHERE accountId = ? ORDER BY date DESC', [accountId]);
+      const trades: { tradeReturn: number, risk: number }[] = await db.getAllAsync('SELECT trade_return, risk FROM trades WHERE account_id = ? ORDER BY date DESC', [accountId]);
 
       // update every trade, so that it reflects the new break even buffer
-      for (const trade of trades) {
+      for (const trade of snakeToCamel(trades)) {
         const breakEvenAmount = trade.risk * (Number(value) > 100 ? 100 : Number(value) / 100);
         const newTradeOutcome = (trade.tradeReturn <= breakEvenAmount && trade.tradeReturn >= -breakEvenAmount) ? 'BREAK EVEN'
           : trade.tradeReturn > 0 ? 'WIN'
@@ -38,7 +39,7 @@ const BreakEvenModal = ({showModal, updateShowModal}: ModalProps) => {
         await db.runAsync(
           `UPDATE trades
           SET
-            tradeOutcome = ?
+            trade_outcome = ?
           WHERE accountId = ?`,
           [
             newTradeOutcome,

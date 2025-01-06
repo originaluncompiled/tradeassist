@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { useSQLiteContext } from 'expo-sqlite'
 import { colors } from '@/constants/colors'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+import { snakeToCamel } from '@/utils/mapSql'
 
 const index = () => {
   const { accountId, setAccountId, setMarket, setStartingBalance, setCurrency, setBreakEvenBuffer } = useUserSettings();
@@ -52,8 +53,8 @@ const index = () => {
           startingBalance: number,
           breakEvenBuffer: number
         }[] = await db.getAllAsync('SELECT * FROM accounts ORDER BY name DESC');
-
-        setAccounts(fetchedAccounts);
+        
+        setAccounts(snakeToCamel(fetchedAccounts));
       } catch (error) {
         console.log('Error fetching accounts: ', error);
       }

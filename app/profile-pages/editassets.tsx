@@ -6,6 +6,7 @@ import { useUserSettings } from '@/hooks/useUserSettings'
 import AssetCard from '@/components/Profile/AssetCard'
 import { useSQLiteContext } from 'expo-sqlite'
 import EditAssetsButton from '@/components/Profile/EditAssetsButton'
+import { snakeToCamel } from '@/utils/mapSql'
 
 const editassets = () => {
   // Prevents the add button from being above the keyboard when it's is open
@@ -26,9 +27,9 @@ const editassets = () => {
   const db = useSQLiteContext();
   const fetchAssets = async () => {
     try {
-      const result: typeof assets = await db.getAllAsync('SELECT * FROM assets WHERE accountId = ?', [accountId]);
+      const result: typeof assets = await db.getAllAsync('SELECT * FROM assets WHERE account_id = ?', [accountId]);
       
-      setAssets(result);
+      setAssets(snakeToCamel(result));
     } catch (error) {
       console.log('Error fetching trade info: ', error);
     }
