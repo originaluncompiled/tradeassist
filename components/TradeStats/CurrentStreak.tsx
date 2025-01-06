@@ -78,7 +78,12 @@ const CurrentStreak = ({ tradeData }: TradeData) => {
   }, [tradeData]);
 
   useEffect(() => {
-    if (tradeDataByDay.length < 1 && tradeData.length < 1) return;
+    if (tradeDataByDay.length < 1 && tradeData.length < 1) {
+      // set the things back to default, so that if the user deletes all their trades, it doesn't still show the data from when there was one trade left
+      setDayStreaks({ current: NaN, currentStreakType: 'WIN', previous: NaN, previousStreakType: 'LOSS' });
+      setTradeStreaks({ current: NaN, currentStreakType: 'WIN', previous: NaN, previousStreakType: 'LOSS' });
+      return;
+    };
     
     setDayStreaks(getDayStreaks);
 

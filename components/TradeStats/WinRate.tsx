@@ -10,20 +10,19 @@ const WinRate = ({ tradeData }: TradeData) => {
     const losses = tradeData.filter((trade) => trade.tradeOutcome === 'LOSS').length;
     const breakEvens = tradeData.filter((trade) => trade.tradeOutcome === 'BREAK EVEN').length;
 
-    const winRate = Number(((wins / tradeData.length) * 100).toFixed(2));
+    let winRate = Number(((wins / tradeData.length) * 100).toFixed(2));
+    winRate = isNaN(winRate) ? 0 : winRate;
 
     const grossWins = tradeData.reduce((total, trade) => trade.tradeOutcome === 'WIN' ? total + trade.tradeReturn : total, 0);
     const grossLosses = tradeData.reduce((total, trade) => trade.tradeOutcome === 'LOSS' ? total + trade.tradeReturn : total, 0);
     const grossBreakEvens = tradeData.reduce((total, trade) => trade.tradeOutcome === 'BREAK EVEN' ? total + trade.tradeReturn : total, 0);
 
-    const profitFactor = Number((grossWins / ((grossLosses * -1) + grossBreakEvens)).toFixed(2));
-
+    let profitFactor = Number((grossWins / ((grossLosses * -1) + grossBreakEvens)).toFixed(2));
+    profitFactor = isNaN(profitFactor) ? 0 : profitFactor;
     return { winRate: winRate, profitFactor: profitFactor, wins: wins, losses: losses, breakEvens: breakEvens };
   }, [tradeData]);
 
   useEffect(() => {
-    if (tradeData.length < 1) return;
-
     setWinRateInfo(getWinRateInfo);
   }, [getWinRateInfo]);
 

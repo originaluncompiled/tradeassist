@@ -30,8 +30,6 @@ const Drawdown = ({ tradeData }: TradeData) => {
   }, [tradeData]);
 
   useEffect(() => {
-    if (tradeData.length < 1) return;
-
     setGraphData(getDrawdown);
   }, [getDrawdown]);
 

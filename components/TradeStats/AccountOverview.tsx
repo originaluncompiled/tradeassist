@@ -29,7 +29,7 @@ const AccountOverview = ({ tradeData }: TradeData) => {
       <View className='flex-row items-center justify-between pt-1'>
         <Text className='text-lg text-dark-2'>PnL</Text>
         <Text className={`font-bold text-2xl ${pnl > 0 ? 'text-accent-green' : pnl < 0 ? 'text-accent-red' : 'text-dark-1'}`}>
-          {`${pnl > 0 ? '+' : pnl < 0 ? '-' : ''}${pnl.toLocaleString('en-US', { style: 'currency', currency: currency })}`}
+          {`${pnl > 0 ? '+' : ''}${pnl.toLocaleString('en-US', { style: 'currency', currency: currency })}`}
         </Text>
       </View>
 
