@@ -33,7 +33,6 @@ const TradeHistory = () => {
   useEffect(() => {
     const fetchTradeHistory = async () => {
       try {
-        // TO-DO: Memoize this for performance, and make it get called as little as possible
         let fetchedTradeHistory: Trade[] = await db.getAllAsync('SELECT id, date, asset, rating, trade_outcome, trade_return, balance_change, direction FROM trades WHERE account_id = ? ORDER BY date DESC', [accountId]);
 
         // If there was no change in the trade history/the database, then we don't need to cause a bunch of re-renders by updating the trade history
@@ -53,11 +52,7 @@ const TradeHistory = () => {
 
   return (
     <>
-      {/* TO-DO: Show a 'Load More' button at the bottom, so that you don't have to actually get everything and people's phones don't explode */}
       <View className='flex-1 bg-dark-8 pt-4 px-4'>
-        {/* TO-DO: Make the filters work
-        <FilterSection filters={filters} updateFilters={updateFilters}/>
-        */}
         {tradeHistory.length > 0 ?
           <FlashList
             data={tradeHistory}

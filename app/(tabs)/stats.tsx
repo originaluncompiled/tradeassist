@@ -102,7 +102,6 @@ const Stats = () => {
   }, [sortedTradeDataByDay]);
 
   return (
-    // TO-DO: Drag-To-Refresh (Same as on Trade History page)
     <ScrollView
       className='flex-1 bg-dark-8'
       showsVerticalScrollIndicator={false}
@@ -117,9 +116,6 @@ const Stats = () => {
       }
     >
       <AccountOverview tradeData={tradeData} />
-      {/* TO-DO:
-      <FilterSection filters={filters} updateFilters={updateFilters}/>
-      */}
       
       <CalendarView tradeData={tradeData} />
       <CurrentStreak tradeData={tradeData} />

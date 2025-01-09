@@ -19,11 +19,7 @@ const FilterModal = ({ bottomSheetRef, caption }: FilterModalProps) => {
       snapPoints={snapPoints}
       backgroundStyle={{ backgroundColor: colors.dark.neutral_7 }}
       handleIndicatorStyle={{ backgroundColor: colors.dark.neutral_3 }}
-      onDismiss={() => {
-        // TO-DO: UPDATE FILTERS
-      }}
     >
-      {/* TO-DO: UPDATE THE FILTERS AS STATE FROM 'useFilters.tsx' */}
       <BottomSheetView className='flex-1 px-4'>
         <Text className='font-medium text-2xl ml-2 text-dark-2 text-center'>{caption}</Text>
 
