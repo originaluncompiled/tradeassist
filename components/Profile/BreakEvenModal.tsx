@@ -80,7 +80,7 @@ const BreakEvenModal = ({showModal, updateShowModal}: ModalProps) => {
             <Text className='text-dark-2 font-semibold text-lg text-wrap'>% of Each Trade's Risk</Text>
           </View>
           
-          <View className='flex-row items-center justify-end mt-4'>
+          <View className='flex-row items-center justify-end'>
             <Pressable
               className='px-2 py-1 mr-4 rounded-lg border border-dark-3 bg-dark-3/30 active:bg-dark-3/60'
               onPress={() => updateShowModal(false)}

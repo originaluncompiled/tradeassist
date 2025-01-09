@@ -64,34 +64,42 @@ const setup = () => {
 
       if (newAccountId === 0) return;
       
-      // await db.withTransactionAsync(async () => {
-      //   await db.runAsync(
-      //     `INSERT INTO transactionHistory (
-      //       account_id
-      //     )
-      //     VALUES (?, ?)`, 
-      //     [
-      //       newAccountId,
-      //       // other important stuff (like date, amount, balance before and balance after)
-      //     ]
-      //   );
-      // });
+      await db.withTransactionAsync(async () => {
+        await db.runAsync(
+          `INSERT INTO balance_history (
+            account_id,
+            value,
+            time,
+            tx_type,
+            currency,
+            balance_after_tx
+          )
+          VALUES (?, ?, ?, ?, ?, ?)`, 
+          [
+            newAccountId,
+            accountInfo.startingAccountBalance,
+            new Date().toISOString(),
+            'Deposit',
+            accountInfo.currencyCode,
+            accountInfo.startingAccountBalance
+          ]
+        );
+      });
 
       for (const asset of accountInfo.assets) {
         await db.withTransactionAsync(async () => {
-            await db.runAsync(
-              `INSERT INTO assets (
-                account_id,
-                asset_name
-              )
-              VALUES (?, ?)`, 
-              [
-                newAccountId,
-                asset.assetName
-              ]
-            );
-          }
-        );
+          await db.runAsync(
+            `INSERT INTO assets (
+              account_id,
+              asset_name
+            )
+            VALUES (?, ?)`, 
+            [
+              newAccountId,
+              asset.assetName
+            ]
+          );
+        });
       }
 
       router.dismissTo({ pathname: '/', params: { newAccountId: newAccountId } });

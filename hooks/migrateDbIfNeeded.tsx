@@ -17,7 +17,7 @@ export const migrateDbIfNeeded = async (db: SQLiteDatabase): Promise<void> => {
         starting_balance REAL NOT NULl DEFAULT 0,
         break_even_buffer REAL NOT NULL DEFAULT 1
       );
-      CREATE TABLE IF NOT EXISTS balanceHistory (
+      CREATE TABLE IF NOT EXISTS balance_history (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         account_id INTEGER NOT NULL,
         value DECIMAL NOT NULL DEFAULT 0,

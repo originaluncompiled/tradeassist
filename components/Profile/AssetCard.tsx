@@ -31,8 +31,6 @@ const AssetCard = ({ id, market, assets, updateAssets, accountId }: AssetCardPro
             placeholderTextColor={colors.dark.neutral_3}
             selectionColor={`${colors.green_2}B4`}
             scrollEnabled={false}
-            multiline={Platform.OS === "ios" ? false : true}
-            numberOfLines={1}
           />
         </View>        
       </View>

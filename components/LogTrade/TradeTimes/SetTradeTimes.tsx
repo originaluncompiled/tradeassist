@@ -1,11 +1,11 @@
 import { View, Text } from 'react-native'
 import React, { useState } from 'react'
 import Button from '@/components/Button'
-import { SetTradeTimesProps } from '@/constants/types'
+import { SetTimeProps } from '@/constants/types'
 import DateTimeSelector from '@/components/DateTimeSelector/DateTimeSelector'
 import { useUserSettings } from '@/hooks/useUserSettings'
 
-const SetTradeTimes = ({ text, updateTime, time }: SetTradeTimesProps) => {
+const SetTime = ({ text, updateTime, time, caption }: SetTimeProps) => {
   const [show, setShow] = useState(false);
   const updateShow = (value: boolean) => setShow(value);
   const { is24Hour } = useUserSettings();
@@ -31,13 +31,12 @@ const SetTradeTimes = ({ text, updateTime, time }: SetTradeTimesProps) => {
   };
 
   return (
-    <View className='flex-row justify-between items-center mb-2'>
-      <Text className='text-dark-2 font-semibold text-lg'>{text}</Text>
-      {/* TO-DO: Make the text display based on if the 24 hour clock is being used */}
+    <View className={`flex-row justify-between items-center ${caption || caption === undefined && 'mb-2'}`}>
+      {caption || caption === undefined && <Text className='text-dark-2 font-semibold text-lg'>{text}</Text>}
       <Button buttonAction={() => setShow(true)} text={getTime(new Date(time))} />
       <DateTimeSelector showModal={show} setShowModal={updateShow} onTimeChange={onTimeChange} initialTime={time} title={text} mode='DateTime' />
     </View>
   )
 }
 
-export default SetTradeTimes
+export default SetTime

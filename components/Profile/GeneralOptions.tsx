@@ -19,7 +19,7 @@ const GeneralOptions = () => {
           text={startingBalance?.toLocaleString('en-US', { style: 'currency', currency: currency }) || (0).toLocaleString('en-US', { style: 'currency', currency: currency })}
           icon='history'
           buttonAction={() => {
-            console.log('account balance history page')
+            router.push('/profile-pages/balancehistory')
           }}
         />
       </View>

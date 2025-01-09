@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native'
-import SetTradeTimes from './SetTradeTimes'
+import SetTime from './SetTradeTimes'
 import { useEffect, useState } from 'react'
 import { useTradeContext } from '@/hooks/useTradeContext';
 
@@ -41,8 +41,8 @@ const TradeTimes = () => {
 
   return (
     <View className='p-4 mb-4 rounded-2xl border border-dark-6 bg-dark-7'>
-      <SetTradeTimes text='Entry Time' updateTime={updateEntryTime} time={entryTime}/>
-      <SetTradeTimes text='Exit Time' updateTime={updateExitTime} time={exitTime}/>
+      <SetTime text='Entry Time' updateTime={updateEntryTime} time={entryTime}/>
+      <SetTime text='Exit Time' updateTime={updateExitTime} time={exitTime}/>
 
       <View className='flex-row justify-between items-center'>
         <Text className='text-dark-2 font-semibold text-lg'>Time in Trade</Text>

@@ -128,7 +128,8 @@ export type MoneyInputProps = {
   ) => void,
 }
 
-export type SetTradeTimesProps = {
+export type SetTimeProps = {
+  caption?: boolean,
   text: string,
   time: number,
   updateTime: (time: number) => void,
@@ -291,4 +292,42 @@ export type EditAssetsButtonProps = {
     accountId: number,
     assetName: string
   }[]
+}
+
+export type TransactionCardProps = {
+  id: number,
+  locale: string,
+  currencyCode: string,
+  txs: {
+    accountId: number,
+    value: number,
+    time: number,
+    txType: 'Deposit' | 'Withdrawal',
+    currency: string,
+    balanceAfterTx: number
+  }[],
+  updateTxs: (tx: {
+    accountId: number,
+    value: number,
+    time: number,
+    txType: 'Deposit' | 'Withdrawal',
+    // currency is also 'coin' when crypto
+    currency: string,
+    balanceAfterTx: number
+  }[]) => void,
+  tradeData: {
+    time: string,
+    tradeReturn: number
+  }[],
+}
+
+export type EditBalanceButtonProps = {
+  txs: {
+    accountId: number,
+    value: number,
+    time: number,
+    txType: 'Deposit' | 'Withdrawal',
+    currency: string,
+    balanceAfterTx: number
+  }[];
 }

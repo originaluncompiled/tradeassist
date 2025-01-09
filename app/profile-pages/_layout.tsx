@@ -37,6 +37,22 @@ const Layout = () => {
           )
         }}
       />
+      <Stack.Screen
+        name='balancehistory'
+        options={{
+          title: 'Balance History',
+          headerBackVisible: false,
+          headerLeft: () => (
+            <Pressable
+              className='rounded-lg px-2'
+              onPressOut={() => setTimeout(() => {router.dismiss()}, 50)}
+              hitSlop={12}
+            >
+              <Text className='text-lg font-semibold text-dark-3'>Back</Text>
+            </Pressable>
+          )
+        }}
+      />
     </Stack>
   )
 }

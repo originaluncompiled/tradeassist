@@ -15,7 +15,12 @@ const EditAssetsButton = ({ assets }: EditAssetsButtonProps) => {
         await db.runAsync('DELETE FROM assets WHERE account_id = ?', [accountId]); // first clear assets
       });
 
-      for (const asset of assets) {
+      const noDuplicateAssets = assets.filter((asset, index, arr) => {
+        // filter out duplicate assets, since that causes the keys n' stuff to be the same when they're rendered in the logtrade page
+        return arr.findIndex(item => JSON.stringify(item) === JSON.stringify(asset)) === index;
+      });
+
+      for (const asset of noDuplicateAssets) {
         await db.withTransactionAsync(async () => {
           await db.runAsync(
             `INSERT INTO assets (
