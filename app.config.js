@@ -1,6 +1,6 @@
-const isDevBuild = process.env.APP_VARIANT === 'development';
+const isDevBuild = process.env && process.env.APP_VARIANT === 'development';
 
-export default {
+module.exports = {
   expo: {
     name: isDevBuild ? "TradeAssist Development" : "TradeAssist",
     slug: "tradeassist",
@@ -21,18 +21,18 @@ export default {
       package: isDevBuild ? "tradeassist.dev" : "tradeassist"
     },
     plugins: [
-      expo-router,
-      expo-font,
+      "expo-router",
+      "expo-font",
       [
-        expo-splash-screen,
+        "expo-splash-screen",
         {
           image: isDevBuild ? "./assets/app/splash-icon-dark-dev.png" : "./assets/app/splash-icon-dark.png",
           backgroundColor: "#1c1c1c",
           imageWidth: 200
         }
       ],
-      expo-sqlite,
-      expo-localization
+      "expo-sqlite",
+      "expo-localization"
     ],
     experiments: {
       typedRoutes: true
