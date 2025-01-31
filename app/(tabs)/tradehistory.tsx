@@ -34,7 +34,7 @@ const TradeHistory = () => {
     const fetchTradeHistory = async () => {
       try {
         // TO-DO: Memoize this for performance, and make it get called as little as possible
-        let fetchedTradeHistory: Trade[] = await db.getAllAsync('SELECT id, date, asset, rating, trade_outcome, trade_return, balance_change, direction FROM trades WHERE account_id = ? ORDER BY date DESC', [accountId]);
+        let fetchedTradeHistory: Trade[] = await db.getAllAsync('SELECT id, date, asset, rating, trade_outcome, trade_return, balance_change, direction, entry_time FROM trades WHERE account_id = ? ORDER BY entry_time DESC', [accountId]);
 
         // If there was no change in the trade history/the database, then we don't need to cause a bunch of re-renders by updating the trade history
         if (JSON.stringify(snakeToCamel(fetchedTradeHistory)) === JSON.stringify(tradeHistory)) {

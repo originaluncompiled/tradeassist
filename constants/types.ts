@@ -12,6 +12,7 @@ export type Trade = {
   tradeReturn: number,
   balanceChange: number,
   direction: 'Long' | 'Short',
+  entryTime?: number
 }
 
 export type TradePage = {

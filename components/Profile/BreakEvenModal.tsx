@@ -27,7 +27,7 @@ const BreakEvenModal = ({showModal, updateShowModal}: ModalProps) => {
         );
       });
 
-      const trades: { tradeReturn: number, risk: number }[] = await db.getAllAsync('SELECT trade_return, risk FROM trades WHERE account_id = ? ORDER BY date DESC', [accountId]);
+      const trades: { tradeReturn: number, risk: number, id: number }[] = await db.getAllAsync('SELECT id, trade_return, risk FROM trades WHERE account_id = ? ORDER BY date DESC', [accountId]);
 
       // update every trade, so that it reflects the new break even buffer
       for (const trade of snakeToCamel(trades)) {
@@ -40,10 +40,10 @@ const BreakEvenModal = ({showModal, updateShowModal}: ModalProps) => {
           `UPDATE trades
           SET
             trade_outcome = ?
-          WHERE accountId = ?`,
+          WHERE id = ?`,
           [
             newTradeOutcome,
-            accountId
+            trade.id
           ]
         );
       }

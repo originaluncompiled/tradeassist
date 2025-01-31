@@ -37,7 +37,7 @@ const Stats = () => {
   const db = useSQLiteContext();
   const fetchTradeData = async () => {
     try {
-      const result: TradePage[] = await db.getAllAsync('SELECT * FROM trades WHERE account_id = ? ORDER BY date DESC', [accountId]);
+      const result: TradePage[] = await db.getAllAsync('SELECT * FROM trades WHERE account_id = ? ORDER BY entry_time DESC', [accountId]);
       
       // If there was no change in the trade data/database, then we don't need to cause a bunch of re-renders by updating tradeData
       if (JSON.stringify(snakeToCamel(result)) === JSON.stringify(tradeData)) {
@@ -69,7 +69,7 @@ const Stats = () => {
         }
       })
   
-      calendarArray.forEach((day) => {
+      calendarArray.forEach((day, index) => {
         day.trades.forEach((trade) => {
           day.totalReturn += trade.tradeReturn;
         })

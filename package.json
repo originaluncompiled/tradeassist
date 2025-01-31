@@ -42,7 +42,8 @@
     "react-native-screens": "^4.4.0",
     "react-native-ui-datepicker": "^2.0.4",
     "victory-native": "^41.14.0",
-    "zustand": "^5.0.1"
+    "zustand": "^5.0.1",
+    "expo-updates": "~0.26.13"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

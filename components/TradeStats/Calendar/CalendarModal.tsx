@@ -45,7 +45,7 @@ const CalendarModal = ({showModal, updateShowModal, selectedDate, tradeData, cal
             <Separator margin='mb-4'/>
 
             {
-              tradeData.map((trade, index: number) => {
+              tradeData.toReversed().map((trade, index: number) => {
                 const tradeDate = new Date(trade.date).setHours(0, 0, 0, 0);
 
                 if (tradeDate === selectedDate.getTime()) {
