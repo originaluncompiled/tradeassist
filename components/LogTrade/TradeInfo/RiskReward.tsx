@@ -48,12 +48,6 @@ const RiskReward = ({ tradeState, handleInputChange }: RiskRewardProps) => {
         dispatchAction='RISK'
       />
 
-      {/* TO-DO */}
-      {/* <View className='flex-row justify-between items-center'>
-        <Text className='text-dark-2 font-semibold text-lg'>% Balance Change</Text>
-        <Text className='text-dark-1 font-semibold text-lg w-32 text-center p-2'>{`${balanceChange}%`}</Text>
-      </View> */}
-
       <View className='flex-row justify-between items-center'>
         <Text className='text-dark-2 font-semibold text-lg'>Risk : Reward</Text>
         <Text className='text-dark-1 font-semibold text-lg w-32 text-center p-2'>1 : {riskReward}</Text>

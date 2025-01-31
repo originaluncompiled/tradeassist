@@ -53,11 +53,7 @@ const TradeHistory = () => {
 
   return (
     <>
-      {/* TO-DO: Show a 'Load More' button at the bottom, so that you don't have to actually get everything and people's phones don't explode */}
       <View className='flex-1 bg-dark-8 pt-4 px-4'>
-        {/* TO-DO: Make the filters work
-        <FilterSection filters={filters} updateFilters={updateFilters}/>
-        */}
         {tradeHistory.length > 0 ?
           <FlashList
             data={tradeHistory}

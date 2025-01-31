@@ -20,9 +20,6 @@ const Profile = () => {
   return (
     <View className='flex-1 bg-dark-8 p-4'>
       {showDelete && <DeleteConfirmation showModal={showDelete} updateShowModal={updateShowDelete}/>}
-      {/* TO-DO: MAYBE JUST SHOW ACCOUNT INFO???
-      <ProfileSection />
-      <Separator /> */}
 
       <GeneralOptions />
       <Separator margin='my-4'/>

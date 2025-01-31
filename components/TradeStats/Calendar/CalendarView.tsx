@@ -45,7 +45,6 @@ const CalendarView = ({ tradeData }: CalendarViewProps) => {
           tradeData={tradeData.filter((trade) => new Date(trade.date).getMonth() === new Date().getMonth())}
         />
       }
-      {/* TO-DO: Have ability to switch between months (using filters???) */}
       <Text className='font-bold text-xl text-dark-2'>Trade Calendar - {new Date(new Date().getTime()).toLocaleDateString(locale, { month: 'long', year: 'numeric' })}</Text>
 
       <Calendar

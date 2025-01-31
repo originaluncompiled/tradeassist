@@ -82,11 +82,6 @@ const TradeCard = ({ tradeInfo, lightBg, onClick, onClickValue }: TradeCardProps
               <Text className='text-dark-1'>{tradeInfo.direction}</Text>
             </View>
           </View>
-
-          {/* TO-DO: Balance Change */}
-          {/* <Text className={`font-bold text-lg ${tradeInfo.balanceChange > 0 ? 'text-accent-green' : 'text-accent-red'}`}>
-            {(tradeInfo.balanceChange > 0 ? '+' : '') + (tradeInfo.balanceChange / 100).toLocaleString(locale, { style: 'percent', maximumFractionDigits: 2 })}
-          </Text> */}
         </View>
       </Pressable>
     </View>
