@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { RefreshControl, Text, View } from 'react-native'
-import FilterSection from '@/components/Filter/FilterSection'
 import TradeCard from '@/components/TradingHistory/TradeCard'
 import { Trade } from '@/constants/types'
 import AddButton from '@/components/TradingHistory/AddButton'
@@ -33,7 +32,6 @@ const TradeHistory = () => {
   useEffect(() => {
     const fetchTradeHistory = async () => {
       try {
-        // TO-DO: Memoize this for performance, and make it get called as little as possible
         let fetchedTradeHistory: Trade[] = await db.getAllAsync('SELECT id, date, asset, rating, trade_outcome, trade_return, balance_change, direction, entry_time FROM trades WHERE account_id = ? ORDER BY entry_time DESC', [accountId]);
 
         // If there was no change in the trade history/the database, then we don't need to cause a bunch of re-renders by updating the trade history

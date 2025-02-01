@@ -2,21 +2,22 @@ import { View, Text } from 'react-native'
 import { Area, CartesianChart, Line } from 'victory-native'
 import { colors } from '@/constants/colors'
 import { DashPathEffect, useFont } from '@shopify/react-native-skia'
-import { TradeData } from '@/constants/types'
 import { useEffect, useMemo, useState } from 'react'
 import { useUserSettings } from '@/hooks/useUserSettings'
+import { useStats } from '@/hooks/useStats'
 const font = require('../../assets/Inter.ttf')
 
-const Drawdown = ({ tradeData }: TradeData) => {
+const Drawdown = () => {
   const { currency } = useUserSettings();
 
   const labelFont = useFont(font, 12);
+  const { tradeDataByDay } = useStats();
   const [graphData, setGraphData] = useState<{day: number, balance: number}[]>([{ day: 0, balance: 0 }]);
 
   const getDrawdown = useMemo(() => {
     let data: {day: number, balance: number}[] = [{ day: 0, balance: 0 }];
     // tradeData goes from the latest trade to the oldest trade
-    const drawdownArray = tradeData.toReversed().map((trade) => trade.tradeReturn);
+    const drawdownArray = tradeDataByDay.map((trade) => trade.totalReturn);
     drawdownArray.reduce((total, currentValue, index) => {      
       data.push({
         day: index + 1,
@@ -27,7 +28,7 @@ const Drawdown = ({ tradeData }: TradeData) => {
     }, 0);
     
     return data;
-  }, [tradeData]);
+  }, [tradeDataByDay]);
 
   useEffect(() => {
     setGraphData(getDrawdown);

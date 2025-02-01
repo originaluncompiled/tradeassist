@@ -122,7 +122,7 @@ const Stats = () => {
       <WinRate tradeData={tradeData} />
       <TradeDuration tradeData={tradeData} />
       <RiskReward tradeData={tradeData} />
-      <Drawdown tradeData={tradeData} />
+      <Drawdown />
       <DailyPnL />
       <View className='h-[80px] bg-dark-8' />
     </ScrollView>

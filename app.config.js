@@ -10,6 +10,12 @@ module.exports = {
     userInterfaceStyle: "dark",
     icon: isDevBuild ? "./assets/app/icon-dev.png" : "./assets/app/icon.png",
     newArchEnabled: true,
+    updates: {
+      url: "https://u.expo.dev/dcafe8f6-89b8-4b02-894c-7e95a1278b56"
+    },
+    runtimeVersion: {
+      policy: "appVersion"
+    },
     ios: {
       supportsTablet: true
     },
@@ -18,7 +24,7 @@ module.exports = {
         foregroundImage: isDevBuild ? "./assets/app/adaptive-icon-dev.png" : "./assets/app/adaptive-icon.png",
         backgroundColor: "#1c1c1c"
       },
-      package: isDevBuild ? "tradeassist.dev" : "tradeassist"
+      package: isDevBuild ? "tradeassist.dev" : "com.tradeassist.app"
     },
     plugins: [
       "expo-router",
